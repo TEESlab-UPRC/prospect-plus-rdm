@@ -1,6 +1,6 @@
 <?php
 
-use Database\Helpers\MigHelper;
+use Database\Helpers\MigHelper as MH;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('questions_schemes', function (Blueprint $table) {
-            MigHelper::rel($table, 'scheme_id', 'questionnaire_question_id', false, null, 'questionnaires_questions');
-            MigHelper::bool($table, 'enabled');
+            MH::rel($table, 'scheme_id', 'questionnaire_question_id', false, null, 'questionnaires_questions');
+            MH::bool($table, 'enabled');
         });
     }
 

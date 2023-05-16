@@ -1,6 +1,6 @@
 <?php
 
-use Database\Helpers\MigHelper;
+use Database\Helpers\MigHelper as MH;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,12 +20,12 @@ return new class extends Migration
             $table->text('title')->nullable();
             $table->timestamp('implementation_start')->nullable();
             $table->timestamp('completion_start')->nullable();
-            MigHelper::ref($table, 'user_id', true);
-            MigHelper::ref($table, 'rdm_id', false, true, 'questionnaires');
-            MigHelper::ref($table, 'frc_id', false, true, 'questionnaires');
-            MigHelper::ref($table, 'plan_id', false, true);
-            MigHelper::ref($table, 'type_id', false, true);
-            MigHelper::ref($table, 'phase_id', false, true);
+            MH::ref($table, 'user_id', true);
+            MH::ref($table, 'rdm_id', false, true, 'questionnaires');
+            MH::ref($table, 'frc_id', false, true, 'questionnaires');
+            MH::ref($table, 'plan_id', false, true);
+            MH::ref($table, 'type_id', false, true);
+            MH::ref($table, 'phase_id', false, true);
             $table->timestamps();
         });
     }

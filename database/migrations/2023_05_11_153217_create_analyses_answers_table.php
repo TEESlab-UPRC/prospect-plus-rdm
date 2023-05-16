@@ -1,6 +1,6 @@
 <?php
 
-use Database\Helpers\MigHelper;
+use Database\Helpers\MigHelper as MH;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('analyses_answers', function (Blueprint $table) {
             $table->id();
-            MigHelper::ref($table, 'question_id');
-            MigHelper::ref($table, 'questionnaire_id');
-            MigHelper::ref($table, 'analysis_id');
-            MigHelper::ref($table, 'answer_id');
+            MH::ref($table, 'question_id');
+            MH::ref($table, 'questionnaire_id');
+            MH::ref($table, 'analysis_id');
+            MH::ref($table, 'answer_id');
             $table->unique(['question_id', 'questionnaire_id', 'analysis_id', 'answer_id'], 'full_id_compound_unique');
             $table->index(['questionnaire_id', 'analysis_id']);
         });

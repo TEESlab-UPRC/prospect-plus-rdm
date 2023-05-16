@@ -1,6 +1,6 @@
 <?php
 
-use Database\Helpers\MigHelper;
+use Database\Helpers\MigHelper as MH;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('questions', function (Blueprint $table) {
-            MigHelper::idTxt($table, 'question');
-            MigHelper::ref($table, 'note_id', false, true);
+            MH::idTxt($table, 'question');
+            MH::ref($table, 'note_id', false, true);
         });
     }
 

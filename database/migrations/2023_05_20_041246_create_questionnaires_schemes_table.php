@@ -12,9 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('questions_schemes', function (Blueprint $table) {
-            MH::rel($table, 'scheme_id', 'questionnaire_question_id', false, null, 'questionnaires_questions');
-            MH::bool($table, 'enabled');
+        Schema::create('questionnaires_schemes', function (Blueprint $table) {
+            MH::rel($table, 'scheme_id', 'questionnaire_id');
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('questions_schemes');
+        Schema::dropIfExists('questionnaires_schemes');
     }
 };

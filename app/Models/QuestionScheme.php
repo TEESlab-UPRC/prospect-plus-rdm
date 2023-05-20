@@ -4,11 +4,10 @@ namespace App\Models;
 
 class QuestionScheme extends Model{
     protected $table = 'questions_schemes';
-    protected $fillable = ['scheme_id', 'questionnaire_question_id', 'enabled'];
-    protected $casts = ['enabled' => 'boolean'];
+    protected $fillable = ['scheme_id', 'question_id'];
 
-    public function questionnaireQuestion(){
-        return $this->belongsTo(QuestionnaireQuestion::class);
+    public function question(){
+        return $this->belongsTo(Question::class);
     }
 
     public function scheme(){

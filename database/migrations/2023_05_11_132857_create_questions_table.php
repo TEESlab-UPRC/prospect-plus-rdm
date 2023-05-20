@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('questions', function (Blueprint $table) {
-            MH::idTxt($table, 'question');
+            MH::idTxt($table, 'question', true);
             MH::ref($table, 'note_id', false, true);
         });
     }

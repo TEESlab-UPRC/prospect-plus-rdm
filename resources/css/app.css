@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .pp-bg-blue {background-color: #003068;}
+    .pp-bg-yellow {background-color: #FFD500;}
+    .pp-bg-cyan {background-color: #009999;}
+    .pp-bg-lime {background-color: #97B42A;}
+    .pp-bg-green {background-color: #00883B;}
+    .pp-fg-blue {color: #003068;}
+    .pp-fg-yellow {color: #FFD500;}
+    .pp-fg-cyan {color: #009999;}
+    .pp-fg-lime {color: #97B42A;}
+    .pp-fg-green {color: #00883B;}
+    .pp-darker {filter: brightness(85%);}
+    .pp-hover {@apply enabled:hover:pp-darker transition;}
+    .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
+
+    .pp-input {@apply cursor-pointer pp-hover pp-disabled}
+    .pp-btn {@apply pp-input text-base font-bold rounded-lg px-5 py-2.5;}
+    .pp-btn-blue {@apply pp-btn text-white pp-bg-blue;}
+    .pp-btn-yellow {@apply pp-btn text-gray-800 pp-bg-yellow;}
+    .pp-btn-cyan {@apply pp-btn text-white pp-bg-cyan;}
+    .pp-btn-lime {@apply pp-btn text-white pp-bg-lime;}
+    .pp-btn-green {@apply pp-btn text-white pp-bg-green;}
+}

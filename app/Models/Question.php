@@ -2,8 +2,16 @@
 
 namespace App\Models;
 
+use Parsedown;
+
 class Question extends TextModel{
     protected $fillable = ['question', 'note_id'];
+    protected $parsedown;
+
+    public function __construct(){
+        parent::__construct();
+        $this->parsedown = new Parsedown();
+    }
 
     public function text(){
         $this->question;
@@ -17,7 +25,19 @@ class Question extends TextModel{
         return $this->hasMany(QuestionnaireQuestion::class);
     }
 
+    public function questionsSchemes(){
+        return $this->hasMany(QuestionScheme::class);
+    }
+
     public function note(){
         return $this->belongsTo(Note::class);
+    }
+
+    public function formattedQuestion(){
+        return $this->parsedown->line($this->question);
+    }
+
+    public function formattedText(){
+        return $this->formattedQuestion();
     }
 }

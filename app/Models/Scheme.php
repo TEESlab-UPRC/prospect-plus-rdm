@@ -7,6 +7,10 @@ class Scheme extends TitleModel{
         return $this->hasMany(QuestionScheme::class);
     }
 
+    public function questionnairesSchemes(){
+        return $this->hasMany(QuestionnaireScheme::class);
+    }
+
     public function text(){
         return $this->title;
     }

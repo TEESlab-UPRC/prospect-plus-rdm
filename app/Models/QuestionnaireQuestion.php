@@ -13,8 +13,4 @@ class QuestionnaireQuestion extends QuestionnaireRelModel{
     public function questionnaire(){
         return $this->belongsTo(Questionnaire::class);
     }
-
-    public function questionsSchemes(){
-        return $this->hasMany(QuestionScheme::class);
-    }
 }

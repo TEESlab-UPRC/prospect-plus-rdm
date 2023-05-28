@@ -8,11 +8,13 @@
     .pp-bg-cyan {background-color: #009999;}
     .pp-bg-lime {background-color: #97B42A;}
     .pp-bg-green {background-color: #00883B;}
+
     .pp-fg-blue {color: #003068;}
     .pp-fg-yellow {color: #FFD500;}
     .pp-fg-cyan {color: #009999;}
     .pp-fg-lime {color: #97B42A;}
     .pp-fg-green {color: #00883B;}
+
     .pp-darker {filter: brightness(85%);}
     .pp-hover {@apply enabled:hover:pp-darker transition;}
     .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
@@ -24,4 +26,9 @@
     .pp-btn-cyan {@apply pp-btn text-white pp-bg-cyan;}
     .pp-btn-lime {@apply pp-btn text-white pp-bg-lime;}
     .pp-btn-green {@apply pp-btn text-white pp-bg-green;}
+
+    .bg-dots-darker {background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");}
+
+    .pp-outter-container {@apply relative flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-center bg-dots-darker selection:pp-bg-blue selection:pp-fg-yellow;}
+    .pp-inner-container {@apply grid grid-cols-1 gap-6 p-6 mx-auto mt-16 mb-6 scale-100 bg-white rounded-lg shadow-2xl max-w-7xl from-gray-700/50 via-transparent shadow-gray-500/20;}
 }

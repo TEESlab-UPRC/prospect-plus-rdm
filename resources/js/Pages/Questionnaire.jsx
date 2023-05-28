@@ -41,8 +41,8 @@ export default function Questionnaire({ questionnaire }) {
     return (
         <>
             <Head title={questionnaire.title} />
-            <div className="relative flex flex-col items-center justify-center min-h-screen bg-gray-100 bg-center bg-dots-darker selection:bg-red-500 selection:text-white">
-                <div className="grid grid-cols-1 gap-6 p-6 mx-auto mt-16 mb-6 scale-100 bg-white rounded-lg shadow-2xl max-w-7xl from-gray-700/50 via-transparent shadow-gray-500/20">
+            <div className="pp-outter-container">
+                <div className="pp-inner-container">
                     {/* <div className="flex justify-center">
                         <svg
                             viewBox="0 0 62 65"
@@ -76,12 +76,6 @@ export default function Questionnaire({ questionnaire }) {
                     ))}
                 </div>
             </div>
-
-            <style>{`
-                .bg-dots-darker {
-                    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
-                }
-            `}</style>
         </>
     );
 }

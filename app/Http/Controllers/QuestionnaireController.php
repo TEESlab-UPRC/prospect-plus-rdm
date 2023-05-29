@@ -13,6 +13,7 @@ class QuestionnaireController extends Controller{
         if($request->has('title')) $q->where('title', $request->input('title'));
         $q = $q->orderByDesc('id')->first();
         return Inertia::render('Questionnaire', [
+            'info' => $request->input('info'),
             'questionnaire' => [
                 'title' => $q->title,
                 'isRDM' => $q->isRDM,

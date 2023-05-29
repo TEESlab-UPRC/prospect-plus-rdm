@@ -5,7 +5,7 @@ import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
 
-export default function Questionnaire({ questionnaire }) {
+export default function Questionnaire({ questionnaire, info }) {
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);

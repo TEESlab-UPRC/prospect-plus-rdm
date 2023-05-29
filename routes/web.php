@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/home', fn() => Inertia::render('Home'))->name('home');
+
 Route::get('/info', [AnalysisInfoController::class, 'render'])->name('info');
 
 Route::get('/sector', fn() => Inertia::render('SectorSelection'))->name('sector');

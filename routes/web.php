@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/sector', fn() => Inertia::render('SectorSelection'))->name('sector');
+
 Route::post('/questionnaire', [QuestionnaireController::class, 'render'])->name('questionnaire');
 
 require __DIR__.'/auth.php';

@@ -7,7 +7,7 @@ const Input = ({ name, label, options = {}, type = "text", required = false }) =
                             .concat(required ? [] : [<option key={`${name}-N/A`} value="N/A">N/A</option>])
                 }/>
             ) : (<input type={type} name={name} id={name} required={required}/>)}
-            <label htmlFor={name} className="text-base text-gray-700">{label}</label>
+            <label htmlFor={name} className="pp-text">{label}</label>
         </div>
     );
 };

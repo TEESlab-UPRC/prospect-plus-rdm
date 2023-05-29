@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, Head } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import Question from '@/Components/Question';
 import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';

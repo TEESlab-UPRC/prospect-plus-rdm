@@ -11,10 +11,12 @@ use Illuminate\Database\Eloquent\Collection;
 
 class AnalysisInfoController extends Controller{
     function render(Request $request){
+        $request->validate(['next' => 'in:frc,rdm']);
         return Inertia::render('AnalysisInfo', [
             'plans' => static::getArray(Plan::all('answer')),
             'types' => static::getArray(Type::all('answer')),
-            'phases' => static::getArray(Phase::all('answer'))
+            'phases' => static::getArray(Phase::all('answer')),
+            'next' => $request->input('next')
         ]);
     }
 

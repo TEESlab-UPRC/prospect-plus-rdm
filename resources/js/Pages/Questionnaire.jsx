@@ -41,7 +41,7 @@ export default function Questionnaire({ questionnaire }) {
     return (
         <>
             <Head title={questionnaire.title} />
-            <div className="pp-outter-container">
+            <div className="pp-outer-container">
                 <div className="pp-inner-container">
                     {/* <div className="flex justify-center">
                         <svg
@@ -56,9 +56,9 @@ export default function Questionnaire({ questionnaire }) {
                             />
                         </svg>
                     </div> */}
-                    <form onSubmit={showResults} className="grid grid-cols-1 gap-6">
-                        <legend className="text-xl font-bold text-gray-700 justify-self-center">{questionnaire.title}</legend>
-                        <div className="grid grid-cols-1 gap-6" children={questionnaire.questions.map(q => (
+                    <form onSubmit={showResults}>
+                        <legend>{questionnaire.title}</legend>
+                        <div className="gap-6" children={questionnaire.questions.map(q => (
                             <Question question={q} answers={questionnaire.answers} key={`q${q.id}`}/>
                         ))} />
                         <button type="submit" className="pp-btn-cyan">Show results</button>

@@ -2,20 +2,20 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Seeder;
 use App\Models\Note;
 use App\Models\Answer;
 use App\Models\Scheme;
 use App\Models\Question;
 use App\Models\Questionnaire;
 use App\Models\QuestionScheme;
-use Illuminate\Database\Seeder;
 use App\Models\QuestionnaireAnswer;
 use App\Models\QuestionnaireScheme;
 use App\Models\QuestionnaireQuestion;
 
 class QuestionnaireData extends Seeder{
     public function run(): void{
-        $schemes = array_map(fn($t) => Scheme::create(['title' => $t])->id ,[
+        $schemes = array_map(fn($t) => Scheme::create(['title' => $t])->id, [
             'Own Funds',
             'Interacting/Internal Contracting',
             'Revolving Funds',

@@ -20,6 +20,10 @@
     .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
 
     form {@apply grid grid-cols-1 gap-5;}
+    form.pp-mark-required input:required+label::after,
+    form.pp-mark-required select:required+label::after {content: "*"; color: #e32; @apply ml-1;}
+    form.pp-mark-required input:required+label:hover::after,
+    form.pp-mark-required select:required+label:hover::after {content: "*required";}
     form legend {@apply text-2xl font-bold text-gray-700 justify-self-center;}
     form fieldset > legend {@apply underline mb-2 text-lg;}
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}

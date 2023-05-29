@@ -1,14 +1,22 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import Input from '@/Components/Input';
 
-export default function AnalysisInfo({ plans, types, phases }) {
+const getFormData = form => Object.fromEntries(Array.from(new FormData(form).entries()).map(e => e[1] == 'N/A' ? [e[0], null] : e));
+
+export default function AnalysisInfo({ plans, types, phases, next }) {
+    const onSubmit = e => {
+        e.preventDefault();
+        let info = getFormData(e.target);
+        if(next == 'rdm') router.get(route('sector'), {info: info});
+        else router.post(route('questionnaire'), {info: info, type: 'frc'});
+    }
+
     return (
         <>
             <Head title="Analysis Details"/>
             <div className="pp-outer-container">
                 <div className="pp-inner-container">
-                    {/* <form onSubmit={showResults} className="grid grid-cols-1 gap-6"> */}
-                    <form className="pp-mark-required">
+                    <form onSubmit={onSubmit} className="pp-mark-required">
                         <legend>Your Analysis Details</legend>
                         <fieldset>
                             <legend>General Information</legend>

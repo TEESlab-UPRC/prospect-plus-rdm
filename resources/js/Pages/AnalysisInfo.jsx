@@ -3,12 +3,21 @@ import Input from '@/Components/Input';
 
 const getFormData = form => Object.fromEntries(Array.from(new FormData(form).entries()).map(e => e[1] == 'N/A' ? [e[0], null] : e));
 
-export default function AnalysisInfo({ plans, types, phases, next }) {
+export default function AnalysisInfo({ auth, plans, types, phases, next }) {
+    const gotoNext = (info = null) => {
+        let opt = info ? {} : {'replace': true};
+        if(next == 'rdm') router.get(route('sector'), {info: info}, opt);
+        else router.post(route('questionnaire'), {info: info, type: 'frc'}, opt);
+    };
+
     const onSubmit = e => {
         e.preventDefault();
-        let info = getFormData(e.target);
-        if(next == 'rdm') router.get(route('sector'), {info: info});
-        else router.post(route('questionnaire'), {info: info, type: 'frc'});
+        gotoNext(getFormData(e.target));
+    };
+
+    if(!auth.user){
+        gotoNext();
+        return (<i>Loading guest session, please wait...</i>);
     }
 
     return (

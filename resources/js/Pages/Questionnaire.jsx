@@ -21,19 +21,20 @@ export default function Questionnaire({ questionnaire }) {
     // const color_start = 2;
     // const getColor = i => `hsl(${((color_start + i) * golden_angle) % 360}, 64%, 40%)`;
 
+    const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
+
     function showResults(e){
         e.preventDefault();
         let answers = Array.from(e.target.querySelectorAll(":checked"));
         if(answers.length == 0) return;
-        if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({
+        if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({                                // for each scheme included in this questionnaire
             'title': s.title,
-            'result': answers.filter(a => s.questions.includes(parseInt(a.name.substr(1))))
-                    .map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100,
+            'result': reduceAns2Percent(answers.filter(a => s.questions.includes(parseInt(a.name.substr(1))))), // filter for included questions in scheme and reduce answers to percentage
             // 'fill': getColor(i)
             // 'fill': colorMap[questionnaire.title][i % 2]
             'fill': colorMap[questionnaire.title][0]
         })));
-        else setResult([answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100]);
+        else setResult([reduceAns2Percent(answers)]);
         setFilled(true);
     }
 
@@ -46,6 +47,7 @@ export default function Questionnaire({ questionnaire }) {
         resetState();   // TODO confirm it works with weird flows
         router.post(route('questionnaire.load', {type: 'frc'}));
     };
+
     const gotoInfo = () => router.get(route('info.render'));    // TODO change to home?
     // TODO: add route to save from data (answers/project), on result display (?)
 

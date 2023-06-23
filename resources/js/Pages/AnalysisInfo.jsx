@@ -9,10 +9,7 @@ export default function AnalysisInfo({ plans, types, phases, info }) {
         router.post(route('info.store'), {info: getFormData(e.target)});
     };
 
-    useEffect(() => {
-        onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info));
-        onPageLoad(() => console.log(info));
-    }, []);
+    useEffect(() => onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info)), []);
 
     return (
         <>

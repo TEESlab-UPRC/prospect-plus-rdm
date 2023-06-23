@@ -3,24 +3,13 @@ import Input from '@/Components/Input';
 
 const getFormData = form => Object.fromEntries(Array.from(new FormData(form).entries()).map(e => e[1] == 'N/A' ? [e[0], null] : e));
 
-export default function AnalysisInfo({ auth, plans, types, phases, next }) {
-    const gotoNext = (info = null) => {
-        let opt = info ? {} : {'replace': true};
-        if(next == 'rdm') router.get(route('sector.render'), {info: info}, opt);
-        else router.post(route('questionnaire.render'), {info: info, type: 'frc'}, opt);
-    };
-
+export default function AnalysisInfo({ plans, types, phases }) {
     const onSubmit = e => {
         e.preventDefault();
-        gotoNext(getFormData(e.target));
+        router.post(route('info.store'), {info: getFormData(e.target)});
     };
 
-    if(!auth.user){
-        gotoNext();
-        return (<i>Loading guest session, please wait...</i>);
-    }
-
-    return (
+    return (    // TODO re-populate if there's already previous info in the session
         <>
             <Head title="Analysis Details"/>
             <div className="pp-outer-container">
@@ -43,7 +32,7 @@ export default function AnalysisInfo({ auth, plans, types, phases, next }) {
                             <Input name="impl" label="(Estimated) Starting date of implementation:" type="date"/>
                             <Input name="comp" label="(Estimated) Starting date of completion:" type="date"/>
                         </fieldset>
-                        <button type="submit" className="pp-btn-cyan">Next</button>
+                        <button type="submit" className="pp-btn-green">Next</button>
                     </form>
                 </div>
             </div>

@@ -7,13 +7,19 @@ use Illuminate\Http\Request;
 use App\Models\Questionnaire;
 
 class QuestionnaireController extends Controller{
-    function render(Request $request){
+    function load(Request $request){
         $request->validate(['type' => 'in:rdm,frc']);
         $q = Questionnaire::where('isRDM', $request->input('type') == 'rdm');
         if($request->has('title')) $q->where('title', $request->input('title'));
         $q = $q->orderByDesc('id')->first();
+        session(['questionnaire' => $q]);
+        return to_route('questionnaire.render');
+    }
+
+    function render(){
+        $q = session('questionnaire');
+        if(!$q) return redirect('/');
         return Inertia::render('Questionnaire', [
-            'info' => $request->input('info'),
             'questionnaire' => [
                 'title' => $q->title,
                 'isRDM' => $q->isRDM,

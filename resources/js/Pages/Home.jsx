@@ -1,8 +1,8 @@
 import { Head, router } from '@inertiajs/react';
 
-const onClick = e => router.get(route('info.render'), {next: e.target.value});
+const start = () => router.get(route('info.render'));
 
-export default function Home({ data }) {
+export default function Home() {
     return (
         <>
             <Head title="Sector Selection"/>
@@ -15,13 +15,7 @@ export default function Home({ data }) {
                         <p>the tool in brief (3-4 lines)</p>
                         <p>read the guideline (link)</p>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="text-center">Start with:</div>
-                        <div className="flex flex-row gap-6">
-                            <button type="button" value="frc" onClick={onClick} className="pp-btn-cyan" style={{width: '250px'}}>Quick Finance Readiness<br />Check</button>
-                            <button type="button" value="rdm" onClick={onClick} className="pp-btn-cyan" style={{width: '250px'}}>Recommendation-Decision<br />Matrix</button>
-                        </div>
-                    </div>
+                    <button type="button" onClick={start} className="self-center pp-btn-green" style={{width: '250px'}}>Start!</button>
                 </div>
             </div>
         </>

@@ -8,7 +8,7 @@ const ImgLink = ({img, dest}) => (
     }/>
 );
 
-export default function SectorSelection({ data }) {
+export default function SectorSelection() {
     return (
         <>
             <Head title="Sector Selection"/>

@@ -25,7 +25,23 @@ class AnalysisInfoController extends Controller{
     }
 
     static function gotoSector(Request $request = null){
-        session(['info' => ($request && $request->has('info')) ? $request->input('info') : null]);
+        $info = null;
+        if($request && $request->has('info')){
+            $request->validate([
+                'info.authority' => 'required|string',
+                'info.region' => 'nullable|string',
+                'info.country' => 'nullable|string',
+                'info.plan' => 'nullable|in:' . join(',', static::getArray(Plan::all('answer'))),
+                'info.title' => 'nullable|string',
+                'info.type' => 'nullable|in:' . join(',', static::getArray(Type::all('answer'))),
+                'info.sector' => 'nullable|in:Public Buildings,Private Buildings,Transport,Public Lighting,Cross Sectoral',
+                'info.phase' => 'nullable|in:' . join(',', static::getArray(Phase::all('answer'))),
+                'info.impl' => 'nullable|date_format:Y-m-d',
+                'info.comp' => 'nullable|date_format:Y-m-d',
+            ]);
+            $info = $request->input('info');
+        }
+        session(['info' => $info]);
         return to_route('sector.render');
     }
 

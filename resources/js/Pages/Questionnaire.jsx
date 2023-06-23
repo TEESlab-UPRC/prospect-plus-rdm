@@ -45,7 +45,7 @@ export default function Questionnaire({ questionnaire }) {
 
     function gotoFRC(){
         resetState();   // TODO confirm it works with weird flows
-        router.post(route('questionnaire.load', {type: 'frc'}));
+        router.post(route('questionnaire.load'), {type: 'frc'});
     };
 
     const gotoInfo = () => router.get(route('info.render'));    // TODO change to home?

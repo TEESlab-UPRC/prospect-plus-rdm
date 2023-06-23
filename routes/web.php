@@ -3,9 +3,11 @@
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\AnalysisInfoController;
+use App\Http\Controllers\QuestionnaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,12 +39,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/home', fn() => Inertia::render('Home'))->name('home');
+Route::get('/home', [HomeController::class, 'render'])->name('home.render');
 
-Route::get('/info', [AnalysisInfoController::class, 'render'])->name('info');
+Route::get('/info', [AnalysisInfoController::class, 'render'])->name('info.render');
 
-Route::get('/sector', fn() => Inertia::render('SectorSelection'))->name('sector');
+Route::get('/sector', [SectorController::class, 'render'])->name('sector.render');
 
-Route::post('/questionnaire', [QuestionnaireController::class, 'render'])->name('questionnaire');
+Route::get('/questionnaire', [QuestionnaireController::class, 'render'])->name('questionnaire.render');
 
 require __DIR__.'/auth.php';

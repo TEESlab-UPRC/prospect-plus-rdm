@@ -1,6 +1,6 @@
 import { Head, router } from '@inertiajs/react';
 
-const onClick = e => router.get(route('info'), {next: e.target.value});
+const onClick = e => router.get(route('info.render'), {next: e.target.value});
 
 export default function Home({ data }) {
     return (

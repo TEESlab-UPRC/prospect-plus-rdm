@@ -6,8 +6,8 @@ const getFormData = form => Object.fromEntries(Array.from(new FormData(form).ent
 export default function AnalysisInfo({ auth, plans, types, phases, next }) {
     const gotoNext = (info = null) => {
         let opt = info ? {} : {'replace': true};
-        if(next == 'rdm') router.get(route('sector'), {info: info}, opt);
-        else router.post(route('questionnaire'), {info: info, type: 'frc'}, opt);
+        if(next == 'rdm') router.get(route('sector.render'), {info: info}, opt);
+        else router.post(route('questionnaire.render'), {info: info, type: 'frc'}, opt);
     };
 
     const onSubmit = e => {

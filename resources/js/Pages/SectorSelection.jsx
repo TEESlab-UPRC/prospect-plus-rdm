@@ -3,7 +3,7 @@ import SectorImg from '@/../img/sectors/SectorImg';
 import PostLink from '@/Components/PostLink';
 
 const ImgLink = ({img, dest}) => (
-    <PostLink href={route('questionnaire')} data={{type: 'rdm', title: dest}} child={
+    <PostLink href={route('questionnaire.load')} data={{type: 'rdm', title: dest}} child={
         <img width={320} className="m-1" src={img}/>
     }/>
 );

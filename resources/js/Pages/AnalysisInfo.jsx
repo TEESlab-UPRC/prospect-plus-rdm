@@ -1,6 +1,7 @@
 import { Head, router } from '@inertiajs/react';
 import Input from '@/Components/Input';
 import { onPageLoad, getFormData, setFormData } from '@/Helpers/DomHelpers';
+import { useEffect } from 'react';
 
 export default function AnalysisInfo({ plans, types, phases, info }) {
     const onSubmit = e => {
@@ -8,7 +9,10 @@ export default function AnalysisInfo({ plans, types, phases, info }) {
         router.post(route('info.store'), {info: getFormData(e.target)});
     };
 
-    onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info));
+    useEffect(() => {
+        onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info));
+        onPageLoad(() => console.log(info));
+    }, []);
 
     return (
         <>

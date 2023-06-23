@@ -1,15 +1,11 @@
-import { useEffect } from "react";
-
 export const setClassStyle = (clazz, callback) => Array.from(document.getElementsByClassName(clazz)).forEach(el => callback(el.style));
 
-export const onPageLoad = callback => { // page load hook for react
-    useEffect(() => {
-        if(document.readyState === 'complete') callback();
+export const onPageLoad = callback => { // page load hook - likely desired usage: useEffect(() => onPageLoad(your_callback), []);
+    if(document.readyState === 'complete') callback();
         else{
-            window.addEventListener('load', callback, false);
-            return () => window.removeEventListener('load', callback);    // remove listener on component unmount
-        }
-    }, []);
+        window.addEventListener('load', callback, false);
+        return () => window.removeEventListener('load', callback);    // remove listener on component unmount
+    }
 };
 
 export const setFormInputVal = (form, key, val) => {

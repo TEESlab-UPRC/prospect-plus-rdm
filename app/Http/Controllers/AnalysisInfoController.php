@@ -15,7 +15,8 @@ class AnalysisInfoController extends Controller{
         return Inertia::render('AnalysisInfo', [
             'plans' => static::getArray(Plan::all('answer')),
             'types' => static::getArray(Type::all('answer')),
-            'phases' => static::getArray(Phase::all('answer'))
+            'phases' => static::getArray(Phase::all('answer')),
+            'info' => session('info')
         ]);
     }
 

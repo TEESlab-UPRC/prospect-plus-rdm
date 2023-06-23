@@ -1,20 +1,21 @@
 import { Head, router } from '@inertiajs/react';
 import Input from '@/Components/Input';
+import { onPageLoad, getFormData, setFormData } from '@/Helpers/DomHelpers';
 
-const getFormData = form => Object.fromEntries(Array.from(new FormData(form).entries()).map(e => e[1] == 'N/A' ? [e[0], null] : e));
-
-export default function AnalysisInfo({ plans, types, phases }) {
+export default function AnalysisInfo({ plans, types, phases, info }) {
     const onSubmit = e => {
         e.preventDefault();
         router.post(route('info.store'), {info: getFormData(e.target)});
     };
 
-    return (    // TODO re-populate if there's already previous info in the session
+    onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info));
+
+    return (
         <>
             <Head title="Analysis Details"/>
             <div className="pp-outer-container">
                 <div className="pp-inner-container">
-                    <form onSubmit={onSubmit} className="pp-mark-required">
+                    <form id="analysis-info-form" onSubmit={onSubmit} className="pp-mark-required">
                         <legend>Your Analysis Details</legend>
                         <fieldset>
                             <legend>General Information</legend>

@@ -20,7 +20,11 @@ export const setFormInputVal = (form, key, val) => {
     }
 };
 
-export const setFormData = (form, data) => Object.entries(data).map(e => e[1] ? e : [e[0], 'N/A']).forEach(e => setFormInputVal(form, e[0], e[1]));
+export const setFormData = (form, data) => data && Object.entries(data).map(e => {
+    if(e[1]) return e;
+    const type = form.elements[e[0]].type;
+    return [e[0], (type == 'select-one' ? 'N/A' : (type == 'checkbox' ? false : ''))];
+}).forEach(e => setFormInputVal(form, e[0], e[1]));
 
 export const getFormData = form => Object.fromEntries(Array.from(new FormData(form).entries()).map(e => e[1] == 'N/A' ? [e[0], null] : e));
 

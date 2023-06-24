@@ -42,11 +42,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/home', [HomeController::class, 'render'])->name('home.render');
 
 Route::get('/info', [AnalysisInfoController::class, 'render'])->name('info.render');
-Route::post('/info', [AnalysisInfoController::class, 'store'])->name('info.store');
+Route::post('/info/store', [AnalysisInfoController::class, 'store'])->name('info.store');
 
 Route::get('/sector', [SectorController::class, 'render'])->name('sector.render');
 
-Route::post('/questionnaire', [QuestionnaireController::class, 'load'])->name('questionnaire.load');
+Route::post('/questionnaire/load', [QuestionnaireController::class, 'load'])->name('questionnaire.load');
 Route::get('/questionnaire', [QuestionnaireController::class, 'render'])->name('questionnaire.render');
 
 require __DIR__.'/auth.php';

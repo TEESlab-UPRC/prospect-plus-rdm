@@ -3,6 +3,8 @@
 namespace App\Models;
 
 class Analysis extends Model{
+    public $timestamps = true;
+
     protected $fillable = [
         'org', 'region', 'country', 'title', 'implementation_start', 'completion_start',
         'user_id', 'rdm_id', 'frc_id', 'plan_id', 'type_id', 'phase_id'

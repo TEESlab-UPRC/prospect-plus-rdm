@@ -3,7 +3,7 @@ import Input from '@/Components/Input';
 import { onPageLoad, getFormData, setFormData } from '@/Helpers/DomHelpers';
 import { useEffect } from 'react';
 
-export default function AnalysisInfo({ plans, types, phases, info }) {
+export default function AnalysisInfo({ plans, types, phases, sectors, info }) {
     const onSubmit = e => {
         e.preventDefault();
         router.post(route('info.store'), {info: getFormData(e.target)});
@@ -29,7 +29,7 @@ export default function AnalysisInfo({ plans, types, phases, info }) {
                             <legend>Project Description</legend>
                             <Input name="title" label="Project title:"/>
                             <Input name="type" label="Type of measure:" options={types}/>
-                            <Input name="sector" label="Sector:" options={['Public Buildings', 'Private Buildings', 'Transport', 'Public Lighting', 'Cross Sectoral']}/>
+                            <Input name="sector" label="Sector:" options={sectors}/>
                             <Input name="phase" label="Phase:" options={phases}/>
                             <Input name="impl" label="(Estimated) Starting date of implementation:" type="date"/>
                             <Input name="comp" label="(Estimated) Starting date of completion:" type="date"/>

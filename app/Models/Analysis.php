@@ -7,7 +7,7 @@ class Analysis extends Model{
 
     protected $fillable = [
         'org', 'region', 'country', 'title', 'implementation_start', 'completion_start',
-        'user_id', 'rdm_id', 'frc_id', 'plan_id', 'type_id', 'phase_id'
+        'user_id', 'rdm_id', 'frc_id', 'plan_id', 'type_id', 'phase_id', 'sector_id'
     ];
 
     protected $casts = [
@@ -35,6 +35,10 @@ class Analysis extends Model{
 
     public function frc(){
         return $this->belongsTo(Questionnaire::class, 'frc_id');
+    }
+
+    public function sector(){
+        return $this->belongsTo(Questionnaire::class, 'sector_id');
     }
 
     public function analysesAnswers(){

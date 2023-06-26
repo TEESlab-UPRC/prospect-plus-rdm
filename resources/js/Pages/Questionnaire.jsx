@@ -51,7 +51,7 @@ export default function Questionnaire({ auth, questionnaire }) {
         router.post(route('questionnaire.load'), {type: 'frc'});
     };
 
-    const gotoInfo = () => router.get(route('info.render'));    // TODO change to home?
+    const gotoHome = () => router.get(route('home.render'));
 
     // TODO: add route and code here to load previous answers
 
@@ -98,7 +98,7 @@ export default function Questionnaire({ auth, questionnaire }) {
                                 My analyses
                                 {/* TODO: redirect to project list */}
                             </button>
-                            <button type="button" onClick={gotoInfo} className="pp-btn-yellow">
+                            <button type="button" onClick={gotoHome} className="pp-btn-yellow">
                                 Start a new analysis
                             </button>
                         </div>

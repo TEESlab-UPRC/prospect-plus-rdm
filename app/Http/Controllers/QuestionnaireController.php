@@ -15,11 +15,26 @@ class QuestionnaireController extends Controller{
     function load(Request $request){
         $request->validate([
             'type' => 'required|string|in:rdm,frc',
-            'title' => 'nullable|string'
+            'edit' => 'nullable|boolean'
         ]);
-        $q = Questionnaire::where('isRDM', $request->input('type') == 'rdm');
-        if($request->has('title')) $q->where('title', $request->input('title'));
-        $q = $q->orderByDesc('id')->first();
+        $ans = null;
+        if($request->has('edit') && $request->input('edit')){
+            $request->validate(['analysis' => 'required|numeric|integer|exists:analyses,id']);
+            $analysis = Analysis::find($request->input('analysis'));
+            $q = $request->input('type') == 'rdm' ? $analysis->rdm : $analysis->frc;
+            if(!$q) return;  // nothing to edit
+            $ans = AnalysisAnswer::where('analysis_id', $analysis->id)
+                    ->where('questionnaire_id', $q->id)->get()
+                    ->map(fn($m) => [$m->question->id, $m->answer->answer])->toArray();
+            $ans = array_combine(array_column($ans, 0), array_column($ans, 1));
+            session(['analysis' => $analysis]);
+        }else{
+            $request->validate(['title' => 'nullable|string']);
+            $q = Questionnaire::where('isRDM', $request->input('type') == 'rdm');
+            if($request->has('title')) $q->where('title', $request->input('title'));
+            $q = $q->orderByDesc('id')->first();
+        }
+        session(['currentAnswers' => $ans]);
         session(['questionnaire' => $q]);
         return to_route('questionnaire.render');
     }
@@ -56,7 +71,8 @@ class QuestionnaireController extends Controller{
                         'questions' => $s->questionsSchemes->map(fn($m2) => $m2->question->id)
                     ];
                 }) : null
-            ]
+            ],
+            'currentAnswers' => session('currentAnswers')
         ]);
     }
 

@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Head, router } from '@inertiajs/react';
 import Question from '@/Components/Question';
 import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
+import { onPageLoad } from '@/Helpers/DomHelpers';
 
-export default function Questionnaire({ auth, questionnaire }) {
+export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
@@ -25,9 +26,19 @@ export default function Questionnaire({ auth, questionnaire }) {
 
     const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
 
-    function showResults(e){
-        e.preventDefault();
-        let answers = Array.from(e.target.querySelectorAll(":checked"));
+    useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
+        if(!currentAnswers || filled) return;
+        let form = document.getElementById("questionnaire-form");
+        let formEls = form.elements;
+        Object.entries(currentAnswers).map(
+                e => Array.from(formEls["q" +  e[0]].values())                      // get question's inputs
+                        .filter(el => el.parentElement.innerText.trim() == e[1])[0] // get selected answer
+                ).forEach(el => el.checked = true);
+        showResults(form, true);
+    }), [currentAnswers]);
+
+    function showResults(form, showOnly = false){   // TODO scroll to bottom?
+        let answers = Array.from(form.querySelectorAll(":checked"));
         if(answers.length == 0) return;
         if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({                                // for each scheme included in this questionnaire
             'title': s.title,
@@ -38,7 +49,12 @@ export default function Questionnaire({ auth, questionnaire }) {
         })));
         else setResult([reduceAns2Percent(answers)]);
         setFilled(true);
-        if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
+        if(!showOnly && auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
+    }
+
+    function onSubmit(e){
+        e.preventDefault();
+        showResults(e.target);
     }
 
     function resetState(){
@@ -52,8 +68,6 @@ export default function Questionnaire({ auth, questionnaire }) {
     };
 
     const gotoHome = () => router.get(route('home.render'));
-
-    // TODO: add route and code here to load previous answers
 
     return (
         <>
@@ -73,7 +87,7 @@ export default function Questionnaire({ auth, questionnaire }) {
                             />
                         </svg>
                     </div> */}
-                    <form onSubmit={showResults}>
+                    <form onSubmit={onSubmit} id="questionnaire-form">
                         <legend>{questionnaire.title}</legend>
                         <div className="gap-6" children={questionnaire.questions.map((q, i) => (
                             <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>

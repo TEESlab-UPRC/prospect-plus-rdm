@@ -75,8 +75,8 @@ export default function Questionnaire({ auth, questionnaire }) {
                     </div> */}
                     <form onSubmit={showResults}>
                         <legend>{questionnaire.title}</legend>
-                        <div className="gap-6" children={questionnaire.questions.map(q => (
-                            <Question question={q} answers={questionnaire.answers} key={`q${q.id}`}/>
+                        <div className="gap-6" children={questionnaire.questions.map((q, i) => (
+                            <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>
                         ))} />
                         <button type="submit" className="pp-btn-cyan">Show results</button>
                     </form>

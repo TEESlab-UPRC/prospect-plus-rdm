@@ -34,10 +34,10 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                 e => Array.from(formEls["q" +  e[0]].values())                      // get question's inputs
                         .filter(el => el.parentElement.innerText.trim() == e[1])[0] // get selected answer
                 ).forEach(el => el.checked = true);
-        showResults(form, true);
+        showResults(form);
     }), [currentAnswers]);
 
-    function showResults(form, showOnly = false){   // TODO scroll to bottom?
+    function showResults(form){   // TODO scroll to bottom?
         let answers = Array.from(form.querySelectorAll(":checked"));
         if(answers.length == 0) return;
         if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({                                // for each scheme included in this questionnaire
@@ -49,12 +49,13 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
         })));
         else setResult([reduceAns2Percent(answers)]);
         setFilled(true);
-        if(!showOnly && auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
+        return answers;
     }
 
     function onSubmit(e){
         e.preventDefault();
-        showResults(e.target);
+        let answers = showResults(e.target);
+        if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
     }
 
     function resetState(){

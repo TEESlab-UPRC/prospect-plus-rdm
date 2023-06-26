@@ -18,7 +18,7 @@ return new class extends Migration
             MH::ref($table, 'questionnaire_id');
             MH::ref($table, 'analysis_id');
             MH::ref($table, 'answer_id');
-            $table->unique(['question_id', 'questionnaire_id', 'analysis_id', 'answer_id'], 'full_id_compound_unique');
+            $table->unique(['question_id', 'questionnaire_id', 'analysis_id'], 'analysis_questionnaire_question_id_compound_unique');
             $table->index(['questionnaire_id', 'analysis_id']);
         });
     }

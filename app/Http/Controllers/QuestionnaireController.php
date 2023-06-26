@@ -13,7 +13,10 @@ use App\Models\Type;
 
 class QuestionnaireController extends Controller{
     function load(Request $request){
-        $request->validate(['type' => 'required|string|in:rdm,frc']);
+        $request->validate([
+            'type' => 'required|string|in:rdm,frc',
+            'title' => 'nullable|string'
+        ]);
         $q = Questionnaire::where('isRDM', $request->input('type') == 'rdm');
         if($request->has('title')) $q->where('title', $request->input('title'));
         $q = $q->orderByDesc('id')->first();

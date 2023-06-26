@@ -5,7 +5,7 @@ import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
 
-export default function Questionnaire({ questionnaire }) {
+export default function Questionnaire({ auth, questionnaire }) {
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
@@ -23,6 +23,8 @@ export default function Questionnaire({ questionnaire }) {
 
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
 
+    const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
+
     function showResults(e){
         e.preventDefault();
         let answers = Array.from(e.target.querySelectorAll(":checked"));
@@ -36,6 +38,7 @@ export default function Questionnaire({ questionnaire }) {
         })));
         else setResult([reduceAns2Percent(answers)]);
         setFilled(true);
+        if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
     }
 
     function resetState(){
@@ -49,7 +52,8 @@ export default function Questionnaire({ questionnaire }) {
     };
 
     const gotoInfo = () => router.get(route('info.render'));    // TODO change to home?
-    // TODO: add route to save from data (answers/project), on result display (?)
+
+    // TODO: add route and code here to load previous answers
 
     return (
         <>

@@ -48,5 +48,6 @@ Route::get('/sector', [SectorController::class, 'render'])->name('sector.render'
 
 Route::post('/questionnaire/load', [QuestionnaireController::class, 'load'])->name('questionnaire.load');
 Route::get('/questionnaire', [QuestionnaireController::class, 'render'])->name('questionnaire.render');
+Route::post('/questionnaire/store', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
 
 require __DIR__.'/auth.php';

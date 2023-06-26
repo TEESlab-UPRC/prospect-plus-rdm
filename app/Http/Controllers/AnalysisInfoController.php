@@ -18,7 +18,7 @@ class AnalysisInfoController extends Controller{
             'types' => static::getTypes(),
             'phases' => static::getPhases(),
             'sectors' => static::getSectors(),
-            'info' => session('info')
+            'info' => session('info')   // TODO load latest user analysis from DB instead
         ]);
     }
 
@@ -30,7 +30,7 @@ class AnalysisInfoController extends Controller{
         $info = null;
         if($request && $request->has('info')){
             $request->validate([
-                'info.authority' => 'required|string',
+                'info.org' => 'required|string',
                 'info.region' => 'nullable|string',
                 'info.country' => 'nullable|string',
                 'info.plan' => 'nullable|in:' . join(',', static::getPlans()),
@@ -38,12 +38,13 @@ class AnalysisInfoController extends Controller{
                 'info.type' => 'nullable|in:' . join(',', static::getTypes()),
                 'info.sector' => 'nullable|in:' . join(',', static::getSectors()),
                 'info.phase' => 'nullable|in:' . join(',', static::getPhases()),
-                'info.impl' => 'nullable|date_format:Y-m-d',
-                'info.comp' => 'nullable|date_format:Y-m-d'
+                'info.implementation_start' => 'nullable|date_format:Y-m-d',
+                'info.completion_start' => 'nullable|date_format:Y-m-d'
             ]);
             $info = $request->input('info');
         }
         session(['info' => $info]);
+        session(['analysis' => null]);  // new analysis
         return to_route('sector.render');
     }
 

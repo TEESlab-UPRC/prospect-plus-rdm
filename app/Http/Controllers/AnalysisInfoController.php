@@ -16,14 +16,17 @@ class AnalysisInfoController extends Controller{
         $analysis = static::getAnalysis($request, false);   // for editing mode of analysis info
         if($analysis) session([ // edit mode
             'analysis' => $analysis,
-            'infoEditMode' => true
+            'infoEditMode' => true,
+            'info' => static::analysisInfo($analysis)
         ]);
         else{
             if($request->user()) $analysis = Analysis::where('user_id', $request->user()->id)
-                ->latest()->first();   // get user's latest analysis
-            session(['infoEditMode' => false]);
+                    ->latest()->first();   // get user's latest analysis
+            session([
+                'infoEditMode' => false,
+                'info' => $analysis ? static::analysisInfo($analysis, true) : null
+            ]);
         }
-        session(['info' => $analysis ? static::analysisInfo($analysis) : null]);
         return to_route('info.render');
     }
 

@@ -47,8 +47,9 @@ class Controller extends BaseController{
         ]);
     }
 
-    static function analysisInfo(Analysis $analysis){   // Analysis -> info form data
+    static function analysisInfo(Analysis $analysis, bool $noTitle = false){   // Analysis -> info form data
         $info = $analysis->only(['org', 'region', 'country', 'plan_id', 'title', 'type_id', 'sector_id', 'phase_id', 'implementation_start', 'completion_start']);
+        if($noTitle) $info['title'] = null;
         $info = array_map(fn($k, $v) => [$k, in_array($k, ['implementation_start', 'completion_start']) ? ($v ? $v->format('Y-m-d') : $v) : $v], array_keys($info), array_values($info));   // format dates
         $info = array_combine(array_column($info, 0), array_column($info, 1));
         return static::mapInfoRev($info);

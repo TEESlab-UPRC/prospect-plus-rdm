@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Analysis;
 use Inertia\Inertia;
 use App\Models\Phase;
 use App\Models\Plan;
@@ -15,10 +16,14 @@ class AnalysisInfoController extends Controller{
         $analysis = static::getAnalysis($request, false);   // for editing mode of analysis info
         if($analysis) session([ // edit mode
             'analysis' => $analysis,
-            'info' => static::analysisInfo($analysis),
             'infoEditMode' => true
         ]);
-        else session(['infoEditMode' => false]);
+        else{
+            if($request->user()) $analysis = Analysis::where('user_id', $request->user()->id)
+                ->latest()->first();   // get user's latest analysis
+            session(['infoEditMode' => false]);
+        }
+        session(['info' => $analysis ? static::analysisInfo($analysis) : null]);
         return to_route('info.render');
     }
 
@@ -29,7 +34,7 @@ class AnalysisInfoController extends Controller{
             'types' => static::getTypes(),
             'phases' => static::getPhases(),
             'sectors' => static::getSectors(),
-            'info' => session('info'),   // TODO load latest user analysis from DB instead (account for edit mode)
+            'info' => session('info'),
             'editMode' => session('infoEditMode')
         ]);
     }

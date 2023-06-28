@@ -16,8 +16,11 @@ class Controller extends BaseController{
     use AuthorizesRequests, ValidatesRequests;
 
     static function getAnalysis(Request $request, bool $required = true){
+        if(!$request->user()) return null;
         $request->validate(['analysis' => ($required ? 'required' : 'nullable') . '|numeric|integer|exists:analyses,id']);
-        return $request->has('analysis') ? Analysis::find($request->input('analysis')) : null;
+        if(!$request->has('analysis')) return null;
+        $analysis = Analysis::find($request->input('analysis'));
+        return $analysis->user_id == $request->user()->id ? $analysis : null;   // only return owned
     }
 
     static function mapInfoEntry(array $info, array $mappers){

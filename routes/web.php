@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', [HomeController::class, 'render'])->name('home.render');
 
+Route::post('/info/load', [AnalysisInfoController::class, 'load'])->name('info.load');
 Route::get('/info', [AnalysisInfoController::class, 'render'])->name('info.render');
 Route::post('/info/store', [AnalysisInfoController::class, 'store'])->name('info.store');
 

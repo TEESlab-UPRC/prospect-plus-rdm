@@ -1,6 +1,6 @@
 import { Head, router } from '@inertiajs/react';
 
-const start = () => router.get(route('info.render'));
+const start = () => router.post(route('info.load'));
 
 export default function Home() {
     return (

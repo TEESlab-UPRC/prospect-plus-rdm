@@ -11,6 +11,17 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 
 class AnalysisInfoController extends Controller{
+    function load(Request $request){
+        $analysis = static::getAnalysis($request, false);   // for editing mode of analysis info
+        if($analysis) session([ // edit mode
+            'analysis' => $analysis,
+            'info' => static::analysisInfo($analysis),
+            'infoEditMode' => true
+        ]);
+        else session(['infoEditMode' => false]);
+        return to_route('info.render');
+    }
+
     function render(Request $request){
         if(!$request->user()) return static::gotoSector();  // skip screen for guests
         return Inertia::render('AnalysisInfo', [
@@ -18,17 +29,27 @@ class AnalysisInfoController extends Controller{
             'types' => static::getTypes(),
             'phases' => static::getPhases(),
             'sectors' => static::getSectors(),
-            'info' => session('info')   // TODO load latest user analysis from DB instead
+            'info' => session('info'),   // TODO load latest user analysis from DB instead (account for edit mode)
+            'editMode' => session('infoEditMode')
         ]);
     }
 
     function store(Request $request){
+        if(session('infoEditMode')){
+            $analysis = session('analysis');
+            $info = static::getInfo($request);
+            if(!$info || !$analysis) return;
+            $info = static::mapInfo($info);
+            $analysis->update($info);
+            session(['analysis' => null, 'info' => null, 'infoEditMode' => null]);
+            return to_route('home.render'); // TODO change to analysis list, when implemented
+        }
         return static::gotoSector($request);
     }
 
     static function gotoSector(Request $request = null){
         session([
-            'info' => static::getInfo($request),
+            'info' => $request ? static::getInfo($request) : null,
             'analysis' => null  // new analysis
         ]);
         return to_route('sector.render');

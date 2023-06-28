@@ -23,14 +23,14 @@ class Controller extends BaseController{
         return $analysis->user_id == $request->user()->id ? $analysis : null;   // only return owned
     }
 
-    static function mapInfoEntry(array $info, array $mappers){
+    static function mapInfoEntries(array $info, array $mappers){
         $n = array_map(fn($k, $m) => [$m[0], $info[$k] ? $m[1]($info[$k]) : null], array_keys($mappers), array_values($mappers));
         $n = array_combine(array_column($n, 0), array_column($n, 1));
         return array_merge(array_diff_key($info, $mappers), $n);    // remove old keys, add new key-val pairs
     }
 
     static function mapInfo(array $info){       // values -> foreign IDs (user options only)
-        return static::mapInfoEntry($info, [
+        return static::mapInfoEntries($info, [
             'plan' => ['plan_id', fn($v) => Plan::where('answer', $v)->value('id')],
             'type' => ['type_id', fn($v) => Type::where('answer', $v)->value('id')],
             'phase' => ['phase_id', fn($v) => Phase::where('answer', $v)->value('id')],
@@ -39,7 +39,7 @@ class Controller extends BaseController{
     }
 
     static function mapInfoRev(array $info){    // foreign IDs -> values (user options only)
-        return static::mapInfoEntry($info, [
+        return static::mapInfoEntries($info, [
             'plan_id' => ['plan', fn($v) => Plan::find($v)->value('answer')],
             'type_id' => ['type', fn($v) => Type::find($v)->value('answer')],
             'phase_id' => ['phase', fn($v) => Phase::find($v)->value('answer')],

@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Analysis;
 use App\Models\AnalysisAnswer;
-use App\Models\Phase;
-use App\Models\Plan;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
-use App\Models\Type;
 
 class QuestionnaireController extends Controller{
     function load(Request $request){

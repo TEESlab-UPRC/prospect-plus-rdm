@@ -19,8 +19,7 @@ class QuestionnaireController extends Controller{
         ]);
         $ans = null;
         if($request->has('edit') && $request->input('edit')){
-            $request->validate(['analysis' => 'required|numeric|integer|exists:analyses,id']);
-            $analysis = Analysis::find($request->input('analysis'));
+            $analysis = static::getAnalysis($request);
             $q = $request->input('type') == 'rdm' ? $analysis->rdm : $analysis->frc;
             if(!$q) return;  // nothing to edit
             $ans = AnalysisAnswer::where('analysis_id', $analysis->id)
@@ -34,8 +33,10 @@ class QuestionnaireController extends Controller{
             if($request->has('title')) $q->where('title', $request->input('title'));
             $q = $q->orderByDesc('id')->first();
         }
-        session(['currentAnswers' => $ans]);
-        session(['questionnaire' => $q]);
+        session([
+            'currentAnswers' => $ans,
+            'questionnaire' => $q
+        ]);
         return to_route('questionnaire.render');
     }
 
@@ -105,12 +106,7 @@ class QuestionnaireController extends Controller{
                 $analysis->save();
             }
         }else{ // Need to make new analysis, process info for it and create it
-            $i = static::mapInfo($i, [
-                'plan' => ['plan_id', fn($v) => Plan::where('answer', $v)->value('id')],
-                'type' => ['type_id', fn($v) => Type::where('answer', $v)->value('id')],
-                'phase' => ['phase_id', fn($v) => Phase::where('answer', $v)->value('id')],
-                'sector' => ['sector_id', fn($v) => Questionnaire::where('title', $v)->value('id')]
-            ]);
+            $i = static::mapInfo($i);
             $i['user_id'] = $request->user()->id;
             $i[($q->isRDM ? 'rdm' : 'frc') . '_id'] = $q->id;
             $analysis = Analysis::create($i);
@@ -130,11 +126,5 @@ class QuestionnaireController extends Controller{
         );
 
         return to_route('questionnaire.render');
-    }
-
-    static function mapInfo(array $info, array $mappers){
-        $n = array_map(fn($k, $m) => [$m[0], $info[$k] ? $m[1]($info[$k]) : null], array_keys($mappers), array_values($mappers));
-        $n = array_combine(array_column($n, 0), array_column($n, 1));
-        return array_merge(array_diff_key($info, $mappers), $n);    // remove old keys, add new key-val pairs
     }
 }

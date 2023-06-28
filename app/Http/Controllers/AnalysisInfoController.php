@@ -27,7 +27,14 @@ class AnalysisInfoController extends Controller{
     }
 
     static function gotoSector(Request $request = null){
-        $info = null;
+        session([
+            'info' => static::getInfo($request),
+            'analysis' => null  // new analysis
+        ]);
+        return to_route('sector.render');
+    }
+
+    static function getInfo(Request $request){
         if($request && $request->has('info')){
             $request->validate([
                 'info.org' => 'required|string',
@@ -41,11 +48,9 @@ class AnalysisInfoController extends Controller{
                 'info.implementation_start' => 'nullable|date_format:Y-m-d',
                 'info.completion_start' => 'nullable|date_format:Y-m-d'
             ]);
-            $info = $request->input('info');
+            return $request->input('info');
         }
-        session(['info' => $info]);
-        session(['analysis' => null]);  // new analysis
-        return to_route('sector.render');
+        return null;
     }
 
     static function getArray(Collection $collection, string $colName = 'answer'){

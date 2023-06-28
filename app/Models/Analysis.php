@@ -11,8 +11,8 @@ class Analysis extends Model{
     ];
 
     protected $casts = [
-        'implementation_start' => 'datetime',
-        'completion_start' => 'datetime',
+        'implementation_start' => 'date:Y-m-d',
+        'completion_start' => 'date:Y-m-d',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];

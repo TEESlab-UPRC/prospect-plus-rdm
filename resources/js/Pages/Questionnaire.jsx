@@ -90,7 +90,9 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                         </svg>
                     </div> */}
                     <form onSubmit={onSubmit} id="questionnaire-form">
-                        <legend>{questionnaire.title}</legend>
+                        <legend style={
+                            colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title][0]} : {}
+                        }>{questionnaire.title}</legend>
                         <div className="gap-6" children={questionnaire.questions.map((q, i) => (
                             <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>
                         ))} />

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class AnalysisInfoController extends Controller{
     function load(Request $request){
-        $analysis = static::getAnalysis($request, false);   // for editing mode of analysis info
+        $analysis = static::getAnalysis($request);   // for editing mode of analysis info
         if($analysis) session([ // edit mode
             'analysis' => $analysis,
             'infoEditMode' => true,

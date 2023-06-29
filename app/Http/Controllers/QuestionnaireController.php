@@ -10,13 +10,10 @@ use App\Models\Questionnaire;
 
 class QuestionnaireController extends Controller{
     function load(Request $request){
-        $request->validate([
-            'type' => 'required|string|in:rdm,frc',
-            'edit' => 'nullable|boolean'
-        ]);
+        $request->validate(['type' => 'required|string|in:rdm,frc']);
         $ans = null;
-        if($request->has('edit') && $request->input('edit')){
-            $analysis = static::getAnalysis($request);
+        $analysis = static::getAnalysis($request);  // for editing mode of questionnaire answers
+        if($analysis){  // edit mode
             $q = $request->input('type') == 'rdm' ? $analysis->rdm : $analysis->frc;
             if(!$q) return;  // nothing to edit
             $ans = AnalysisAnswer::where('analysis_id', $analysis->id)

@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController{
     use AuthorizesRequests, ValidatesRequests;
 
-    static function getAnalysis(Request $request, bool $required = true){
+    static function getAnalysis(Request $request, bool $required = false){
         if(!$request->user()) return null;
         $request->validate(['analysis' => ($required ? 'required' : 'nullable') . '|numeric|integer|exists:analyses,id']);
         if(!$request->has('analysis')) return null;

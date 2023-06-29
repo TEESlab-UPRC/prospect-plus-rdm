@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AnalysisInfoController;
+use App\Http\Controllers\AnalysisListController;
 use App\Http\Controllers\QuestionnaireController;
 
 /*
@@ -50,5 +51,8 @@ Route::get('/sector', [SectorController::class, 'render'])->name('sector.render'
 Route::post('/questionnaire/load', [QuestionnaireController::class, 'load'])->name('questionnaire.load');
 Route::get('/questionnaire', [QuestionnaireController::class, 'render'])->name('questionnaire.render');
 Route::post('/questionnaire/store', [QuestionnaireController::class, 'store'])->name('questionnaire.store');
+
+Route::get('/analyses', [AnalysisListController::class, 'render'])->name('analyses.render');
+Route::post('/analyses/delete', [AnalysisListController::class, 'delete'])->name('analyses.delete');
 
 require __DIR__.'/auth.php';

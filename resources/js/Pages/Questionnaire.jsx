@@ -68,6 +68,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
         router.post(route('questionnaire.load'), {type: 'frc'});
     };
 
+    const gotoAnalyses = () => router.get(route('analyses.render'));
     const gotoHome = () => router.get(route('home.render'));
 
     return (
@@ -98,21 +99,30 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                     {filled && (<>
                         {questionnaire.isRDM ? (<>
                             <RDMChart percentages={result} title={questionnaire.title} />
-                            <div className="grid grid-cols-2 gap-4">
+                            {currentAnswers ? ( // edit mode
                                 <ChartDLBtn filename={`${questionnaire.title} - results`} />
-                                <button type="button" onClick={gotoFRC} disabled={!filled} className="pp-btn-lime">
-                                    Continue to the Quick Finance Readiness Check
-                                </button>
-                            </div>
+                            ) : (
+                                <div className="grid grid-cols-2 gap-4">
+                                    <ChartDLBtn filename={`${questionnaire.title} - results`} />
+                                    <button type="button" onClick={gotoFRC} className="pp-btn-lime">
+                                        Continue to the Quick Finance Readiness Check
+                                    </button>
+                                </div>
+                            )}
                         </>) : (<>
                             <FRCChart percentage={result[0]} />
                             <ChartDLBtn filename="Quick Finance Readiness - results" />
                         </>)}
                         <div className="grid grid-cols-2 gap-4">
-                            <button type="button" className="pp-btn-yellow">
-                                My analyses
-                                {/* TODO: redirect to project list */}
-                            </button>
+                            {auth.user ? (
+                                <button type="button" onClick={gotoAnalyses} className="pp-btn-yellow">
+                                    My analyses
+                                </button>
+                            ) : (
+                                <button type="button" className="pp-btn-yellow" disabled>
+                                    Log in to save and view your analyses
+                                </button>
+                            )}
                             <button type="button" onClick={gotoHome} className="pp-btn-yellow">
                                 Start a new analysis
                             </button>

@@ -50,7 +50,7 @@ class AnalysisInfoController extends Controller{
             $info = static::mapInfo($info);
             $analysis->update($info);
             session(['analysis' => null, 'info' => null, 'infoEditMode' => null]);
-            return to_route('home.render'); // TODO change to analysis list, when implemented
+            return to_route('analyses.render');
         }
         return static::gotoSector($request);
     }

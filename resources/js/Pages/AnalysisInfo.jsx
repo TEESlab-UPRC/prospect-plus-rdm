@@ -3,7 +3,7 @@ import Input from '@/Components/Input';
 import { onPageLoad, getFormData, setFormData } from '@/Helpers/DomHelpers';
 import { useEffect } from 'react';
 
-export default function AnalysisInfo({ plans, types, phases, sectors, info }) {
+export default function AnalysisInfo({ plans, types, phases, sectors, info, editMode }) {
     const onSubmit = e => {
         e.preventDefault();
         router.post(route('info.store'), {info: getFormData(e.target)});
@@ -34,7 +34,7 @@ export default function AnalysisInfo({ plans, types, phases, sectors, info }) {
                             <Input name="implementation_start" label="(Estimated) Starting date of implementation:" type="date"/>
                             <Input name="completion_start" label="(Estimated) Starting date of completion:" type="date"/>
                         </fieldset>
-                        <button type="submit" className="pp-btn-green">Next</button>
+                        <button type="submit" className="pp-btn-green">{editMode ? "Save" : "Next"}</button>
                     </form>
                 </div>
             </div>

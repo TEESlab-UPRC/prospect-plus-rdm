@@ -17,7 +17,7 @@ class Controller extends BaseController{
 
     static function getAnalysis(Request $request, bool $required = false){
         if(!$request->user()) return null;
-        $request->validate(['analysis' => ($required ? 'required' : 'nullable') . '|numeric|integer|exists:analyses,id']);
+        $request->validate(['analysis' => ($required ? 'required' : 'nullable') . '|numeric|integer|exists:' . Analysis::class . ',id']);
         if(!$request->has('analysis')) return null;
         $analysis = Analysis::find($request->input('analysis'));
         return $analysis->user_id == $request->user()->id ? $analysis : null;   // only return owned

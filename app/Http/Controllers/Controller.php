@@ -8,6 +8,7 @@ use App\Models\Phase;
 use App\Models\Analysis;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -53,5 +54,9 @@ class Controller extends BaseController{
         $info = array_map(fn($k, $v) => [$k, in_array($k, ['implementation_start', 'completion_start']) ? ($v ? $v->format('Y-m-d') : $v) : $v], array_keys($info), array_values($info));   // format dates
         $info = array_combine(array_column($info, 0), array_column($info, 1));
         return static::mapInfoRev($info);
+    }
+
+    protected static function invalid($msg, $values = [], $field = 0){
+        throw ValidationException::withMessages([$field => $msg . ($values ? ': ' . implode(', ', $values) : '')]);
     }
 }

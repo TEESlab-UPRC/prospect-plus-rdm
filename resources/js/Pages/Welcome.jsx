@@ -8,7 +8,7 @@ export default function Welcome({ isRegister = false }) {
 
     const submit = e => {
         e.preventDefault();
-        router.post(route(isRegister ? 'register' : 'login'), getFormData(e.target), {onError: setErrors} );
+        router.post(route(isRegister ? 'register' : 'login'), getFormData(e.target), {onError: setErrors, preserveState: true, preserveScroll: true});
     };
 
     return (

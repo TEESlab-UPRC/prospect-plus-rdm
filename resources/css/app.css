@@ -8,14 +8,14 @@
     .pp-bg-cyan {background-color: #009999;}
     .pp-bg-lime {background-color: #97B42A;}
     .pp-bg-green {background-color: #00883B;}
-    .pp-bg-red {@apply bg-red-500;}
+    .pp-bg-red {@apply bg-red-600;}
 
     .pp-fg-blue {color: #003068;}
     .pp-fg-yellow {color: #FFD500;}
     .pp-fg-cyan {color: #009999;}
     .pp-fg-lime {color: #97B42A;}
     .pp-fg-green {color: #00883B;}
-    .pp-fg-red {@apply text-red-500;}
+    .pp-fg-red {@apply text-red-600;}
 
     .pp-darker {filter: brightness(85%);}
     .pp-hover {@apply enabled:hover:pp-darker transition;}

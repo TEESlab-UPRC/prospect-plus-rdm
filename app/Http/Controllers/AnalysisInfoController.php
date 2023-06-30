@@ -10,6 +10,7 @@ use App\Models\Questionnaire;
 use App\Models\Type;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AnalysisInfoController extends Controller{
     function load(Request $request){
@@ -65,19 +66,26 @@ class AnalysisInfoController extends Controller{
 
     static function getInfo(Request $request){
         if($request && $request->has('info')){
-            $request->validate([
-                'info.org' => 'required|string',
-                'info.region' => 'nullable|string',
-                'info.country' => 'nullable|string',
-                'info.plan' => 'nullable|in:' . join(',', static::getPlans()),
-                'info.title' => 'nullable|string',
-                'info.type' => 'nullable|in:' . join(',', static::getTypes()),
-                'info.sector' => 'nullable|in:' . join(',', static::getSectors()),
-                'info.phase' => 'nullable|in:' . join(',', static::getPhases()),
-                'info.implementation_start' => 'nullable|date_format:Y-m-d',
-                'info.completion_start' => 'nullable|date_format:Y-m-d'
-            ]);
-            return $request->input('info');
+            $i = $request->input('info');
+            Validator::make($i, [
+                'org' => 'required|string',
+                'region' => 'nullable|string',
+                'country' => 'nullable|string',
+                'plan' => 'nullable|in:' . join(',', static::getPlans()),
+                'title' => 'nullable|string',
+                'type' => 'nullable|in:' . join(',', static::getTypes()),
+                'sector' => 'nullable|in:' . join(',', static::getSectors()),
+                'phase' => 'nullable|in:' . join(',', static::getPhases()),
+                'implementation_start' => 'nullable|date_format:Y-m-d',
+                'completion_start' => 'nullable|date_format:Y-m-d'
+            ], [], [
+                'org' => 'authority/agency',
+                'region' => 'city/region',
+                'plan' => 'plan/strategy',
+                'title' => 'project title',
+                'type' => 'type of measure'
+            ])->validate();
+            return $i;
         }
         return null;
     }

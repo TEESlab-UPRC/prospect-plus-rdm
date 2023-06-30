@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine, LabelList } from 'recharts';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setClassStyle } from '../Helpers/DomHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
@@ -43,9 +43,17 @@ const onResize = (w, h) => {
 };
 
 
-const FRCChart = ({ percentage, title = "Quick Finance Readiness" }) => {
-    useEffect(onResize);
+const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = null }) => {
+    const [loaded, setLoaded] = useState(false);
     let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
+
+    useEffect(() => {
+        onResize();
+        if(loaded) return;
+        onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
+        setLoaded(true);
+    });
+
     return (<div className="grid grid-cols-1" id="downloadable-chart">
         <svg className="mb-6 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>

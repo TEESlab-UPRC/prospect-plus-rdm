@@ -4,7 +4,7 @@ import Question from '@/Components/Question';
 import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
-import { onPageLoad } from '@/Helpers/DomHelpers';
+import { onPageLoad, centerTo } from '@/Helpers/DomHelpers';
 
 export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
@@ -25,6 +25,8 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
 
     const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
+
+    const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
         if(!currentAnswers || filled) return;
@@ -55,6 +57,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     function onSubmit(e){
         e.preventDefault();
         let answers = showResults(e.target);
+        centerToChart();
         if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
     }
 
@@ -100,7 +103,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                     </form>
                     {filled && (<>
                         {questionnaire.isRDM ? (<>
-                            <RDMChart percentages={result} title={questionnaire.title} />
+                            <RDMChart percentages={result} title={questionnaire.title} onLoaded={centerToChart} />
                             {currentAnswers ? ( // edit mode
                                 <ChartDLBtn filename={`${questionnaire.title} - results`} />
                             ) : (
@@ -112,7 +115,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                                 </div>
                             )}
                         </>) : (<>
-                            <FRCChart percentage={result[0]} />
+                            <FRCChart percentage={result[0]} onLoaded={centerToChart} />
                             <ChartDLBtn filename="Quick Finance Readiness - results" />
                         </>)}
                         <div className="grid grid-cols-2 gap-4">

@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList } from 'recharts';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { setClassStyle } from '../Helpers/DomHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
@@ -24,8 +24,16 @@ const onResize = (w, h) => {
     });
 };
 
-const RDMChart = ({ percentages, title }) => {
-    useEffect(onResize);
+const RDMChart = ({ percentages, title, onLoaded = null }) => {
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        onResize();
+        if(loaded) return;
+        onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
+        setLoaded(true);
+    });
+
     return (<div className="grid grid-cols-1" id="downloadable-chart">
         <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
             <g className="pp-rmsg" children={msg.map((s, i) => (

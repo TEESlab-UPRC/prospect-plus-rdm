@@ -24,10 +24,17 @@ export const setFormData = (form, data) => data && Object.entries(data).map(e =>
 
 export const getFormData = form => Object.fromEntries(Array.from(new FormData(form).entries()).map(e => e[1] == 'N/A' ? [e[0], null] : e));
 
+export const centerTo = el => el ? el.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "center"
+}) : false;
+
 export default {
     setClassStyle,
     onPageLoad,
     setFormInputVal,
     setFormData,
-    getFormData
+    getFormData,
+    centerTo
 };

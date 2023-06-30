@@ -1,4 +1,6 @@
-const Input = ({ name, label, options = {}, type = "text", required = false, defaultValue = null, autoComplete = null, placeholder = null, error = null }) => {
+const Input = ({ name, label, options = {}, type = "text", required = false, defaultValue = null, autoComplete = null, placeholder = null, error = null, errorObj = {} }) => {
+    error = error ?? errorObj[name];
+
     return (
         <div className={`flex ${type == "checkbox" ? "flex-row items-center gap-2" : "flex-col-reverse gap-1"}`}>
             {error && (<p className="text-sm pp-fg-red">{error}</p>)}

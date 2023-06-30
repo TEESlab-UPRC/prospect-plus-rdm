@@ -17,11 +17,11 @@ export default function Welcome({ isRegister = false }) {
             <div className="pp-outer-container">
                 <div className="pp-inner-container">
                     <form onSubmit={submit}>
-                        {isRegister && (<Input name="name" label="Name" error={errors.name} autoComplete="name" required={true}/>)}
-                        <Input name="email" label="Email" error={errors.email} autoComplete="username" type="email" required={true}/>
-                        <Input name="password" label="Password" error={errors.password} autoComplete={isRegister ? "new-password" : "current-password"} type="password" required={true}/>
+                        {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required={true}/>)}
+                        <Input name="email" label="Email" errorObj={errors} autoComplete="username" type="email" required={true}/>
+                        <Input name="password" label="Password" errorObj={errors} autoComplete={isRegister ? "new-password" : "current-password"} type="password" required={true}/>
                         {isRegister ? (
-                            <Input name="password_confirmation" label="Confirm Password" error={errors.password_confirmation} autoComplete="new-password" type="password" required={true}/>
+                            <Input name="password_confirmation" label="Confirm Password" errorObj={errors} autoComplete="new-password" type="password" required={true}/>
                         ) : (
                             <Input name="remember" label="Remember me" type="checkbox"/>
                         )}

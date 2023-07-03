@@ -16,8 +16,15 @@ export default function Welcome({ isRegister = false }) {
     return (
         <>
             <Head title="Welcome"/>
+            <div className="absolute top-0 right-0 z-10 block w-40 px-4 py-2 text-lg text-center bg-slate-300">Powered by<br />TEESlab</div>{/* TODO: replace/move placeholder */}
             <div className="pp-outer-container">
                 <div className="pp-inner-container">
+                    <p className="text-5xl text-center">P+ LOGO</p>{/* TODO: replace placeholder */}
+                    <p className="text-2xl text-center">
+                        Recommendation-Decision Matrix Tool<br />
+                        for selecting financing schemes
+                    </p>
+                    <hr />
                     <form onSubmit={submit} className={`gap-3 ${isRegister ? "pp-mark-required" : ""}`}>
                         <legend className="mb-0 small-legend">{isRegister ? "Register" : "Log in"}</legend>
                         {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required={true}/>)}

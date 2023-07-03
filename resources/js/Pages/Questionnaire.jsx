@@ -8,6 +8,7 @@ import { onPageLoad, centerTo } from '@/Helpers/DomHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 
 export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
+    const isEdit = !!currentAnswers;
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
@@ -30,7 +31,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
-        if(!currentAnswers || filled) return;
+        if(!isEdit || filled) return;
         let form = document.getElementById("questionnaire-form");
         let formEls = form.elements;
         Object.entries(currentAnswers).map(
@@ -89,7 +90,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
             {filled && (<>
                 {questionnaire.isRDM ? (<>
                     <RDMChart percentages={result} title={questionnaire.title} onLoaded={centerToChart} />
-                    {currentAnswers ? ( // edit mode
+                    {isEdit ? ( // edit mode
                         <ChartDLBtn filename={`${questionnaire.title} - results`} />
                     ) : (
                         <div className="grid grid-cols-2 gap-4">

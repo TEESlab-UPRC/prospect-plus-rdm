@@ -25,7 +25,7 @@ class QuestionnaireData extends Seeder{
             '3rd Party Financing',
             'Guarantee Funds',
             'On-bill financing',
-            'Citizens Financing-Cooperatives/Crowdfunding'
+            'Citizens Financing - Cooperatives/Crowdfunding'
         ]);
 
         $frc = static::newQuestionnaire('Quick Finance Readiness Check', [], false);

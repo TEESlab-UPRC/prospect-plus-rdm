@@ -11,10 +11,10 @@ const msg = [
     (<><tspan>available on the PROSPECT+ </tspan><a href="https://h2020prospect.eu/learning-handbooks" target="_blank" style={{ fill: '#009999' }}>Learning Handbooks</a><tspan>.</tspan></>)
 ];
 
-const onResize = (w, h) => {
+const onResize = (w, h, colNum) => {
     setClassStyle("pp-rtitle", s => s.fontSize = `${w / 50}px`);
     setClassStyle("pp-rval", s => s.fontSize = `${w / 75}px`);
-    setClassStyle("pp-rschemes", s => s.fontSize = `${w / 85}px`);
+    setClassStyle("pp-rschemes", s => s.fontSize = `${w / (colNum * 14)}px`);
     setClassStyle("pp-rlabel", s => s.fontSize = `${w / 85}px`);
     setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
     Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
@@ -43,13 +43,13 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
         <svg className="my-2 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
-        <ResponsiveContainer aspect={2} width="100%" onResize={onResize}>
+        <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length)}>
             <BarChart id="downloadable-chart" title={title} label={title} width={400} height={400} data={percentages} margin={{top: 15, bottom: 6}} style={{ fontFamily: 'Arial' }}>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold' }}/>}/>
-                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval"/>}/>
+                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold', fontFamily: 'Arial' }}/>}/>
+                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval" style={{ fontFamily: 'Arial' }}/>}/>
                 <Bar dataKey="result" fill="#0b2870" className="pp-rlabel">
-                    <LabelList dataKey="result" position="top" offset={4} formatter={Math.round}/>
+                    <LabelList dataKey="result" position="top" offset={4} formatter={Math.round} style={{ fontFamily: 'Arial' }} />
                 </Bar>
             </BarChart>
         </ResponsiveContainer>

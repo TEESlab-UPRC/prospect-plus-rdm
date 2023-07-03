@@ -85,7 +85,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (
                     <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>
                 ))} />
-                <button type="submit" className="pp-btn-cyan">Show results</button>
+                <button type="submit" className="pp-btn-cyan">{`S${isEdit ? "ave & s" : ""}how results`}</button>
             </form>
             {filled && (<>
                 {questionnaire.isRDM ? (<>

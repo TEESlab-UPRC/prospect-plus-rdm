@@ -70,4 +70,14 @@
     .pp-table-btn-green {@apply pp-table-btn text-white pp-bg-green;}
     .pp-table-btn-red {@apply pp-table-btn text-white pp-bg-red;}
     .pp-table-hover td {background-color: #fff3ba !important;}
+
+    #menubar{
+        @apply relative top-0 w-full;
+        @apply flex flex-row justify-between items-center;
+        @apply py-2 px-4;
+        @apply bg-slate-300;
+    }
+    #menubar > * {@apply flex flex-row items-center gap-6;}
+    .menubar-menu {@apply hidden sm:flex sm:items-center;}
+    .menubar-menu-trigger {@apply inline-flex flex-row items-center gap-2 pl-4 pr-2 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none;}
 }

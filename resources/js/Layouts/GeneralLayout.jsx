@@ -1,3 +1,4 @@
+import MenuBar from '@/Components/MenuBar';
 import { Head } from '@inertiajs/react';
 
 const altLayoutRoutes = ['welcome', 'login', 'register'];
@@ -13,7 +14,7 @@ export default function Layout({ className, title, auth, children }) {
                     Powered by<br />TEESlab{/* TODO: replace placeholder */}
                 </div>
             ) : (
-                <></>// TODO: add menu bar
+                <MenuBar user={auth.user}/>
             )}
             <div className="pp-outer-container">
                 <div className={`pp-inner-container ${className}`}>

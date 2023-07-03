@@ -72,7 +72,7 @@
     .pp-table-hover td {background-color: #fff3ba !important;}
 
     #menubar{
-        @apply relative top-0 w-full;
+        @apply fixed top-0 w-full z-50;
         @apply flex flex-row justify-between items-center;
         @apply py-2 px-4;
         @apply bg-slate-300;

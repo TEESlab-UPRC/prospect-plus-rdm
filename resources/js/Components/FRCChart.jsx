@@ -30,16 +30,18 @@ const FRCLabel = ({x, y, width, height, value}) => {
     return (<text x={x + nw / 2} y={y + height / 2} fill="#fff" textAnchor="middle" dominantBaseline="middle" style={{ fontWeight: 'bold' }}>{Math.round(value)}</text>);
 };
 
+const svgAutocropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
+    const { yMin, yMax } = getBoundaries(svg);
+    svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${yMax - yMin}`);
+    svg.setAttribute('height', yMax - yMin);
+});
+
 const onResize = (w, h) => {
     setClassStyle("pp-rtitle", s => s.fontSize = `${w / 50}px`);
     setClassStyle("pp-rtick", s => s.fontSize = `${w / 75}px`);
     setClassStyle("pp-rlabel", s => s.fontSize = `${w / 90}px`);
     setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
-    Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
-        const { yMin, yMax } = getBoundaries(svg);
-        svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${yMax - yMin}`);
-        svg.setAttribute('height', yMax - yMin);
-    });
+    svgAutocropY();
 };
 
 
@@ -48,7 +50,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = nu
     let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
 
     useEffect(() => {
-        onResize();
+        svgAutocropY();
         if(loaded) return;
         onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
         setLoaded(true);

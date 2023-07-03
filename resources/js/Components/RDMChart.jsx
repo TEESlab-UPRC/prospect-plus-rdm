@@ -11,24 +11,26 @@ const msg = [
     (<><tspan>available on the PROSPECT+ </tspan><a href="https://h2020prospect.eu/learning-handbooks" target="_blank" style={{ fill: '#009999' }}>Learning Handbooks</a><tspan>.</tspan></>)
 ];
 
+const svgAutocropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
+    const { yMin, yMax } = getBoundaries(svg);
+    svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${yMax - yMin}`);
+    svg.setAttribute('height', yMax - yMin);
+});
+
 const onResize = (w, h, colNum) => {
     setClassStyle("pp-rtitle", s => s.fontSize = `${w / 50}px`);
     setClassStyle("pp-rval", s => s.fontSize = `${w / 75}px`);
     setClassStyle("pp-rschemes", s => s.fontSize = `${w / (colNum * 14)}px`);
     setClassStyle("pp-rlabel", s => s.fontSize = `${w / 85}px`);
     setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
-    Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
-        const { yMin, yMax } = getBoundaries(svg);
-        svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${yMax - yMin}`);
-        svg.setAttribute('height', yMax - yMin);
-    });
+    svgAutocropY();
 };
 
 const RDMChart = ({ percentages, title, onLoaded = null }) => {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        onResize();
+        svgAutocropY();
         if(loaded) return;
         onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
         setLoaded(true);

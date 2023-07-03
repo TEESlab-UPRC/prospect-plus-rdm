@@ -1,5 +1,6 @@
 import MenuBar from '@/Components/MenuBar';
 import { Head } from '@inertiajs/react';
+import { ToastContainer } from 'react-toastify';
 
 const altLayoutRoutes = ['welcome', 'login', 'register'];
 
@@ -21,6 +22,7 @@ export default function Layout({ className, title, auth, children }) {
                     {children}
                 </div>
             </div>
+            <ToastContainer autoClose={6000} className="toastify-customizations"/>
         </>
     );
 }

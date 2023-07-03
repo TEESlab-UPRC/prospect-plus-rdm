@@ -6,6 +6,7 @@ import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
 import { onPageLoad, centerTo } from '@/Helpers/DomHelpers';
 import Layout from '@/Layouts/GeneralLayout';
+import { toast } from 'react-toastify';
 
 export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const isEdit = !!currentAnswers;
@@ -60,7 +61,10 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
         e.preventDefault();
         let answers = showResults(e.target);
         centerToChart();
-        if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true});
+        if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true,
+            onSuccess: () => toast.success(`Answers ${filled ? "edited" : "saved"} successfully!`),
+            onError: () => toast.error("Failed to save answers!")
+        });
     }
 
     function resetState(){

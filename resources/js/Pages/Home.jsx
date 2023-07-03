@@ -1,9 +1,14 @@
 import { router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
+import { useEffect } from 'react';
+import { onPageLoad } from '@/Helpers/DomHelpers';
+import { toast } from 'react-toastify';
 
 const start = () => router.post(route('info.load'));
 
 export default function Home({ auth }) {
+    useEffect(() => onPageLoad(() => auth.user || toast.info("Guest mode: log in if you want your analyses to be saved!")), []);
+
     return (
         <Layout title="Sector Selection" auth={auth} className="flex flex-col justify-center pp-text">
             <p className="text-4xl text-center">P+ LOGO</p>{/* TODO: replace placeholder */}

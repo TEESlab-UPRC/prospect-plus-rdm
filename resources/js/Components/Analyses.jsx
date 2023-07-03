@@ -1,4 +1,5 @@
 import { router } from '@inertiajs/react';
+import { toast } from 'react-toastify';
 
 const Analysis = ({ analysis }) => {
     const {id, org, title, sector, hasRDM, hasFRC} = analysis;
@@ -9,7 +10,10 @@ const Analysis = ({ analysis }) => {
     const editRDM = () => editQ('rdm', hasRDM);
     const delA = () => {
         if(confirm("Are you sure you want to delete this analysis?"))
-            router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true});
+            router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true,
+                onSuccess: () => toast.success("Analysis deleted successfully!"),
+                onError: () => toast.error("Failed to delete analysis!")
+            });
     }
 
     const btnTxt = type => (type == 'rdm' ? hasRDM : hasFRC) ? "View/Edit" : "Create";

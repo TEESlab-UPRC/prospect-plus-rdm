@@ -8,7 +8,7 @@ const ImgLink = ({img, dest}) => (
     }/>
 );
 
-export default function SectorSelection() {
+export default function SectorSelection({ auth }) {
     return (
         <Layout title="Sector Selection" auth={auth}>
             <div>

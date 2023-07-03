@@ -1,15 +1,10 @@
 import Analyses from '@/Components/Analyses';
-import { Head, router } from '@inertiajs/react';
+import Layout from '@/Layouts/GeneralLayout';
 
-export default function AnalysisList({ analyses }) {
+export default function AnalysisList({ auth, analyses }) {
     return (
-        <>
-            <Head title="Analysis List"/>
-            <div className="pp-outer-container">
-                <div className="pp-inner-container">
-                    <Analyses analyses={analyses}/>
-                </div>
-            </div>
-        </>
+        <Layout title="Analysis List" auth={auth}>
+            <Analyses analyses={analyses}/>
+        </Layout>
     );
 }

@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine, LabelList } from 'recharts';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { setClassStyle } from '../Helpers/DomHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
@@ -47,10 +47,17 @@ const onResize = (w, h) => {
 
 const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = null }) => {
     const [loaded, setLoaded] = useState(false);
+    const barRef = useRef(null);
     let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
+
+    const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
+        let bar = barRef.current;
+        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration * 1.5);
+    };
 
     useEffect(() => {
         svgAutocropY();
+        patchLabel();
         if(loaded) return;
         onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
         setLoaded(true);
@@ -61,7 +68,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = nu
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
         <ResponsiveContainer aspect={8} width="100%" onResize={onResize}>
-            <BarChart title={title} label={title} width={200} height={400} data={[{value: percentage}]} layout='vertical' barCategoryGap="20%" margin={{left: 25, right: 25}}  style={{ fontFamily: 'Arial' }}>
+            <BarChart title={title} label={title} width={200} height={400} data={[{value: percentage}]} layout='vertical' barCategoryGap="20%" margin={{left: 25, right: 25}} style={{ fontFamily: 'Arial' }}>
                 <defs>
                     <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stopColor="red" />
@@ -75,7 +82,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = nu
                 <ReferenceLine x={75} stroke="#7dbe00" strokeDasharray="5 5" strokeWidth={2} />
                 <XAxis type="number" domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick className="pp-rtick" isYAxis={false}/>} />
                 <YAxis type="category" hide />
-                <Bar dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className="pp-rlabel">
+                <Bar onAnimationStart={patchLabel} ref={barRef} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className="pp-rlabel">
                     <LabelList dataKey="value" content={FRCLabel}/>
                 </Bar>
             </BarChart>

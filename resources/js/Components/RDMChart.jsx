@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList } from 'recharts';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { setClassStyle } from '../Helpers/DomHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
@@ -28,9 +28,16 @@ const onResize = (w, h, colNum) => {
 
 const RDMChart = ({ percentages, title, onLoaded = null }) => {
     const [loaded, setLoaded] = useState(false);
+    const barRef = useRef(null);
+
+    const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
+        let bar = barRef.current;
+        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration * 1.5);
+    };
 
     useEffect(() => {
         svgAutocropY();
+        patchLabel();
         if(loaded) return;
         onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
         setLoaded(true);
@@ -50,7 +57,7 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold', fontFamily: 'Arial' }}/>}/>
                 <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval" style={{ fontFamily: 'Arial' }}/>}/>
-                <Bar dataKey="result" fill="#0b2870" className="pp-rlabel">
+                <Bar onAnimationStart={patchLabel} ref={barRef} dataKey="result" fill="#0b2870" className="pp-rlabel">
                     <LabelList dataKey="result" position="top" offset={4} formatter={Math.round} style={{ fontFamily: 'Arial' }} />
                 </Bar>
             </BarChart>

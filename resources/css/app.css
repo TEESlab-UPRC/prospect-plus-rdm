@@ -3,27 +3,45 @@
 @tailwind utilities;
 
 @layer components{
-    .pp-bg-blue {background-color: #003068;}
-    .pp-bg-yellow {background-color: #FFD500;}
-    .pp-bg-cyan {background-color: #009999;}
-    .pp-bg-lime {background-color: #97B42A;}
-    .pp-bg-green {background-color: #00883B;}
-    .pp-bg-red {@apply bg-red-600;}
+    :root{
+        --pp-blue: #003068;
+        --pp-yellow: #FFD500;
+        --pp-cyan: #009999;
+        --pp-lime: #97B42A;
+        --pp-green: #00883B;
+        --pp-red: #DC2626;
+        --pp-yellow-light: #fff3ba;
+        --pp-base-text-color: #374151;
+        --pp-btn-text-dark-color: #1F2937;
+        --pp-btn-text-light-color: #FFFFFF;
+    }
 
-    .pp-fg-blue {color: #003068;}
-    .pp-fg-yellow {color: #FFD500;}
-    .pp-fg-cyan {color: #009999;}
-    .pp-fg-lime {color: #97B42A;}
-    .pp-fg-green {color: #00883B;}
-    .pp-fg-red {@apply text-red-600;}
+    .pp-bg-blue {background-color: var(--pp-blue);}
+    .pp-bg-yellow {background-color: var(--pp-yellow);}
+    .pp-bg-cyan {background-color: var(--pp-cyan);}
+    .pp-bg-lime {background-color: var(--pp-lime);}
+    .pp-bg-green {background-color: var(--pp-green);}
+    .pp-bg-red {background-color: var(--pp-red);}
+    .pp-bg-table-hover {background-color: var(--pp-yellow-light);}
+
+    .pp-fg-blue {color: var(--pp-blue);}
+    .pp-fg-yellow {color: var(--pp-yellow);}
+    .pp-fg-cyan {color: var(--pp-cyan);}
+    .pp-fg-lime {color: var(--pp-lime);}
+    .pp-fg-green {color: var(--pp-green);}
+    .pp-fg-red {color: var(--pp-red);}
+    .pp-fg-btn-base {color: var(--pp-base-text-color);}
+    .pp-fg-btn-dark {color: var(--pp-btn-text-dark-color);}
+    .pp-fg-btn-light {color: var(--pp-btn-text-light-color);}
 
     .pp-darker {filter: brightness(85%);}
     .pp-hover {@apply enabled:hover:pp-darker transition;}
     .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
 
-    .pp-text {@apply text-base text-gray-700;}
+    .pp-text {@apply text-base pp-fg-btn-base;}
+    .pp-selection {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
 
-    body {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
+    body {@apply pp-selection;}
 
     form {@apply grid grid-cols-1 gap-5;}
     form.pp-mark-required input:required+label::after,
@@ -37,12 +55,14 @@
 
     .pp-input {@apply cursor-pointer pp-hover pp-disabled}
     .pp-btn {@apply pp-input text-base font-bold rounded-lg px-5 py-2.5;}
-    .pp-btn-blue {@apply pp-btn text-white pp-bg-blue;}
-    .pp-btn-yellow {@apply pp-btn text-gray-800 pp-bg-yellow;}
-    .pp-btn-cyan {@apply pp-btn text-white pp-bg-cyan;}
-    .pp-btn-lime {@apply pp-btn text-white pp-bg-lime;}
-    .pp-btn-green {@apply pp-btn text-white pp-bg-green;}
-    .pp-btn-red {@apply pp-btn text-white pp-bg-red;}
+    .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}
+    .pp-btn-yellow {@apply pp-btn pp-fg-btn-dark;}
+    .pp-btn-blue {@apply pp-bg-blue;}
+    .pp-btn-yellow {@apply pp-bg-yellow;}
+    .pp-btn-cyan {@apply pp-bg-cyan;}
+    .pp-btn-lime {@apply pp-bg-lime;}
+    .pp-btn-green {@apply pp-bg-green;}
+    .pp-btn-red {@apply pp-bg-red;}
 
     .bg-dots-darker {background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");}
 
@@ -63,21 +83,19 @@
     .pp-table button {@apply pp-table-btn;}
     .pp-table-btn {@apply text-sm pp-input py-1 px-2 rounded;}
     .pp-table-btn:not(:last-child) {@apply mr-2;}
-    .pp-table-btn-blue {@apply pp-table-btn text-white pp-bg-blue;}
-    .pp-table-btn-yellow {@apply pp-table-btn text-gray-800 pp-bg-yellow;}
-    .pp-table-btn-cyan {@apply pp-table-btn text-white pp-bg-cyan;}
-    .pp-table-btn-lime {@apply pp-table-btn text-white pp-bg-lime;}
-    .pp-table-btn-green {@apply pp-table-btn text-white pp-bg-green;}
-    .pp-table-btn-red {@apply pp-table-btn text-white pp-bg-red;}
-    .pp-table-hover td {background-color: #fff3ba !important;}
+    .pp-table-btn-blue, .pp-table-btn-cyan, .pp-table-btn-lime, .pp-table-btn-green, .pp-table-btn-red {@apply pp-table-btn pp-fg-btn-light;}
+    .pp-table-btn-yellow {@apply pp-table-btn pp-fg-btn-dark;}
+    .pp-table-btn-blue {@apply pp-bg-blue;}
+    .pp-table-btn-yellow {@apply pp-bg-yellow;}
+    .pp-table-btn-cyan {@apply pp-bg-cyan;}
+    .pp-table-btn-lime {@apply pp-bg-lime;}
+    .pp-table-btn-green {@apply pp-bg-green;}
+    .pp-table-btn-red {@apply pp-bg-red;}
+    .pp-table-hover td {@apply pp-bg-table-hover;}
 
-    #menubar{
-        @apply fixed top-0 w-full z-50;
-        @apply flex flex-row justify-between items-center;
-        @apply py-2 px-4;
-        @apply bg-slate-300;
-    }
-    #menubar > * {@apply flex flex-row items-center gap-6;}
+    #menubar, #menubar > * {@apply flex flex-row items-center;}
+    #menubar {@apply fixed top-0 w-full z-50 justify-between py-2 px-4 bg-slate-300;}
+    #menubar > * {@apply gap-6;}
     .menubar-menu {@apply hidden sm:flex sm:items-center;}
     .menubar-menu-trigger {@apply inline-flex flex-row items-center gap-2 pl-4 pr-2 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none;}
 

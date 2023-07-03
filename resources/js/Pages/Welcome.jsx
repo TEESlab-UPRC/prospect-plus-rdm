@@ -11,6 +11,8 @@ export default function Welcome({ isRegister = false }) {
         router.post(route(isRegister ? 'register' : 'login'), getFormData(e.target), {onError: setErrors, preserveState: true, preserveScroll: true});
     };
 
+    const skipToHome = () => router.get(route('home.render'));
+
     return (
         <>
             <Head title="Welcome"/>
@@ -30,6 +32,8 @@ export default function Welcome({ isRegister = false }) {
                             <button type="submit" className="pp-btn-blue">{isRegister ? "Register" : "Log in"}</button>
                         </div>
                     </form>
+                    <hr />
+                    <button className="pp-btn-lime" onClick={skipToHome}>Proceed without an account</button>
                 </div>
             </div>
         </>

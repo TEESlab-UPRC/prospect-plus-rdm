@@ -18,15 +18,12 @@ const imgMap = {
 }
 
 const colorMap = {
-    'Public Buildings': ["#1f326a", "#2e4a9e"],
-    'Private Buildings': ["#0c9e9d", "#075f5f"],
-    'Transport': ["#038d44", "#024a24"],
-    'Public Lighting': ["#fed800", "#b39800"],
-    'Cross Sectoral': ["#9cb93a", "#72882b"]
+    'Public Buildings': "#1f326a",
+    'Private Buildings': "#0c9e9d",
+    'Transport': "#038d44",
+    'Public Lighting': "#fed800",
+    'Cross Sectoral': "#9cb93a"
 };
-// const golden_angle = 137.507764;
-// const color_start = 2;
-// const getColor = i => `hsl(${((color_start + i) * golden_angle) % 360}, 64%, 40%)`;
 
 const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
 const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
@@ -57,9 +54,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
         if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({                                // for each scheme included in this questionnaire
             'title': s.title,
             'result': reduceAns2Percent(answers.filter(a => s.questions.includes(parseInt(a.name.substr(1))))), // filter for included questions in scheme and reduce answers to percentage
-            // 'fill': getColor(i)
-            // 'fill': colorMap[questionnaire.title][i % 2]
-            'fill': colorMap[questionnaire.title][0]
+            'fill': colorMap[questionnaire.title]
         })));
         else setResult([reduceAns2Percent(answers)]);
         setFilled(true);
@@ -98,7 +93,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
             )}
             <form onSubmit={onSubmit} id="questionnaire-form">
                 <legend style={
-                    colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title][0]} : {}
+                    colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title]} : {}
                 }>{questionnaire.title}</legend>
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (
                     <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>

@@ -7,12 +7,21 @@ import ChartDLBtn from '@/Components/ChartDLBtn';
 import { onPageLoad, centerTo } from '@/Helpers/DomHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
+import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
 
 export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const isEdit = !!currentAnswers;
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
+
+    const imgMap = {
+        'Public Buildings': SectorCircleImg.PublicBuildings,
+        'Private Buildings': SectorCircleImg.PrivateBuildings,
+        'Transport': SectorCircleImg.Transport,
+        'Public Lighting': SectorCircleImg.PublicLighting,
+        'Cross Sectoral': SectorCircleImg.CrossSectoral
+    }
 
     const colorMap = {
         'Public Buildings': ["#1f326a", "#2e4a9e"],
@@ -82,6 +91,11 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
 
     return (
         <Layout title={questionnaire.title} auth={auth}>
+            {questionnaire.isRDM && (
+                <div className="flex justify-center">
+                    <img src={imgMap[questionnaire.title]} className="circle-img" />
+                </div>
+            )}
             <form onSubmit={onSubmit} id="questionnaire-form">
                 <legend style={
                     colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title][0]} : {}

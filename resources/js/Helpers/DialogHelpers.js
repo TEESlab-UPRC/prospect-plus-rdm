@@ -6,7 +6,8 @@ export const confirm = (title, message, confirmCallback, cancelCallback = null, 
     showCancelButton: true,
     reverseButtons: true,
     cancelButtonText: "No",
-    confirmButtonText: "Yes"
+    confirmButtonText: "Yes",
+    confirmButtonColor: "#00883B"   // from pallet, check CSS vars before changing
 }).then(res => {
     if(res.isConfirmed) confirmCallback();
     else if(cancelCallback) cancelCallback(res.dismiss);

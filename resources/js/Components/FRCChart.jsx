@@ -30,7 +30,7 @@ const FRCLabel = ({x, y, width, height, value}) => {
     return (<text x={x + nw / 2} y={y + height / 2} fill="#fff" textAnchor="middle" dominantBaseline="middle" style={{ fontWeight: 'bold' }}>{Math.round(value)}</text>);
 };
 
-const svgAutocropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
+const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
     const { yMin, yMax } = getBoundaries(svg);
     svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${yMax - yMin}`);
     svg.setAttribute('height', yMax - yMin);
@@ -41,7 +41,7 @@ const onResize = (w, h) => {
     setClassStyle("pp-rtick", s => s.fontSize = `${w / 75}px`);
     setClassStyle("pp-rlabel", s => s.fontSize = `${w / 90}px`);
     setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
-    svgAutocropY();
+    svgAutoCropY();
 };
 
 
@@ -56,7 +56,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = nu
     };
 
     useEffect(() => {
-        svgAutocropY();
+        svgAutoCropY();
         patchLabel();
         if(loaded) return;
         onLoaded && setTimeout(onLoaded, 1000); // TODO improve?

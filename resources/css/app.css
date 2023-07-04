@@ -35,7 +35,7 @@
     .pp-fg-lime {color: var(--pp-lime);}
     .pp-fg-green {color: var(--pp-green);}
     .pp-fg-red {color: var(--pp-red);}
-    .pp-fg-btn-base {color: var(--pp-base-text-color);}
+    .pp-fg-text-base {color: var(--pp-base-text-color);}
     .pp-fg-btn-dark {color: var(--pp-btn-text-dark-color);}
     .pp-fg-btn-light {color: var(--pp-btn-text-light-color);}
 
@@ -45,7 +45,7 @@
     .pp-circle {border-radius: 50%;}
     .pp-shadow {box-shadow: 1px 6px 23px 5px rgba(0,0,0,0.17);}
 
-    .pp-text {@apply text-base pp-fg-btn-base;}
+    .pp-text {@apply text-base pp-fg-text-base;}
     .pp-selection {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
 
     body {@apply pp-selection;}

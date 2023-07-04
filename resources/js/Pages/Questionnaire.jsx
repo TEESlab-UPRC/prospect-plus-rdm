@@ -9,36 +9,36 @@ import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
 import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
 
+const imgMap = {
+    'Public Buildings': SectorCircleImg.PublicBuildings,
+    'Private Buildings': SectorCircleImg.PrivateBuildings,
+    'Transport': SectorCircleImg.Transport,
+    'Public Lighting': SectorCircleImg.PublicLighting,
+    'Cross Sectoral': SectorCircleImg.CrossSectoral
+}
+
+const colorMap = {
+    'Public Buildings': ["#1f326a", "#2e4a9e"],
+    'Private Buildings': ["#0c9e9d", "#075f5f"],
+    'Transport': ["#038d44", "#024a24"],
+    'Public Lighting': ["#fed800", "#b39800"],
+    'Cross Sectoral': ["#9cb93a", "#72882b"]
+};
+// const golden_angle = 137.507764;
+// const color_start = 2;
+// const getColor = i => `hsl(${((color_start + i) * golden_angle) % 360}, 64%, 40%)`;
+
+const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
+const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
+
+
 export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     const isEdit = !!currentAnswers;
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
 
-    const imgMap = {
-        'Public Buildings': SectorCircleImg.PublicBuildings,
-        'Private Buildings': SectorCircleImg.PrivateBuildings,
-        'Transport': SectorCircleImg.Transport,
-        'Public Lighting': SectorCircleImg.PublicLighting,
-        'Cross Sectoral': SectorCircleImg.CrossSectoral
-    }
-
-    const colorMap = {
-        'Public Buildings': ["#1f326a", "#2e4a9e"],
-        'Private Buildings': ["#0c9e9d", "#075f5f"],
-        'Transport': ["#038d44", "#024a24"],
-        'Public Lighting': ["#fed800", "#b39800"],
-        'Cross Sectoral': ["#9cb93a", "#72882b"]
-    };
-    // const golden_angle = 137.507764;
-    // const color_start = 2;
-    // const getColor = i => `hsl(${((color_start + i) * golden_angle) % 360}, 64%, 40%)`;
-
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
-
-    const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
-
-    const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
         if(!isEdit || filled) return;

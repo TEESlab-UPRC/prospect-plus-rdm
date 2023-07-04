@@ -48,7 +48,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
         showResults(form);
     }), [currentAnswers]);
 
-    function showResults(form){   // TODO scroll to bottom?
+    function showResults(form){
         let answers = Array.from(form.querySelectorAll(":checked"));
         if(answers.length == 0) return;
         if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({                                // for each scheme included in this questionnaire

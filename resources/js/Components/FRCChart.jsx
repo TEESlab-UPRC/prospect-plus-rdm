@@ -59,7 +59,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = nu
         svgAutoCropY();
         patchLabel();
         if(loaded) return;
-        onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
+        onLoaded && setTimeout(onLoaded, 1000); // TODO improve? move to chart onAnimationStart??
         setLoaded(true);
     });
 

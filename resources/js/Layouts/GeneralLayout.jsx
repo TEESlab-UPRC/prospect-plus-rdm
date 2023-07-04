@@ -1,7 +1,7 @@
 import MenuBar from '@/Components/MenuBar';
 import { Head } from '@inertiajs/react';
 import { ToastContainer } from 'react-toastify';
-import LogoImg from '@/../img/logos/LogoImg';
+import { TEESlab } from '@/Components/Logo';
 
 const altLayoutRoutes = ['welcome', 'login', 'register'];
 
@@ -14,7 +14,7 @@ export default function Layout({ className, title, auth, children }) {
             {isAltLayout ? (
                 <div className="powered-by-logo">
                     <span>Powered by</span>
-                    <img src={LogoImg.TEESlab}/>
+                    <TEESlab />
                 </div>
             ) : (
                 <MenuBar user={auth.user}/>

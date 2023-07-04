@@ -17,7 +17,7 @@ export default function Welcome({ auth, isRegister = false }) {
 
     return (
         <Layout title="Welcome" auth={auth}>
-            <div className="text-center">
+            <div className="flex flex-col items-center text-center welcome-pp-logo">
                 <PROSPECTplus />
                 <h3 className="pp-fg-blue-light">Capacity building for cities and regions<br />From learning to action!</h3>
             </div>

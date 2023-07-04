@@ -47,6 +47,7 @@
 
     .pp-text {@apply text-base pp-fg-text-base;}
     .pp-selection {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
+    .pp-link {@apply pp-fg-cyan underline cursor-pointer hover:pp-darker ;}
 
     .pp-title {@apply text-4xl font-bold pp-text;}
     .pp-title-small {@apply text-2xl pp-title;}

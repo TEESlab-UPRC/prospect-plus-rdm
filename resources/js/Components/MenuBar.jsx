@@ -5,7 +5,7 @@ const MenuBar = ({ user }) => {
         <div id="menubar">
             <p>TEESlab</p>
             <div>
-                <a>Guidelines</a>
+                <a className="pp-link" target="_blank">Guidelines</a>{/* TODO: put a link here, same as in Home */}
                 <Menu user={user} />
             </div>
         </div>

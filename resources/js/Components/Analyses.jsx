@@ -13,13 +13,12 @@ const Analysis = ({ analysis }) => {
     const editRDM = () => editQ('rdm', hasRDM);
     const delA = () => {
         setDeleting(true);
-        confirm("Please confirm deletion", "Are you sure you want to delete this analysis?", () => {
-            router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true,
+        confirm("Please confirm deletion", "Are you sure you want to delete this analysis?",
+            () => router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true,
                 onSuccess: () => toast.success("Analysis deleted successfully!"),
                 onError: () => toast.error("Failed to delete analysis!")
-            });
-            setDeleting(false);
-        })
+            }), null, () => setDeleting(false)
+        );
     };
 
     const btnTxt = type => (type == 'rdm' ? hasRDM : hasFRC) ? "View/Edit" : "Create";

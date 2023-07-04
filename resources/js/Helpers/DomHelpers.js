@@ -30,11 +30,14 @@ export const centerTo = el => el ? el.scrollIntoView({
     inline: "center"
 }) : false;
 
+export const getCSSVar = varName => getComputedStyle(document.body).getPropertyValue(`--${varName}`);
+
 export default {
     setClassStyle,
     onPageLoad,
     setFormInputVal,
     setFormData,
     getFormData,
-    centerTo
+    centerTo,
+    getCSSVar
 };

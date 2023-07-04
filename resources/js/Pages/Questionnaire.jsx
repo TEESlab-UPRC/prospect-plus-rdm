@@ -4,7 +4,7 @@ import Question from '@/Components/Question';
 import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
-import { onPageLoad, centerTo } from '@/Helpers/DomHelpers';
+import { onPageLoad, centerTo, getCSSVar } from '@/Helpers/DomHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
 import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
@@ -17,13 +17,13 @@ const imgMap = {
     'Cross Sectoral': SectorCircleImg.CrossSectoral
 }
 
-const colorMap = {
-    'Public Buildings': "#1f326a",
-    'Private Buildings': "#0c9e9d",
-    'Transport': "#038d44",
-    'Public Lighting': "#fed800",
-    'Cross Sectoral': "#9cb93a"
-};
+const colorMap = Object.fromEntries(Object.entries({
+    'Public Buildings': "blue",
+    'Private Buildings': "cyan",
+    'Transport': "green",
+    'Public Lighting': "yellow",
+    'Cross Sectoral': "lime"
+}).map(e => [e[0], getCSSVar(`pp-${e[1]}`)]));
 
 const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
 const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));

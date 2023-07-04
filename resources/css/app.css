@@ -15,6 +15,9 @@
         --pp-base-text-color: #374151;
         --pp-btn-text-dark-color: #1F2937;
         --pp-btn-text-light-color: #FFFFFF;
+        --pp-frc-resp-good-color: #92d050;
+        --pp-frc-resp-mid-color: #ffc000;
+        --pp-frc-resp-bad-color: #f17484;
     }
 
     .pp-bg-blue {background-color: var(--pp-blue);}

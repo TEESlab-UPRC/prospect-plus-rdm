@@ -1,19 +1,19 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine, LabelList } from 'recharts';
 import { useEffect, useState, useRef } from 'react';
-import { setClassStyle } from '../Helpers/DomHelpers';
+import { getCSSVar, setClassStyle } from '../Helpers/DomHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
 
 const FRCResponses = [
-    ["#92d050", `Great! You have gathered and prepared all or most of the relevant information needed. Your project is financially ready.
+    ["good", `Great! You have gathered and prepared all or most of the relevant information needed. Your project is financially ready.
             You can now approach investors of financing institutions or proceed with setting up your planned financing scheme.`],
-    ["#ffc000", `You are almost there. Please make sure to provide the missing information about your planned project so that investors can quickly and easily understand
+    ["mid", `You are almost there. Please make sure to provide the missing information about your planned project so that investors can quickly and easily understand
             what the project is about. This includes most importantly the planned measures and the anticipated energy savings or renewable energy produced resulting
             from these measures. You should also consider risks your project might face and assess challenging and supporting regulations within your country that
             have an effect on your planned project.`],
-    ["#f17484", `More information required. You still lack much for the required information before you can consider your project financially ready.
+    ["bad", `More information required. You still lack much for the required information before you can consider your project financially ready.
             Please make sure to prepare the missing information. The more information you have prepared the easier it will be to obtain financial means for your project.`]
-];
+].map(e => [getCSSVar(`pp-frc-resp-${e[0]}-color`), e[1]]);
 
 const h = 1.35, r = 2;  // bar rendering modifiers
 

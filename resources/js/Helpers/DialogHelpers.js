@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import { getCSSVar } from './DomHelpers';
 
 export const confirm = (title, message, confirmCallback, cancelCallback = null, finallyCallback = null) => Swal.fire({
     title: title,
@@ -7,7 +8,7 @@ export const confirm = (title, message, confirmCallback, cancelCallback = null, 
     reverseButtons: true,
     cancelButtonText: "No",
     confirmButtonText: "Yes",
-    confirmButtonColor: "#00883B"   // from pallet, check CSS vars before changing
+    confirmButtonColor: getCSSVar("pp-green")
 }).then(res => {
     if(res.isConfirmed) confirmCallback();
     else if(cancelCallback) cancelCallback(res.dismiss);

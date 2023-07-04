@@ -11,6 +11,7 @@ const ImgLink = ({img, dest}) => (
 export default function SectorSelection({ auth }) {
     return (
         <Layout title="Sector Selection" auth={auth}>
+            <h2 className="text-center">Recommendation-Decision Matrix Tool</h2>
             <div>
                 <div className="flex justify-center">
                     <ImgLink img={SectorImg.PublicBuildings} dest="Public Buildings"/>

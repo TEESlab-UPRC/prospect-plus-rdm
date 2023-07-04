@@ -87,12 +87,13 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
     return (
         <Layout title={questionnaire.title} auth={auth}>
             {questionnaire.isRDM && (
-                <div className="flex justify-center">
+                <div className="flex flex-col items-center gap-4">
+                    <h2>Recommendation-Decision Matrix Tool</h2>
                     <img src={imgMap[questionnaire.title]} className="circle-img" />
                 </div>
             )}
             <form onSubmit={onSubmit} id="questionnaire-form">
-                <legend style={
+                <legend className="mb-2" style={
                     colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title]} : {}
                 }>{questionnaire.title}</legend>
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (

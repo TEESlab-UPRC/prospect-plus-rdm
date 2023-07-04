@@ -16,6 +16,7 @@ export default function AnalysisList({ auth, analyses }) {
 
     return (
         <Layout title="Analysis List" auth={auth}>
+            <h1 className="text-center">Your analyses</h1>
             <NewAnalysisBtn />
             <Analyses analyses={analyses}/>
         </Layout>

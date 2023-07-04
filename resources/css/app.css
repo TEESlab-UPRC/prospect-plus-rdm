@@ -48,15 +48,23 @@
     .pp-text {@apply text-base pp-fg-text-base;}
     .pp-selection {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
 
+    .pp-title {@apply text-4xl font-bold pp-text;}
+    .pp-title-small {@apply text-2xl pp-title;}
+    .pp-title-smaller {@apply text-lg pp-title;}
+
     body {@apply pp-selection;}
+
+    h1 {@apply pp-title;}
+    h2 {@apply pp-title-small;}
+    h3 {@apply pp-title-smaller;}
 
     form {@apply grid grid-cols-1 gap-5;}
     form.pp-mark-required input:required+label::after,
     form.pp-mark-required select:required+label::after {content: "*"; @apply ml-1 pp-fg-red;}
     form.pp-mark-required input:required+label:hover::after,
     form.pp-mark-required select:required+label:hover::after {content: "*required";}
-    form legend {@apply text-4xl font-bold pp-text justify-self-center;}
-    .small-legend {@apply underline mb-2 text-lg;}
+    form legend {@apply pp-title justify-self-center;}
+    .small-legend {@apply underline mb-2 pp-title-smaller;}
     form fieldset > legend {@apply small-legend;}
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
 

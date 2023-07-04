@@ -7,6 +7,7 @@
         --tl-blue: #1d305f;
         --tl-red: #c81e54;
         --pp-blue-light: #1a7190;
+        --pp-cyan-light: #b2e4e4;
         --pp-blue: #003068;
         --pp-yellow: #FFD500;
         --pp-cyan: #009999;
@@ -23,6 +24,7 @@
         --pp-frc-resp-bad-color: #f17484;
     }
 
+    .pp-bg-cyan-light {background: var(--pp-cyan-light);}
     .pp-bg-blue {background-color: var(--pp-blue);}
     .pp-bg-yellow {background-color: var(--pp-yellow);}
     .pp-bg-cyan {background-color: var(--pp-cyan);}
@@ -119,7 +121,9 @@
     #menubar > * {@apply gap-6;}
     .menubar-logos img {@apply h-12;}
     .menubar-menu {@apply hidden sm:flex sm:items-center;}
-    .menubar-menu-trigger {@apply inline-flex flex-row items-center gap-2 pl-4 pr-2 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none;}
+    .menubar-menu-trigger {@apply inline-flex flex-row items-center gap-2 pl-4 pr-2 py-2 text-base leading-4 pp-text font-bold transition duration-150 ease-in-out pp-bg-cyan-light border border-transparent rounded-md hover:brightness-95 focus:outline-none;}
+    .menubar-menu-trigger:focus {@apply pp-darker;}
+    .menubar-menu-trigger:focus img {@apply rotate-180;}
 
     .toastify-customizations {@apply top-20 z-40;}
 

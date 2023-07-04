@@ -22,6 +22,7 @@ export default function Home({ auth }) {
                 <p>the tool in brief (3-4 lines)</p>
                 <p>read the guideline (link)</p>
             </div>
+            <hr />
             <button type="button" onClick={start} className="self-center pp-btn-green" style={{width: '250px'}}>Start!</button>
         </Layout>
     );

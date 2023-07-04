@@ -1,8 +1,10 @@
 import { confirm } from '@/Helpers/DialogHelpers';
 import { router } from '@inertiajs/react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const Analysis = ({ analysis }) => {
+    const [deleting, setDeleting] = useState(false);
     const {id, org, title, sector, hasRDM, hasFRC} = analysis;
 
     const editInfo = () => router.post(route('info.load'), {analysis: id});
@@ -10,18 +12,20 @@ const Analysis = ({ analysis }) => {
     const editFRC = () => editQ('frc', hasFRC);
     const editRDM = () => editQ('rdm', hasRDM);
     const delA = () => {
+        setDeleting(true);
         confirm("Please confirm deletion", "Are you sure you want to delete this analysis?", () => {
             router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true,
                 onSuccess: () => toast.success("Analysis deleted successfully!"),
                 onError: () => toast.error("Failed to delete analysis!")
             });
+            setDeleting(false);
         })
     };
 
     const btnTxt = type => (type == 'rdm' ? hasRDM : hasFRC) ? "View/Edit" : "Create";
 
     return (
-        <tr children={[
+        <tr className={deleting ? "pp-table-del" : ""} children={[
             org, title, sector,
             (<button className="pp-table-btn-lime" onClick={editFRC}>{btnTxt("frc")}</button>),
             (<button className="pp-table-btn-green" onClick={editRDM}>{btnTxt("rdm")}</button>),

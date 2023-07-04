@@ -11,6 +11,7 @@
         --pp-green: #00883B;
         --pp-red: #DC2626;
         --pp-yellow-light: #fff3ba;
+        --pp-red-light: #ffafaf;
         --pp-base-text-color: #374151;
         --pp-btn-text-dark-color: #1F2937;
         --pp-btn-text-light-color: #FFFFFF;
@@ -23,6 +24,7 @@
     .pp-bg-green {background-color: var(--pp-green);}
     .pp-bg-red {background-color: var(--pp-red);}
     .pp-bg-table-hover {background-color: var(--pp-yellow-light);}
+    .pp-bg-table-del {background-color: var(--pp-red-light);}
 
     .pp-fg-blue {color: var(--pp-blue);}
     .pp-fg-yellow {color: var(--pp-yellow);}
@@ -92,6 +94,7 @@
     .pp-table-btn-green {@apply pp-bg-green;}
     .pp-table-btn-red {@apply pp-bg-red;}
     .pp-table-hover td {@apply pp-bg-table-hover;}
+    .pp-table-del td {@apply pp-bg-table-del;}
 
     #menubar, #menubar > * {@apply flex flex-row items-center;}
     #menubar {@apply fixed top-0 w-full z-50 justify-between py-2 px-4 bg-slate-300;}

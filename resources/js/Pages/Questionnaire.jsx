@@ -96,6 +96,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                 <legend className="mb-2" style={
                     colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title]} : {}
                 }>{questionnaire.title}</legend>
+                <hr />
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (
                     <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>
                 ))} />

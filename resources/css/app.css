@@ -4,6 +4,8 @@
 
 @layer components{
     :root{
+        --tl-blue: #1d305f;
+        --tl-red: #c81e54;
         --pp-blue: #003068;
         --pp-yellow: #FFD500;
         --pp-cyan: #009999;
@@ -113,10 +115,16 @@
     #menubar, #menubar > * {@apply flex flex-row items-center;}
     #menubar {@apply fixed top-0 w-full z-50 justify-between py-2 px-4 bg-gray-100 border-b border-gray-300;}
     #menubar > * {@apply gap-6;}
+    .menubar-logos img {@apply h-12;}
     .menubar-menu {@apply hidden sm:flex sm:items-center;}
     .menubar-menu-trigger {@apply inline-flex flex-row items-center gap-2 pl-4 pr-2 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none;}
 
     .toastify-customizations {@apply top-16 z-40;}
 
     .circle-img {@apply pp-circle w-40 pp-shadow;}
+    .powered-by-logo {
+        @apply absolute top-0 right-0 z-10 flex flex-col gap-1 px-4 pt-1 pb-3 bg-gray-100 border-b border-l w-60 text-left pp-title-smaller;
+        border-color: var(--tl-red);
+        color: var(--tl-blue);
+    }
 }

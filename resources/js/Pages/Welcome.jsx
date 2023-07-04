@@ -3,6 +3,7 @@ import Input from '@/Components/Input';
 import { getFormData } from '@/Helpers/DomHelpers';
 import { Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
+import LogoImg from '@/../img/logos/LogoImg';
 
 export default function Welcome({ auth, isRegister = false }) {
     const [errors, setErrors] = useState({});
@@ -16,7 +17,10 @@ export default function Welcome({ auth, isRegister = false }) {
 
     return (
         <Layout title="Welcome" auth={auth}>
-                <h1>P+ LOGO</h1>{/* TODO: replace placeholder */}
+            <div className="text-center">
+                <img className="h-24" src={LogoImg.PROSPECTplus}/>
+                <h3>Capacity building for cities and regions</h3>
+            </div>
             <div className="flex flex-col gap-2 text-center">
                 <hr />
                 <h2>

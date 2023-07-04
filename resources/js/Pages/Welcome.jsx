@@ -16,14 +16,15 @@ export default function Welcome({ auth, isRegister = false }) {
 
     return (
         <Layout title="Welcome" auth={auth}>
-            <div className="flex flex-col gap-3 text-center">
                 <h1>P+ LOGO</h1>{/* TODO: replace placeholder */}
+            <div className="flex flex-col gap-2 text-center">
+                <hr />
                 <h2>
                     Recommendation-Decision Matrix Tool<br />
                     for selecting financing schemes
                 </h2>
+                <hr />
             </div>
-            <hr />
             <form onSubmit={submit} className={`gap-3 ${isRegister ? "pp-mark-required" : ""}`}>
                 <legend className="mb-0 small-legend">{isRegister ? "Register" : "Log in"}</legend>
                 {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required={true}/>)}

@@ -19,7 +19,7 @@ export default function Welcome({ auth, isRegister = false }) {
         <Layout title="Welcome" auth={auth}>
             <div className="text-center">
                 <img className="h-24" src={LogoImg.PROSPECTplus}/>
-                <h3>Capacity building for cities and regions</h3>
+                <h3 className="pp-fg-blue-light">Capacity building for cities and regions<br />From learning to action!</h3>
             </div>
             <div className="flex flex-col gap-2 text-center">
                 <hr />

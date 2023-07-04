@@ -6,6 +6,7 @@
     :root{
         --tl-blue: #1d305f;
         --tl-red: #c81e54;
+        --pp-blue-light: #1a7190;
         --pp-blue: #003068;
         --pp-yellow: #FFD500;
         --pp-cyan: #009999;
@@ -31,6 +32,7 @@
     .pp-bg-table-hover {background-color: var(--pp-yellow-light);}
     .pp-bg-table-del {background-color: var(--pp-red-light);}
 
+    .pp-fg-blue-light {color: var(--pp-blue-light);}
     .pp-fg-blue {color: var(--pp-blue);}
     .pp-fg-yellow {color: var(--pp-yellow);}
     .pp-fg-cyan {color: var(--pp-cyan);}

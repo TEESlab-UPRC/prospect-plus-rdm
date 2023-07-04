@@ -1,3 +1,4 @@
+import { confirm } from '@/Helpers/DialogHelpers';
 import { router } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 
@@ -9,12 +10,13 @@ const Analysis = ({ analysis }) => {
     const editFRC = () => editQ('frc', hasFRC);
     const editRDM = () => editQ('rdm', hasRDM);
     const delA = () => {
-        if(confirm("Are you sure you want to delete this analysis?"))
+        confirm("Please confirm deletion", "Are you sure you want to delete this analysis?", () => {
             router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true,
                 onSuccess: () => toast.success("Analysis deleted successfully!"),
                 onError: () => toast.error("Failed to delete analysis!")
             });
-    }
+        })
+    };
 
     const btnTxt = type => (type == 'rdm' ? hasRDM : hasFRC) ? "View/Edit" : "Create";
 

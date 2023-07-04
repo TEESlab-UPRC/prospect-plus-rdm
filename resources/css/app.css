@@ -125,8 +125,7 @@
 
     .circle-img {@apply pp-circle w-40 pp-shadow;}
     .powered-by-logo {
-        @apply absolute top-0 right-0 z-10 flex flex-col gap-1 px-4 pt-1 pb-3 bg-gray-100 border-b border-l w-60 text-left pp-title-smaller;
-        border-color: var(--tl-red);
+        @apply absolute top-0 right-0 z-10 flex flex-col gap-1 px-4 pt-1 pb-3 bg-white w-60 text-left pp-title-smaller rounded-bl-lg shadow-lg;
         color: var(--tl-blue);
     }
 }

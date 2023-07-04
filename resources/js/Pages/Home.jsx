@@ -11,13 +11,10 @@ export default function Home({ auth }) {
 
     return (
         <Layout title="Sector Selection" auth={auth} className="flex flex-col">
-            <div className="flex flex-col gap-3 text-center">
-                <h1>P+ LOGO</h1>{/* TODO: replace placeholder */}
-                <h2>
-                    Recommendation-Decision Matrix Tool<br />
-                    for selecting financing schemes
-                </h2>
-            </div>
+            <h2 className="text-center">
+                Recommendation-Decision Matrix Tool<br />
+                for selecting financing schemes
+            </h2>
             <hr />
             <div className="flex flex-col gap-1 text-left pp-text">
                 <p>Welcome message</p>

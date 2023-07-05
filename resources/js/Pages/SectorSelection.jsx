@@ -12,8 +12,8 @@ export default function SectorSelection({ auth }) {
     return (
         <Layout title="Sector Selection" auth={auth} className="text-center">
             <h2>Recommendation-Decision Matrix Tool</h2>
-            <h3>Select sector for analysis:</h3>
             <div>
+            <h3>Select sector for your analysis:</h3>
                 <div className="flex justify-center">
                     <ImgLink img={SectorImg.PublicBuildings} dest="Public Buildings"/>
                     <ImgLink img={SectorImg.PrivateBuildings} dest="Private Buildings"/>

@@ -98,8 +98,8 @@
     .pp-checkbox input {@apply rounded;}
     .pp-input input[type="text"], .pp-input input[type="email"], .pp-input input[type="password"] {@apply cursor-text;}
     .pp-checkbox input, .pp-checkbox label, .pp-input select, .pp-input input[type="date"], .pp-input input[type="radio"], .pp-input input[type="radio"] + span, .pp-btn {@apply cursor-pointer}
-    .pp-btn-common {@apply pp-disabled enabled:pp-hover;}
-    .pp-btn {@apply pp-btn-common text-base font-bold rounded-lg px-5 py-2.5 gap-1 flex items-center justify-center;}
+    .pp-btn-common {@apply pp-disabled font-bold enabled:pp-hover;}
+    .pp-btn {@apply pp-btn-common text-base rounded-lg px-5 py-2.5 gap-1 flex items-center justify-center;}
     .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}
     .pp-btn-yellow {@apply pp-btn pp-fg-btn-dark;}
     .pp-btn-blue {@apply pp-bg-blue;}

@@ -4,6 +4,7 @@ import { getFormData } from '@/Helpers/DomHelpers';
 import { Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
 import { PROSPECTplusLogo } from '@/Components/Logo';
+import { PrivacyPolicyLink } from '@/Components/ExtLink';
 
 export default function Welcome({ auth, isRegister = false }) {
     const [errors, setErrors] = useState({});
@@ -16,7 +17,7 @@ export default function Welcome({ auth, isRegister = false }) {
     const skipToHome = () => router.get(route('home.render'));
 
     return (
-        <Layout title="Welcome" auth={auth}>
+        <Layout title="Welcome" auth={auth} className="pb-4">
             <div className="welcome-pp-logo">
                 <PROSPECTplusLogo />
                 <h3 className="pp-fg-blue-light">Capacity building for cities and regions<br />From learning to action!</h3>
@@ -45,7 +46,10 @@ export default function Welcome({ auth, isRegister = false }) {
                 </div>
             </form>
             <hr />
-            <button className="pp-btn-lime" onClick={skipToHome}>Proceed without an account</button>
+            <div className="grid grid-cols-1 gap-2">
+                <button className="pp-btn-lime" onClick={skipToHome}>Proceed without an account</button>
+                <PrivacyPolicyLink className="mr-2 justify-self-end"/>
+            </div>
         </Layout>
     );
 }

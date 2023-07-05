@@ -34,6 +34,7 @@
     .pp-bg-table-hover {background-color: var(--pp-yellow-light);}
     .pp-bg-table-del {background-color: var(--pp-red-light);}
 
+    .tl-fg-blue {color: var(--tl-blue);}
     .pp-fg-blue-light {color: var(--pp-blue-light);}
     .pp-fg-blue {color: var(--pp-blue);}
     .pp-fg-yellow {color: var(--pp-yellow);}
@@ -144,10 +145,7 @@
 
     .toastify-customizations {@apply top-20 z-40;}
 
-    .powered-by-logo {
-        @apply absolute top-0 right-0 z-10 flex flex-col gap-1 px-4 pt-1 pb-3 bg-white w-60 text-left pp-title-smaller rounded-bl-lg shadow-lg transition-all;
-        color: var(--tl-blue);
-    }
+    .powered-by-logo {@apply absolute top-0 right-0 z-10 flex flex-col gap-1 px-4 pt-1 pb-3 bg-white tl-fg-blue w-60 text-left pp-title-smaller rounded-bl-lg shadow-lg transition-all;}
     .powered-by-logo span {@apply transition-opacity;}
     .powered-by-logo a {@apply transition-transform;}
     .powered-by-logo:hover {@apply w-64;}

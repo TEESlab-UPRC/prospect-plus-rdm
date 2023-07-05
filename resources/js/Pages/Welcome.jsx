@@ -41,7 +41,7 @@ export default function Welcome({ auth, isRegister = false }) {
                     <Input name="remember" label="Remember me" type="checkbox"/>
                 )}
                 <div className="flex items-center justify-end mt-2">
-                    <Link href={route(isRegister ? 'login' : 'register')} className="underline pp-fg-cyan">{isRegister ? "Already registered?" : "Not registered?"}</Link>
+                    <Link href={route(isRegister ? 'login' : 'register')} className="pp-link">{isRegister ? "Already registered?" : "Not registered?"}</Link>
                     <button type="submit" className="pp-btn-blue">{isRegister ? "Register" : "Log in"}</button>
                 </div>
             </form>

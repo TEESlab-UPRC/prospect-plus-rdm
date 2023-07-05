@@ -5,7 +5,7 @@ import { GuidelinesLink } from './ExtLink';
 const MenuBar = ({ user }) => {
     return (
         <div id="menubar">
-            <div class="menubar-logos">
+            <div className="menubar-logos">
                 <TEESlabLogo />
                 <PROSPECTplusLogo />
             </div>

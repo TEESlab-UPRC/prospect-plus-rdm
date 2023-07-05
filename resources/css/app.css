@@ -51,14 +51,14 @@
     .pp-br-cyan-light {border-color: var(--pp-cyan-light);}
 
     .pp-darker {filter: brightness(85%);}
-    .pp-hover {@apply enabled:hover:pp-darker transition;}
+    .pp-hover {@apply hover:pp-darker transition;}
     .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
     .pp-circle {border-radius: 50%;}
     .pp-shadow {box-shadow: 1px 6px 23px 5px rgba(0,0,0,0.17);}
 
     .pp-text {@apply text-base pp-fg-text-base;}
     .pp-selection {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
-    .pp-link {@apply pp-fg-cyan underline cursor-pointer hover:pp-darker ;}
+    .pp-link {@apply pp-fg-cyan underline cursor-pointer pp-hover;}
 
     .pp-title {@apply text-4xl font-bold pp-text;}
     .pp-title-small {@apply text-2xl pp-title;}
@@ -93,10 +93,13 @@
     form fieldset > legend {@apply small-legend;}
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
 
-    .pp-input {@apply cursor-pointer pp-hover pp-disabled}
-    .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light;}
+    .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light pp-disabled;}
     .pp-input input:not([type="radio"]), .pp-input select {@apply rounded-md;}
-    .pp-btn {@apply pp-input gap-1 flex items-center justify-center text-base font-bold rounded-lg px-5 py-2.5;}
+    .pp-checkbox input {@apply rounded;}
+    .pp-input input[type="text"], .pp-input input[type="email"], .pp-input input[type="password"] {@apply cursor-text;}
+    .pp-checkbox input, .pp-checkbox label, .pp-input select, .pp-input input[type="date"], .pp-input input[type="radio"], .pp-input input[type="radio"] + span, .pp-btn {@apply cursor-pointer}
+    .pp-btn-common {@apply pp-disabled enabled:pp-hover;}
+    .pp-btn {@apply pp-btn-common text-base font-bold rounded-lg px-5 py-2.5 gap-1 flex items-center justify-center;}
     .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}
     .pp-btn-yellow {@apply pp-btn pp-fg-btn-dark;}
     .pp-btn-blue {@apply pp-bg-blue;}
@@ -128,7 +131,7 @@
     .pp-table tr:last-child td:first-child {border-bottom-left-radius: 0.375rem;}
     .pp-table tr:last-child td:last-child {border-bottom-right-radius: 0.375rem;}
     .pp-table button {@apply pp-table-btn;}
-    .pp-table-btn {@apply text-sm pp-input py-1 px-2 rounded;}
+    .pp-table-btn {@apply pp-btn-common text-sm py-1 px-2 rounded;}
     .pp-table-btn:not(:last-child) {@apply mr-2;}
     .pp-table-btn-blue, .pp-table-btn-cyan, .pp-table-btn-lime, .pp-table-btn-green, .pp-table-btn-red {@apply pp-table-btn pp-fg-btn-light;}
     .pp-table-btn-yellow, .pp-table-btn-lime-trans {@apply pp-table-btn pp-fg-btn-dark;}

@@ -7,7 +7,7 @@ const Logo = ({ logo, website, ...props }) => (
     </a>
 );
 
-export const TEESlab = ({ ...props }) => (<Logo {...props} logo={LogoImg.TEESlab} website={Websites.TEESlab}/>)
-export const PROSPECTplus = ({ ...props }) => (<Logo {...props} logo={LogoImg.PROSPECTplus} website={Websites.PROSPECTplus}/>)
+export const TEESlabLogo = ({ ...props }) => (<Logo {...props} logo={LogoImg.TEESlab} website={Websites.TEESlab}/>);
+export const PROSPECTplusLogo = ({ ...props }) => (<Logo {...props} logo={LogoImg.PROSPECTplus} website={Websites.PROSPECTplus}/>);
 
 export default Logo;

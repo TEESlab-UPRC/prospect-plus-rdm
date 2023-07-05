@@ -1,7 +1,7 @@
 import MenuBar from '@/Components/MenuBar';
 import { Head } from '@inertiajs/react';
 import { ToastContainer } from 'react-toastify';
-import { TEESlab } from '@/Components/Logo';
+import { TEESlabLogo } from '@/Components/Logo';
 import Footer from '@/Components/Footer';
 
 const altLayoutRoutes = ['welcome', 'login', 'register'];
@@ -9,7 +9,7 @@ const altLayoutRoutes = ['welcome', 'login', 'register'];
 const PoweredBy = () => (
     <div className="powered-by-logo">
         <span>Powered by</span>
-        <TEESlab />
+        <TEESlabLogo />
     </div>
 );
 

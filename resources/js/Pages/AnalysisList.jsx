@@ -17,8 +17,18 @@ export default function AnalysisList({ auth, analyses }) {
     return (
         <Layout title="Analysis List" auth={auth}>
             <h1 className="text-center">Your analyses</h1>
-            <NewAnalysisBtn />
-            <Analyses analyses={analyses}/>
+            <hr />
+            {analyses.length > 0 ? (
+                <>
+                    <NewAnalysisBtn />
+                    <Analyses analyses={analyses}/>
+                </>
+            ) : (
+                <div className="flex items-center gap-8">
+                    <h3>No analyses completed yet!</h3>
+                    <NewAnalysisBtn />
+                </div>
+            )}
         </Layout>
     );
 }

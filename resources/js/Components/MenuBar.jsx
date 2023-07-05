@@ -1,5 +1,6 @@
 import Menu from '@/Components/Menu';
 import { TEESlabLogo, PROSPECTplusLogo } from '@/Components/Logo';
+import { GuidelinesLink } from './ExtLink';
 
 const MenuBar = ({ user }) => {
     return (
@@ -9,7 +10,7 @@ const MenuBar = ({ user }) => {
                 <PROSPECTplusLogo />
             </div>
             <div>
-                <a className="pp-link" target="_blank">Guidelines</a>{/* TODO: put a link here, same as in Home */}
+                <GuidelinesLink />
                 <Menu user={user} />
             </div>
         </div>

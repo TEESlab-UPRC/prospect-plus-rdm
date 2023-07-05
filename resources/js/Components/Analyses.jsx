@@ -26,8 +26,8 @@ const Analysis = ({ analysis }) => {
     return (
         <tr className={deleting ? "pp-table-del" : ""} children={[
             org, title, sector,
-            (<button className="pp-table-btn-lime" onClick={editFRC}>{btnTxt("frc")}</button>),
-            (<button className="pp-table-btn-green" onClick={editRDM}>{btnTxt("rdm")}</button>),
+            (<button className={`w-20 ${hasFRC ? "pp-table-btn-lime" : "pp-table-btn-lime-trans"}`} onClick={editFRC}>{btnTxt("frc")}</button>),
+            (<button className="w-20 pp-table-btn-green" onClick={editRDM}>{btnTxt("rdm")}</button>),
             (<>
                 <button className="pp-table-btn-cyan" onClick={editInfo}>View/Edit Info</button>
                 <button className="pp-table-btn-red" onClick={delA}>Delete</button>

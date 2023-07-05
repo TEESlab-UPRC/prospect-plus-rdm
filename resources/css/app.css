@@ -14,6 +14,7 @@
         --pp-lime: #97B42A;
         --pp-green: #00883B;
         --pp-red: #DC2626;
+        --pp-lime-trans: #96b42a62;
         --pp-yellow-light: #fff3ba;
         --pp-red-light: #ffafaf;
         --pp-base-text-color: #374151;
@@ -29,6 +30,7 @@
     .pp-bg-yellow {background-color: var(--pp-yellow);}
     .pp-bg-cyan {background-color: var(--pp-cyan);}
     .pp-bg-lime {background-color: var(--pp-lime);}
+    .pp-bg-lime-trans{background-color: var(--pp-lime-trans);}
     .pp-bg-green {background-color: var(--pp-green);}
     .pp-bg-red {background-color: var(--pp-red);}
     .pp-bg-table-hover {background-color: var(--pp-yellow-light);}
@@ -125,13 +127,14 @@
     .pp-table-btn {@apply text-sm pp-input py-1 px-2 rounded;}
     .pp-table-btn:not(:last-child) {@apply mr-2;}
     .pp-table-btn-blue, .pp-table-btn-cyan, .pp-table-btn-lime, .pp-table-btn-green, .pp-table-btn-red {@apply pp-table-btn pp-fg-btn-light;}
-    .pp-table-btn-yellow {@apply pp-table-btn pp-fg-btn-dark;}
+    .pp-table-btn-yellow, .pp-table-btn-lime-trans {@apply pp-table-btn pp-fg-btn-dark;}
     .pp-table-btn-blue {@apply pp-bg-blue;}
     .pp-table-btn-yellow {@apply pp-bg-yellow;}
     .pp-table-btn-cyan {@apply pp-bg-cyan;}
     .pp-table-btn-lime {@apply pp-bg-lime;}
     .pp-table-btn-green {@apply pp-bg-green;}
     .pp-table-btn-red {@apply pp-bg-red;}
+    .pp-table-btn-lime-trans {@apply pp-bg-lime-trans;}
     .pp-table-hover td {@apply pp-bg-table-hover;}
     .pp-table-del td {@apply pp-bg-table-del;}
 

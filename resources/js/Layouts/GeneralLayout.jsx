@@ -16,7 +16,7 @@ const PoweredBy = () => (
 export default function Layout({ className, title, auth, children }) {
     const isAltLayout = altLayoutRoutes.includes(route().current());
 
-    return (    // TODO: add footer
+    return (
         <>
             <Head title={title}/>
             {isAltLayout ? (<PoweredBy />) : (<MenuBar user={auth.user}/>)}

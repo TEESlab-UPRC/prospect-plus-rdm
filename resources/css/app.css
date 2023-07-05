@@ -66,13 +66,13 @@
 
     body {@apply pp-selection;}
 
-    footer {@apply flex items-center justify-center gap-3 w-full py-2 px-4 bg-gray-100 border-t border-gray-300;}
-    .footer-disclaimer img {@apply h-14 float-left mr-2;}
-    .footer-disclaimer {
+    footer {@apply flex items-center justify-center gap-3 w-full py-2 px-4 bg-gray-100 border-t border-gray-300 bg-opacity-50;}
+    .footer-disclaimer img {@apply h-10 float-left mr-2;}
+    .footer-disclaimer{
         @apply flex items-center pp-text text-xs font-bold text-justify font-serif;
-        max-width: 57rem;
+        max-width: 80rem;
     }
-    @media (max-width: 850px) {
+    @media (max-width: 1000px){
         .footer-disclaimer {@apply block;}
         .footer-disclaimer img {@apply my-1;}
     }

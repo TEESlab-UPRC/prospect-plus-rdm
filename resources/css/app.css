@@ -46,6 +46,8 @@
     .pp-fg-btn-dark {color: var(--pp-btn-text-dark-color);}
     .pp-fg-btn-light {color: var(--pp-btn-text-light-color);}
 
+    .pp-br-cyan-light {border-color: var(--pp-cyan-light);}
+
     .pp-darker {filter: brightness(85%);}
     .pp-hover {@apply enabled:hover:pp-darker transition;}
     .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
@@ -90,6 +92,8 @@
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
 
     .pp-input {@apply cursor-pointer pp-hover pp-disabled}
+    .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light;}
+    .pp-input input:not([type="radio"]), .pp-input select {@apply rounded-md;}
     .pp-btn {@apply pp-input gap-1 flex items-center justify-center text-base font-bold rounded-lg px-5 py-2.5;}
     .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}
     .pp-btn-yellow {@apply pp-btn pp-fg-btn-dark;}

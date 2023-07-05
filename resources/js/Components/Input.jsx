@@ -2,7 +2,7 @@ const Input = ({ name, label, options = {}, type = "text", required = false, def
     error = error ?? errorObj[name];
 
     return (
-        <div className={`flex ${type == "checkbox" ? "flex-row items-center gap-2" : "flex-col-reverse gap-1"}`}>
+        <div className={`flex ${type == "checkbox" ? "flex-row items-center gap-2 pp-checkbox" : "flex-col-reverse gap-1 pp-input"}`}>
             {error && (<p className="text-sm pp-fg-red">{error}</p>)}
             {options.length > 0 ? (
                 <select name={name} id={name} required={required} defaultValue={defaultValue ?? (required ? null : "N/A")} children={

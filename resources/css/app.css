@@ -175,6 +175,9 @@
     .welcome-pp-logo a:hover img {width: 28rem;}
     .welcome-pp-logo a:hover + h3 {@apply scale-95 origin-top;}
 
+    .consortium-logos {@apply flex flex-row flex-wrap items-center justify-center gap-5 py-1;}
+    .consortium-logos img {@apply max-h-[4.5rem] max-w-[6.0rem] block w-full h-auto;}
+
     .sector-select img {@apply transition-transform;}
     .sector-select button:hover img {@apply scale-95;}
 }

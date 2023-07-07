@@ -16,9 +16,13 @@ export const setFormInputVal = (form, key, val) => {
     }
 };
 
-export const setFormData = (form, data) => data && Object.entries(data).map(e => {
-    if(e[1]) return e;
-    const type = form.elements[e[0]].type;
+export const setFormData = (form, data, preSetCallback = null) => data && Object.entries(data).map(e => {
+    const el = form.elements[e[0]];
+    if(e[1]){
+        if(preSetCallback) preSetCallback(el, e[1]);    // before setting value, call callback with element & value that will be set
+        return e;
+    }
+    const type = el.type;
     return [e[0], (type == 'select-one' ? 'N/A' : (type == 'checkbox' ? false : ''))];
 }).forEach(e => setFormInputVal(form, e[0], e[1]));
 

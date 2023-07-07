@@ -178,6 +178,8 @@
     .consortium-logos {@apply flex flex-row flex-wrap items-center justify-center gap-5 py-1;}
     .consortium-logos img {@apply max-h-[4.5rem] max-w-[6.0rem] block w-full h-auto;}
 
+    .refilled-data {@apply text-gray-500 italic;}
+
     .sector-select img {@apply transition-transform;}
     .sector-select button:hover img {@apply scale-95;}
 }

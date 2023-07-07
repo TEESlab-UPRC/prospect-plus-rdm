@@ -12,7 +12,13 @@ export default function AnalysisInfo({ auth, plans, types, phases, sectors, info
         router.post(route('info.store'), {info: getFormData(e.target)}, {onError: setErrors, preserveScroll:true, preserveState: true});
     };
 
-    useEffect(() => onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info)), []);
+    useEffect(() => onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info, el => {
+        el.classList.add("refilled-data");
+        el.onfocus = () => {
+            el.classList.remove("refilled-data");
+            el.onfocus = null;
+        };
+    })), []);
 
     return (
         <Layout title="Analysis Details" auth={auth}>

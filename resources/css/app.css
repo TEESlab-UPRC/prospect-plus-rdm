@@ -168,7 +168,10 @@
 
     .welcome-pp-logo {@apply h-40 flex flex-col items-center justify-between text-center;}
     .welcome-pp-logo * {@apply transition-all;}
-    .welcome-pp-logo img {width: 27rem;}
+    .welcome-pp-logo img {
+        @apply p-1;
+        width: 27rem;
+    }
     .welcome-pp-logo a:hover img {width: 28rem;}
     .welcome-pp-logo a:hover + h3 {@apply scale-95 origin-top;}
 

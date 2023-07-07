@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import { getCSSVar, setClassStyle } from '../Helpers/DomHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
+import { PPLearningHandbooks } from '@/Constants/Websites';
 
 const msg = [
     "Thank you for using the PROSPECT+ Decision Matrix Tool to check which financing scheme will be the most suitable for your local authority to implement the planned or",
     "ongoing local sustainable energy project for your city. Please note that all results have been automatically determined based on your answers, indicating an ease of",
     "implementation rate (%) for each available financing scheme against the general framework conditions. More information on the set of financing alternatives is also",
-    (<><tspan>available on the PROSPECT+ </tspan><a href="https://h2020prospect.eu/learning-handbooks" target="_blank" style={{ fill: getCSSVar("pp-cyan") }}>Learning Handbooks</a><tspan>.</tspan></>)
+    (<><tspan>available on the PROSPECT+ </tspan><a href={PPLearningHandbooks} target="_blank" style={{ fill: getCSSVar("pp-cyan") }}>Learning Handbooks</a><tspan>.</tspan></>)
 ];
 
 const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {

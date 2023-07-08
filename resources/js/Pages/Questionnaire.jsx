@@ -117,7 +117,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                     )}
                 </>) : (<>
                     <FRCChart percentage={result[0]} onLoaded={centerToChart} />
-                    <ChartDLBtn filename="Quick Finance Readiness - results" />
+                    <ChartDLBtn filename="Quick Finance Readiness Check - results" />
                 </>)}
                 <div className="grid grid-cols-2 gap-4">
                     {auth.user ? (

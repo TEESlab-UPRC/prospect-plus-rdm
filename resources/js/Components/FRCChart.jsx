@@ -45,7 +45,7 @@ const onResize = (w, h) => {
 };
 
 
-const FRCChart = ({ percentage, title = "Quick Finance Readiness", onLoaded = null }) => {
+const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoaded = null }) => {
     const [loaded, setLoaded] = useState(false);
     const barRef = useRef(null);
     let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);

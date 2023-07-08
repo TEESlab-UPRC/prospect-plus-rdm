@@ -29,8 +29,9 @@ const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.nam
 const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
 
 
-export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
+export default function Questionnaire({ auth, questionnaire, currentAnswers, analysisTitle }) {
     const isEdit = !!currentAnswers;
+    const resultFilename = [analysisTitle, questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check", "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
@@ -106,10 +107,10 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                 {questionnaire.isRDM ? (<>
                     <RDMChart percentages={result} title={questionnaire.title} onLoaded={centerToChart} />
                     {isEdit ? ( // edit mode
-                        <ChartDLBtn filename={`${questionnaire.title} - results`} />
+                        <ChartDLBtn filename={resultFilename} />
                     ) : (
                         <div className="grid grid-cols-2 gap-4">
-                            <ChartDLBtn filename={`${questionnaire.title} - results`} />
+                            <ChartDLBtn filename={resultFilename} />
                             <button type="button" onClick={gotoFRC} className="pp-btn-lime">
                                 Continue to the Quick Finance Readiness Check
                             </button>
@@ -117,7 +118,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers }) {
                     )}
                 </>) : (<>
                     <FRCChart percentage={result[0]} onLoaded={centerToChart} />
-                    <ChartDLBtn filename="Quick Finance Readiness Check - results" />
+                    <ChartDLBtn filename={resultFilename} />
                 </>)}
                 <div className="grid grid-cols-2 gap-4">
                     {auth.user ? (

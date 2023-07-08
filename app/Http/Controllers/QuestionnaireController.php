@@ -12,6 +12,7 @@ class QuestionnaireController extends Controller{
     function load(Request $request){
         $request->validate(['type' => 'required|string|in:rdm,frc']);
         $ans = null;
+        $analysisTitle = null;
         $analysis = static::getAnalysis($request);  // for editing mode of questionnaire answers
         if($analysis){  // edit mode
             $q = $request->input('type') == 'rdm' ? $analysis->rdm : $analysis->frc;
@@ -20,16 +21,20 @@ class QuestionnaireController extends Controller{
                     ->where('questionnaire_id', $q->id)->get()
                     ->map(fn($m) => [$m->question->id, $m->answer->answer])->toArray();
             $ans = array_combine(array_column($ans, 0), array_column($ans, 1));
+            $analysisTitle = $analysis->title ?? $analysis->org;
             session(['analysis' => $analysis]);
         }else{
             $request->validate(['title' => 'nullable|string']);
             $q = Questionnaire::where('isRDM', $request->input('type') == 'rdm');
             if($request->has('title')) $q->where('title', $request->input('title'));
             $q = $q->orderByDesc('id')->first();
+            $i = session('info');
+            if($request->user() && $i) $analysisTitle = $i['title'] ?? $i['org'];
         }
         session([
             'currentAnswers' => $ans,
-            'questionnaire' => $q
+            'questionnaire' => $q,
+            'analysisTitle' => $analysisTitle
         ]);
         return to_route('questionnaire.render');
     }
@@ -67,7 +72,8 @@ class QuestionnaireController extends Controller{
                     ];
                 }) : null
             ],
-            'currentAnswers' => session('currentAnswers')
+            'currentAnswers' => session('currentAnswers'),
+            'analysisTitle' => session('analysisTitle')
         ]);
     }
 

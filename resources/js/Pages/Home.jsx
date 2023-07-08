@@ -12,7 +12,7 @@ export default function Home({ auth }) {
     useEffect(() => onPageLoad(() => auth.user || toast.info("Guest mode: log in if you want your analyses to be saved!")), []);
 
     return (
-        <Layout title="Sector Selection" auth={auth} className="grid grid-cols-1">
+        <Layout title="Home" auth={auth} className="grid grid-cols-1">
             <h2 className="text-center">
                 Recommendation-Decision Matrix Tool<br />
                 for selecting financing schemes

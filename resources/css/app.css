@@ -144,8 +144,7 @@
     .pp-table-hover {@apply pp-bg-table-hover;}
     .pp-table-del {@apply pp-bg-table-del;}
 
-    .pp-analysis-list-table tr > *:nth-last-child(-n+3):not(:last-child) {@apply text-center;}
-    .pp-analysis-list-table tr > *:last-child {@apply text-end;}
+    .pp-analysis-list-table tr > *:nth-last-child(-n+3) {@apply text-center;}
     .pp-analysis-list-table tr > td:last-child {@apply flex flex-row flex-wrap gap-1 justify-end;}
     .pp-analysis-list-table col:nth-child(3) {@apply w-[146px];}
     .pp-analysis-list-table col:nth-last-child(-n+3):not(:last-child) {@apply w-[170px];}

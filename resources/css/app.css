@@ -142,8 +142,8 @@
     .pp-table-btn-green {@apply pp-bg-green;}
     .pp-table-btn-red {@apply pp-bg-red;}
     .pp-table-btn-lime-trans {@apply pp-bg-lime-trans;}
-    .pp-table-hover td {@apply pp-bg-table-hover;}
-    .pp-table-del td {@apply pp-bg-table-del;}
+    .pp-table-hover {@apply pp-bg-table-hover;}
+    .pp-table-del {@apply pp-bg-table-del;}
 
     .circle-img {@apply pp-circle w-40 pp-shadow;}
 

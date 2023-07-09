@@ -39,7 +39,10 @@ const Analysis = ({ analysis }) => {
 };
 
 const Analyses = ({ analyses }) => (
-    <table className="pp-table">
+    <table className="pp-table pp-analysis-list-table">
+        <colgroup children={Array.from({length: 6}, (_, i) => (
+            <col key={`c${i}`}/>
+        ))}/>
         <thead>
             <tr children={[
                 "Authority/Agency", "Project Title", "Sector", "Financial Readiness Check", "Recommendation-Decision Matrix", "Analysis Actions"

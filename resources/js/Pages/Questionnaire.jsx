@@ -29,7 +29,7 @@ const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.nam
 const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
 
 
-export default function Questionnaire({ auth, questionnaire, currentAnswers, analysisTitle }) {
+export default function Questionnaire({ auth, questionnaire, currentAnswers, analysisTitle, isDebug }) {
     const isEdit = !!currentAnswers;
     const resultFilename = [analysisTitle, questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check", "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
@@ -99,7 +99,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
                 }>{questionnaire.title}</legend>
                 <hr />
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (
-                    <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1}/>
+                    <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1} isDebug={isDebug}/>
                 ))} />
                 <button type="submit" className="pp-btn-cyan">{`S${isEdit ? "ave & s" : ""}how results`}</button>
             </form>

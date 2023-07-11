@@ -73,7 +73,8 @@ class QuestionnaireController extends Controller{
                 }) : null
             ],
             'currentAnswers' => session('currentAnswers'),
-            'analysisTitle' => session('analysisTitle')
+            'analysisTitle' => session('analysisTitle'),
+            'isDebug' => env('APP_DEBUG', false)
         ]);
     }
 

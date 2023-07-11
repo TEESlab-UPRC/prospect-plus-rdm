@@ -48,6 +48,7 @@ const onResize = (w, h) => {
 const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoaded = null }) => {
     const [loaded, setLoaded] = useState(false);
     const barRef = useRef(null);
+    const fontFamily = getCSSVar("pp-font-sans");
     let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
@@ -64,11 +65,11 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
     });
 
     return (<div className="grid grid-cols-1" id="downloadable-chart">
-        <svg className="mb-6 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
+        <svg className="mb-6 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
         <ResponsiveContainer aspect={8} width="100%" onResize={onResize}>
-            <BarChart title={title} label={title} width={200} height={400} data={[{value: percentage}]} layout='vertical' barCategoryGap="20%" margin={{left: 25, right: 25}} style={{ fontFamily: 'Arial' }}>
+            <BarChart title={title} label={title} width={200} height={400} data={[{value: percentage}]} layout='vertical' barCategoryGap="20%" margin={{left: 25, right: 25}} style={{ fontFamily: fontFamily }}>
                 <defs>
                     <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stopColor="red" />
@@ -87,7 +88,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
                 </Bar>
             </BarChart>
         </ResponsiveContainer>
-        <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
+        <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <g className="pp-rmsg" children={resp[1].split(/[\r\n]+/).map((s, i) => {
                 return (<text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: resp[0] }}>{s.trim()}</text>);
             })}/>

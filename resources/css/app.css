@@ -24,6 +24,8 @@
         --pp-frc-resp-good-color: #92d050;
         --pp-frc-resp-mid-color: #ffc000;
         --pp-frc-resp-bad-color: #f17484;
+        --pp-font-serif: 'Times New Roman', Times, 'Liberation Serif', serif;
+        --pp-font-sans: Arial, 'Liberation Sans', sans-serif;
     }
 
     .pp-bg-cyan-light {background: var(--pp-cyan-light);}
@@ -52,6 +54,10 @@
 
     .pp-br-cyan-light {border-color: var(--pp-cyan-light);}
 
+    .pp-font-serif {font-family: var(--pp-font-serif);}
+    .pp-font-sans {font-family: var(--pp-font-sans);}
+    .pp-font-def {@apply font-sans;}
+
     .pp-darker {filter: brightness(85%);}
     .pp-hover {@apply hover:pp-darker transition;}
     .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
@@ -73,7 +79,7 @@
     footer {@apply flex items-center justify-center gap-3 w-full py-2 px-4 bg-gray-100 border-t border-gray-300 bg-opacity-50;}
     .footer-disclaimer img {@apply h-10 float-left mr-2;}
     .footer-disclaimer{
-        @apply flex items-center pp-text text-xs font-bold text-justify font-serif;
+        @apply flex items-center pp-text text-xs font-bold text-justify pp-font-serif;
         max-width: 80rem;
     }
     @media (max-width: 1000px){

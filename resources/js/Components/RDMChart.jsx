@@ -30,6 +30,7 @@ const onResize = (w, h, colNum) => {
 const RDMChart = ({ percentages, title, onLoaded = null }) => {
     const [loaded, setLoaded] = useState(false);
     const barRef = useRef(null);
+    const fontFamily = getCSSVar("pp-font-sans");
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
         let bar = barRef.current;
@@ -45,21 +46,21 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
     });
 
     return (<div className="grid grid-cols-1" id="downloadable-chart">
-        <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
+        <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <g className="pp-rmsg" children={msg.map((s, i) => (
                 <text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: '#777' }} children={s}></text>)
             )}/>
         </svg>
-        <svg className="my-2 svg-autocrop-y" width="100%" height="100%" fontFamily="Arial">
+        <svg className="my-2 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
         <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length)}>
-            <BarChart id="downloadable-chart" title={title} label={title} width={400} height={400} data={percentages} margin={{top: 15, bottom: 6}} style={{ fontFamily: 'Arial' }}>
+            <BarChart id="downloadable-chart" title={title} label={title} width={400} height={400} data={percentages} margin={{top: 15, bottom: 6}} style={{ fontFamily: fontFamily }}>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold', fontFamily: 'Arial' }}/>}/>
-                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval" style={{ fontFamily: 'Arial' }}/>}/>
+                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold' }}/>}/>
+                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval"/>}/>
                 <Bar onAnimationStart={patchLabel} ref={barRef} dataKey="result" fill="#0b2870" className="pp-rlabel">
-                    <LabelList dataKey="result" position="top" offset={4} formatter={Math.round} style={{ fontFamily: 'Arial' }} />
+                    <LabelList dataKey="result" position="top" offset={4} formatter={Math.round}/>
                 </Bar>
             </BarChart>
         </ResponsiveContainer>

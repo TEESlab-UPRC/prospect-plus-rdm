@@ -15,6 +15,13 @@ export const confirm = (title, message, confirmCallback, cancelCallback = null, 
     if(finallyCallback) finallyCallback();
 });
 
+export const info = (title, message, callback = null) => Swal.fire({
+    title: title,
+    text: message,
+    confirmButtonColor: getCSSVar("pp-cyan")
+}).then(() => callback && callback());
+
 export default {
-    confirm
+    confirm,
+    info
 };

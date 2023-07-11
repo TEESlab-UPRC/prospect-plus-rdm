@@ -18,6 +18,7 @@
         --pp-yellow-light: #fff3ba;
         --pp-red-light: #ffafaf;
         --pp-base-text-color: #374151;
+        --pp-faint-text-color: #606c80;
         --pp-btn-text-dark-color: #1F2937;
         --pp-btn-text-light-color: #FFFFFF;
         --pp-frc-resp-good-color: #92d050;
@@ -45,6 +46,7 @@
     .pp-fg-green {color: var(--pp-green);}
     .pp-fg-red {color: var(--pp-red);}
     .pp-fg-text-base {color: var(--pp-base-text-color);}
+    .pp-fg-text-faint {color: var(--pp-faint-text-color);}
     .pp-fg-btn-dark {color: var(--pp-btn-text-dark-color);}
     .pp-fg-btn-light {color: var(--pp-btn-text-light-color);}
 
@@ -59,6 +61,7 @@
     .pp-text {@apply text-base pp-fg-text-base;}
     .pp-selection {@apply selection:pp-bg-cyan selection:pp-fg-yellow;}
     .pp-link {@apply pp-fg-cyan underline cursor-pointer pp-hover;}
+    .pp-link-faint {@apply pp-fg-text-faint pp-hover underline decoration-dotted italic cursor-pointer;}
 
     .pp-title {@apply text-4xl font-bold pp-text;}
     .pp-title-small {@apply text-2xl pp-title;}

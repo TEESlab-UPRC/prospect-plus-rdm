@@ -21,7 +21,7 @@ const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autoc
 const onResize = (w, h, colNum) => {
     setClassStyle("pp-rtitle", s => s.fontSize = `${w / 50}px`);
     setClassStyle("pp-rval", s => s.fontSize = `${w / 75}px`);
-    setClassStyle("pp-rschemes", s => s.fontSize = `${w / (colNum * 14)}px`);
+    setClassStyle("pp-rschemes", s => s.fontSize = `${w / (colNum * 15)}px`);
     setClassStyle("pp-rlabel", s => s.fontSize = `${w / 85}px`);
     setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
     svgAutoCropY();

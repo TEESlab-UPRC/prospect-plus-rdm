@@ -67,6 +67,7 @@
     .pp-title-small {@apply text-2xl pp-title;}
     .pp-title-smaller {@apply text-lg pp-title;}
 
+    html {@apply scroll-pt-28 scroll-pb-12;}
     body {@apply pp-selection;}
 
     footer {@apply flex items-center justify-center gap-3 w-full py-2 px-4 bg-gray-100 border-t border-gray-300 bg-opacity-50;}

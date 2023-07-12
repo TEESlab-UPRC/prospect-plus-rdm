@@ -69,7 +69,7 @@
     .pp-link {@apply pp-fg-cyan underline cursor-pointer pp-hover;}
     .pp-link-faint {@apply pp-fg-text-faint pp-hover underline decoration-dotted italic cursor-pointer;}
 
-    .pp-title {@apply text-4xl font-bold pp-text;}
+    .pp-title {@apply text-3xl font-bold pp-text;}
     .pp-title-small {@apply text-2xl pp-title;}
     .pp-title-smaller {@apply text-lg pp-title;}
 

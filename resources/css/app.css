@@ -108,6 +108,7 @@
     .pp-checkbox input {@apply rounded;}
     .pp-input input[type="text"], .pp-input input[type="email"], .pp-input input[type="password"] {@apply cursor-text disabled:cursor-default;}
     .pp-checkbox input, .pp-checkbox label, .pp-input select, .pp-input input[type="date"], .pp-input input[type="radio"], .pp-input input[type="radio"] + span, .pp-btn {@apply cursor-pointer disabled:cursor-default;}
+    .pp-input p {@apply cursor-default;}
     .pp-btn-common {@apply pp-disabled font-bold enabled:pp-hover;}
     .pp-btn {@apply pp-btn-common text-base rounded-lg px-5 py-2.5 gap-1 flex items-center justify-center;}
     .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}

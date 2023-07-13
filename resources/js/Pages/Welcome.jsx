@@ -5,7 +5,6 @@ import { Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
 import { PROSPECTplusLogo } from '@/Components/Logo';
 import { PrivacyPolicyLink } from '@/Components/ExtLink';
-import { info } from '@/Helpers/DialogHelpers';
 
 export default function Welcome({ auth, isRegister = false }) {
     const [errors, setErrors] = useState({});
@@ -41,7 +40,7 @@ export default function Welcome({ auth, isRegister = false }) {
                 ) : (
                     <div className="flex flex-row justify-between">
                         <Input name="remember" label="Remember me" type="checkbox"/>
-                        <Link className="mr-2 pp-link-faint" onClick={e => {e.preventDefault(); info("W.I.P.", "Function to be implemented!")}}>forgot password?</Link>
+                        <Link href={route('password.request')} className="mr-2 pp-link-faint">forgot password?</Link>
                     </div>
                 )}
                 <div className="flex items-center justify-end mt-2">

@@ -60,7 +60,7 @@
 
     .pp-darker {filter: brightness(85%);}
     .pp-hover {@apply hover:pp-darker transition;}
-    .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale;}
+    .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale disabled:pp-fg-text-faint;}
     .pp-circle {border-radius: 50%;}
     .pp-shadow {box-shadow: 1px 6px 23px 5px rgba(0,0,0,0.17);}
 
@@ -103,11 +103,11 @@
     form fieldset > legend {@apply small-legend;}
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
 
-    .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light pp-disabled;}
+    .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 disabled:hover:border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light pp-disabled;}
     .pp-input input:not([type="radio"]), .pp-input select {@apply rounded-md;}
     .pp-checkbox input {@apply rounded;}
-    .pp-input input[type="text"], .pp-input input[type="email"], .pp-input input[type="password"] {@apply cursor-text;}
-    .pp-checkbox input, .pp-checkbox label, .pp-input select, .pp-input input[type="date"], .pp-input input[type="radio"], .pp-input input[type="radio"] + span, .pp-btn {@apply cursor-pointer}
+    .pp-input input[type="text"], .pp-input input[type="email"], .pp-input input[type="password"] {@apply cursor-text disabled:cursor-default;}
+    .pp-checkbox input, .pp-checkbox label, .pp-input select, .pp-input input[type="date"], .pp-input input[type="radio"], .pp-input input[type="radio"] + span, .pp-btn {@apply cursor-pointer disabled:cursor-default;}
     .pp-btn-common {@apply pp-disabled font-bold enabled:pp-hover;}
     .pp-btn {@apply pp-btn-common text-base rounded-lg px-5 py-2.5 gap-1 flex items-center justify-center;}
     .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}

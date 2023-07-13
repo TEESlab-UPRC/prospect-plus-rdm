@@ -33,11 +33,11 @@ export default function Welcome({ auth, isRegister = false }) {
             </div>
             <form onSubmit={submit} className={`gap-3 ${isRegister ? "pp-mark-required" : ""}`}>
                 <legend className="mb-0 small-legend">{isRegister ? "Register" : "Log in"}</legend>
-                {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required={true}/>)}
-                <Input name="email" label="Email" errorObj={errors} autoComplete="username" type="email" required={true}/>
-                <Input name="password" label="Password" errorObj={errors} autoComplete={isRegister ? "new-password" : "current-password"} type="password" required={true}/>
+                {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required/>)}
+                <Input name="email" label="Email" errorObj={errors} autoComplete="username" type="email" required/>
+                <Input name="password" label="Password" errorObj={errors} autoComplete={isRegister ? "new-password" : "current-password"} type="password" required/>
                 {isRegister ? (
-                    <Input name="password_confirmation" label="Confirm Password" errorObj={errors} autoComplete="new-password" type="password" required={true}/>
+                    <Input name="password_confirmation" label="Confirm Password" errorObj={errors} autoComplete="new-password" type="password" required/>
                 ) : (
                     <div className="flex flex-row justify-between">
                         <Input name="remember" label="Remember me" type="checkbox"/>

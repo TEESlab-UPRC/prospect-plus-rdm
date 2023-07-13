@@ -103,6 +103,9 @@
     form fieldset > legend {@apply small-legend;}
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
 
+    @keyframes onAutoFill {}                                /* Dummy animation for JS hook */
+    input:-webkit-autofill {animation-name: onAutoFill;}    /* Expose autofill event hook for JS */
+
     .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 disabled:hover:border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light pp-disabled;}
     .pp-input input:not([type="radio"]), .pp-input select {@apply rounded-md;}
     .pp-checkbox input {@apply rounded;}

@@ -6,7 +6,7 @@ import Layout from '@/Layouts/GeneralLayout';
 import { PROSPECTplusLogo } from '@/Components/Logo';
 import { PrivacyPolicyLink } from '@/Components/ExtLink';
 
-export default function Welcome({ auth, isRegister = false }) {
+export default function Welcome({ auth, pwReset, isRegister = false }) {
     const [errors, setErrors] = useState({});
 
     const submit = e => {
@@ -34,7 +34,7 @@ export default function Welcome({ auth, isRegister = false }) {
                 <legend className="mb-0 small-legend">{isRegister ? "Register" : "Log in"}</legend>
                 {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required/>)}
                 <Input name="email" label="Email" errorObj={errors} autoComplete="username" type="email" required/>
-                <Input name="password" label="Password" errorObj={errors} autoComplete={isRegister ? "new-password" : "current-password"} type="password" required/>
+                <Input name="password" label="Password" errorObj={errors} autoComplete={isRegister ? "new-password" : (pwReset ? "off" : "current-password")} type="password" required/>
                 {isRegister ? (
                     <Input name="password_confirmation" label="Confirm Password" errorObj={errors} autoComplete="new-password" type="password" required/>
                 ) : (

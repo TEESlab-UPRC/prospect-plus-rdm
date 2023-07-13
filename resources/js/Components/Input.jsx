@@ -1,9 +1,10 @@
-const Input = ({ name, label = null, options = {}, type = "text", defaultValue = null, checked = null, error = null, errorObj = {}, ...props }) => {
+const Input = ({ name, label = null, options = {}, type = "text", defaultValue = null, checked = null, error = null, errorObj = {}, status = null, ...props }) => {
     error = error ?? errorObj[name];
     checked = checked ?? defaultValue;
 
     return (
         <div className={`flex ${type == "checkbox" ? "flex-row items-center gap-2 pp-checkbox" : "flex-col-reverse gap-1 pp-input"}`}>
+            {status && (<p className="text-sm pp-fg-green">{status}</p>)}
             {error && (<p className="text-sm pp-fg-red">{error}</p>)}
             {options.length > 0 ? (
                 <select {...props} name={name} id={name} defaultValue={defaultValue ?? (required ? null : "N/A")} children={

@@ -59,7 +59,7 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
         <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length)}>
-            <BarChart id="downloadable-chart" title={title} label={title} width={400} height={400} data={percentages} margin={{top: 15, bottom: 6}} style={{ fontFamily: fontFamily }}>
+            <BarChart title={title} label={title} width={400} height={400} data={percentages} margin={{top: 15, bottom: 6}} style={{ fontFamily: fontFamily }}>
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold' }}/>}/>
                 <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval"/>}/>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Input = ({ name, label = null, options = {}, type = "text", defaultValue = null, checked = null, error = null, errorObj = {}, status = null, formObj = {}, onChange = null, onAnimationStart = null, autoComplete = null, required = false, ...props }) => {
+const Input = ({ name, label = null, options = {}, type = "text", defaultValue = null, checked = null, error = null, errorObj = {}, status = null, formObj = {}, onChange = null, onAnimationStart = null, autoComplete = null, required = false, className = "", ...props }) => {
     const [autoFillReverted, setAutoFillReverted] = useState(false);
 
     errorObj = formObj.errors ?? errorObj;
@@ -24,7 +24,7 @@ const Input = ({ name, label = null, options = {}, type = "text", defaultValue =
     };                                                                                              // Note: this takes advantage of a dummy animation "onAutoFill" - see: app.css
 
     return (
-        <div className={`flex ${type == "checkbox" ? "flex-row items-center gap-2 pp-checkbox" : "flex-col-reverse gap-1 pp-input"}`}>
+        <div className={`flex ${type == "checkbox" ? "flex-row items-center gap-2 pp-checkbox" : "flex-col-reverse gap-1 pp-input"} ${className}`}>
             {status && (<p className="text-sm pp-fg-green">{status}</p>)}
             {error && (<p className="text-sm pp-fg-red">{error}</p>)}
             {options.length > 0 ? (

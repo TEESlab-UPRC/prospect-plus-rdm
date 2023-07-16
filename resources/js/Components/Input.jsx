@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Input = ({ name, label = null, options = {}, type = "text", defaultValue = null, checked = null, error = null, errorObj = {}, status = null, formObj = {}, onChange = null, onAnimationStart = null, autoComplete = null, ...props }) => {
+const Input = ({ name, label = null, options = {}, type = "text", defaultValue = null, checked = null, error = null, errorObj = {}, status = null, formObj = {}, onChange = null, onAnimationStart = null, autoComplete = null, required = false, ...props }) => {
     const [autoFillReverted, setAutoFillReverted] = useState(false);
 
     errorObj = formObj.errors ?? errorObj;
@@ -28,7 +28,7 @@ const Input = ({ name, label = null, options = {}, type = "text", defaultValue =
             {status && (<p className="text-sm pp-fg-green">{status}</p>)}
             {error && (<p className="text-sm pp-fg-red">{error}</p>)}
             {options.length > 0 ? (
-                <select {...props} name={name} id={name} defaultValue={defaultValue} onChange={onChangeD} autoComplete={autoComplete} onAnimationStart={onAnimationStartAF} children={
+                <select {...props} name={name} id={name} required={required} defaultValue={defaultValue} onChange={onChangeD} autoComplete={autoComplete} onAnimationStart={onAnimationStartAF} children={
                     options.map(v => (<option key={`${name}-${v}`} value={v}>{v}</option>))
                             .concat(required ? [] : [<option key={`${name}-N/A`} value="N/A">N/A</option>])
                 }/>
@@ -36,7 +36,7 @@ const Input = ({ name, label = null, options = {}, type = "text", defaultValue =
                 type == "checkbox" ? (
                     <input {...props} type="checkbox" name={name} id={name} checked={checked} onChange={onChangeD} onAnimationStart={onAnimationStart}/>
                 ) : (
-                    <input {...props} type={type} name={name} id={name} defaultValue={defaultValue} onChange={onChangeD} autoComplete={autoComplete} onAnimationStart={onAnimationStartAF}/>
+                    <input {...props} type={type} name={name} id={name} required={required} defaultValue={defaultValue} onChange={onChangeD} autoComplete={autoComplete} onAnimationStart={onAnimationStartAF}/>
                 )
             )}
             {label && (<label htmlFor={name} className="pp-text">{label}</label>)}

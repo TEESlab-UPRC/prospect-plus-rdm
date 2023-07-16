@@ -19,6 +19,7 @@ const Menu = ({ user }) => {
                     <Link dest="home.render" text="Home"/>
                     {user && (<Link dest="analyses.render" text="My Analyses"/>)}
                     <Link dest="home.render" text="Help & Support"/>{/* TODO: add page for this placeholder */}
+                    {user && (<Link dest="profile.render" text="Edit Profile"/>)}
                     {user ? (<PLink dest="logout" text="Log Out"/>) : (<Link dest="login" text="Log In"/>)}
                 </Dropdown.Content>
             </Dropdown>

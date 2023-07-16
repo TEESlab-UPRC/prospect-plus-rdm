@@ -8,7 +8,7 @@ use Inertia\Inertia;
 class WelcomeController extends Controller{
     static function render(Request $request, $isRegister = false){
         if($request->user()) return to_route('home.render');
-        $pwReset = session('pwReset');
+        $pwReset = session('pwReset') ?? false;
         session(['pwReset' => false]);
         return Inertia::render('Welcome', ['isRegister' => $isRegister, 'pwReset' => $pwReset]);
     }

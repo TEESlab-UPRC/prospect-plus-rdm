@@ -37,12 +37,16 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
         if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration);
     };
 
+    const onAnimationStart = () => {
+        patchLabel();
+        if(loaded) return;
+        onLoaded && onLoaded();
+        setLoaded(true);
+    };
+
     useEffect(() => {
         svgAutoCropY();
         patchLabel();
-        if(loaded) return;
-        onLoaded && setTimeout(onLoaded, 1000); // TODO improve?
-        setLoaded(true);
     });
 
     return (<div className="grid grid-cols-1" id="downloadable-chart">
@@ -59,7 +63,7 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold' }}/>}/>
                 <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval"/>}/>
-                <Bar onAnimationStart={patchLabel} ref={barRef} dataKey="result" fill="#0b2870" className="pp-rlabel">
+                <Bar onAnimationStart={onAnimationStart} ref={barRef} dataKey="result" fill="#0b2870" className="pp-rlabel">
                     <LabelList dataKey="result" position="top" offset={4} formatter={Math.round}/>
                 </Bar>
             </BarChart>

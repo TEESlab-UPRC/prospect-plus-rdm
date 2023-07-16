@@ -56,12 +56,16 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
         if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration);
     };
 
+    const onAnimationStart = () => {
+        patchLabel();
+        if(loaded) return;
+        onLoaded && onLoaded();
+        setLoaded(true);
+    };
+
     useEffect(() => {
         svgAutoCropY();
         patchLabel();
-        if(loaded) return;
-        onLoaded && setTimeout(onLoaded, 1000); // TODO improve? move to chart onAnimationStart??
-        setLoaded(true);
     });
 
     return (<div className="grid grid-cols-1" id="downloadable-chart">
@@ -83,7 +87,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
                 <ReferenceLine x={75} stroke="#7dbe00" strokeDasharray="5 5" strokeWidth={2} />
                 <XAxis type="number" domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick className="pp-rtick" isYAxis={false}/>} />
                 <YAxis type="category" hide />
-                <Bar onAnimationStart={patchLabel} ref={barRef} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className="pp-rlabel">
+                <Bar onAnimationStart={onAnimationStart} ref={barRef} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className="pp-rlabel">
                     <LabelList dataKey="value" content={FRCLabel}/>
                 </Bar>
             </BarChart>

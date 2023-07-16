@@ -34,7 +34,7 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
         let bar = barRef.current;
-        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration * 1.5);
+        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration);
     };
 
     useEffect(() => {

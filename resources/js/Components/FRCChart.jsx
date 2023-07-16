@@ -53,7 +53,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
         let bar = barRef.current;
-        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration * 1.5);
+        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration);
     };
 
     useEffect(() => {

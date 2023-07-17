@@ -1,8 +1,8 @@
-# Prospect+ RDM
-Prospect+ Recommendations-Decision Matrix tool
+# Recommendations-Decision Matrix Tool
+Prospect+ Recommendations-Decision Matrix tool, powered by TEESlab.
 
 ## Requirements
-- PHP 8
+- PHP 8.1
 ### For development & building
 - Node.js (>=16, latest LTS recommended)
 - Composer
@@ -54,3 +54,6 @@ npm run build
 ```
 The web server should serve [public](public/).  
 More deployment info [here](https://laravel.com/docs/10.x/deployment).
+
+## Licensing notes
+The [LICENSE](LICENSE) does not apply to the images included in this repo.

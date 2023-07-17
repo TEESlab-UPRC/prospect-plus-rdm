@@ -69,7 +69,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
         e.preventDefault();
         let answers = showResults(e.target);
         centerToChart();
-        if(auth.user) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true,
+        if(auth.user && answers) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true,
             onSuccess: () => toast.success(`Answers ${filled ? "edited" : "saved"} successfully!`),
             onError: () => toast.error("Failed to save answers!")
         });

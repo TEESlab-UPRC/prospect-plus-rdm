@@ -171,8 +171,10 @@
 
     #menubar, #menubar > * {@apply flex flex-row items-center gap-6;}
     #menubar {@apply fixed top-0 w-full h-[65px] z-50 justify-between py-2 px-4 bg-gray-100 border-b border-gray-300;}
-    .menubar-logos img {@apply max-h-12 transition-transform;}
-    .menubar-logos a:hover img {@apply scale-90;}
+    .menubar-logos a {@apply sm:w-fit w-12 overflow-hidden transition-transform;}
+    .menubar-logos a:first-child {@apply sm:w-fit w-11;}
+    .menubar-logos a:hover {@apply scale-90;}
+    .menubar-logos img {@apply max-h-12 sm:max-w-full max-w-none;}
     .menubar-menu {@apply sm:flex sm:items-center;}
     .menubar-menu-trigger {@apply flex flex-row items-center gap-2 min-h-[34px] min-w-[34px] md:pl-4 pl-2 pr-2 py-2 text-base leading-4 pp-text font-bold transition duration-150 ease-in-out pp-bg-cyan-light border border-transparent rounded-md hover:brightness-95 focus:outline-none;}
     .menubar-menu-trigger:focus {@apply pp-darker;}

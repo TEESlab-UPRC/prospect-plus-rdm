@@ -21,7 +21,9 @@ export default function AnalysisList({ auth, analyses }) {
             {analyses.length > 0 ? (
                 <>
                     <NewAnalysisBtn />
-                    <Analyses analyses={analyses}/>
+                    <div className="overflow-x-scroll shadow-md">
+                        <Analyses analyses={analyses}/>
+                    </div>
                 </>
             ) : (
                 <div className="flex items-center gap-8">

@@ -9,6 +9,8 @@ import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
 import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
 
+const editChartCenterDelay = 200;
+
 const imgMap = {
     'Public Buildings': SectorCircleImg.PublicBuildings,
     'Private Buildings': SectorCircleImg.PrivateBuildings,
@@ -37,6 +39,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
     const [result, setResult] = useState([0]);
 
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
+    const onChartLoad = () => setTimeout(() => window.scrollY == 0 && centerToChart(), editChartCenterDelay);
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
         if(!isEdit || filled) return;
@@ -105,7 +108,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
             </form>
             {filled && (<>
                 {questionnaire.isRDM ? (<>
-                    <RDMChart percentages={result} title={questionnaire.title} onLoaded={centerToChart} />
+                    <RDMChart percentages={result} title={questionnaire.title} onLoaded={onChartLoad} />
                     {isEdit ? ( // edit mode
                         <ChartDLBtn filename={resultFilename} />
                     ) : (
@@ -117,7 +120,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
                         </div>
                     )}
                 </>) : (<>
-                    <FRCChart percentage={result[0]} onLoaded={centerToChart} />
+                    <FRCChart percentage={result[0]} onLoaded={onChartLoad} />
                     <ChartDLBtn filename={resultFilename} />
                 </>)}
                 <div className="grid grid-cols-2 gap-4">

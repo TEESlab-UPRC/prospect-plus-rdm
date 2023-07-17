@@ -81,7 +81,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
     };
 
     function gotoFRC(){
-        resetState();   // TODO confirm it works with weird flows
+        resetState();
         router.post(route('questionnaire.load'), {type: 'frc'});
     };
 

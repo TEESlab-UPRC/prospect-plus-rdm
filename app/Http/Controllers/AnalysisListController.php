@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class AnalysisListController extends Controller{
     function render(Request $request){
-        if(!$request->user()) return redirect('/'); // TODO redirect for login?
+        if(!$request->user()) return redirect('/');
         $data = Analysis::where('user_id', $request->user()->id)
                 ->oldest()->get()
                 ->map(fn($a) => array_merge($a->only(['id', 'org', 'title']), [

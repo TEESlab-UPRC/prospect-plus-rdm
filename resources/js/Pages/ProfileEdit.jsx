@@ -44,7 +44,7 @@ export default function ProfileEdit({ auth }) {
 
     return (
         <Layout title="Edit Profile" auth={auth} className="max-w-2xl">
-            <h1 className="text-center">Edit Profile</h1>
+            <h1>Edit Profile</h1>
             <p className="pp-text">
                 You can change your profile info from here.<br />
                 To keep the same password, just leave the "New Password" field empty.<br />

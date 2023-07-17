@@ -166,15 +166,15 @@
 
     .circle-img {@apply pp-circle w-40 pp-shadow;}
 
-    #menubar, #menubar > * {@apply flex flex-row items-center;}
-    #menubar {@apply fixed top-0 w-full z-50 justify-between py-2 px-4 bg-gray-100 border-b border-gray-300;}
-    #menubar > * {@apply gap-6;}
-    .menubar-logos img {@apply h-12 transition-transform;}
+    #menubar, #menubar > * {@apply flex flex-row items-center gap-6;}
+    #menubar {@apply fixed top-0 w-full h-[65px] z-50 justify-between py-2 px-4 bg-gray-100 border-b border-gray-300;}
+    .menubar-logos img {@apply max-h-12 transition-transform;}
     .menubar-logos a:hover img {@apply scale-90;}
-    .menubar-menu {@apply hidden sm:flex sm:items-center;}
-    .menubar-menu-trigger {@apply inline-flex flex-row items-center gap-2 pl-4 pr-2 py-2 text-base leading-4 pp-text font-bold transition duration-150 ease-in-out pp-bg-cyan-light border border-transparent rounded-md hover:brightness-95 focus:outline-none;}
+    .menubar-menu {@apply sm:flex sm:items-center;}
+    .menubar-menu-trigger {@apply flex flex-row items-center gap-2 min-h-[34px] min-w-[34px] md:pl-4 pl-2 pr-2 py-2 text-base leading-4 pp-text font-bold transition duration-150 ease-in-out pp-bg-cyan-light border border-transparent rounded-md hover:brightness-95 focus:outline-none;}
     .menubar-menu-trigger:focus {@apply pp-darker;}
     .menubar-menu-trigger:focus img {@apply rotate-180;}
+    .menubar-menu-trigger span {@apply hidden md:block overflow-ellipsis whitespace-nowrap overflow-hidden max-w-xs;}
 
     .toastify-customizations {@apply top-20 z-40;}
 

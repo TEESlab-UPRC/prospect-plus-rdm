@@ -10,7 +10,7 @@ const Menu = ({ user }) => {
             <Dropdown>
                 <Dropdown.Trigger>
                     <button type="button" className="menubar-menu-trigger">
-                        {user ? user.name : "Menu"}
+                        <span>{user ? user.name : "Menu"}</span>
                         <img className="w-4" src={MiscImg.MenuArrow}/>
                     </button>
                 </Dropdown.Trigger>

@@ -4,7 +4,7 @@ const defMargin = {top: 10, bottom: 10, left: 10, right: 10};
 
 const dlChart = (filename, margin = {}, transparency = false) => {
     // Get elements and their properties
-    const svgWrapper = document.getElementById("downloadable-chart");   // parent "chart" div
+    const svgWrapper = document.getElementById("offscreen-chart");   // parent "chart" div
     const svgEls = Array.from(svgWrapper.getElementsByTagName("svg"));
     const wRect = svgWrapper.getBoundingClientRect();
     // General init

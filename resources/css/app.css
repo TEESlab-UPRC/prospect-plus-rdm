@@ -201,4 +201,7 @@
 
     .sector-select img {@apply transition-transform;}
     .sector-select button:hover img {@apply scale-95;}
+
+    #offscreen-chart-container {@apply fixed invisible w-1 h-1 overflow-scroll;}
+    #offscreen-chart-container > div {@apply w-[1900px];}   /* controls downloaded chart size (not including added margins: defMargin @ ChartDLBtn component etc) */
 }

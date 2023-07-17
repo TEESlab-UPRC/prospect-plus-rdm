@@ -36,19 +36,20 @@ const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autoc
     svg.setAttribute('height', yMax - yMin);
 });
 
-const onResize = (w, h) => {
-    setClassStyle("pp-rtitle", s => s.fontSize = `${w / 50}px`);
-    setClassStyle("pp-rtick", s => s.fontSize = `${w / 75}px`);
-    setClassStyle("pp-rlabel", s => s.fontSize = `${w / 90}px`);
-    setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
+const onResize = (w, h, id) => {
+    setClassStyle(`pp-${id}-rtitle`, s => s.fontSize = `${w / 50}px`);
+    setClassStyle(`pp-${id}-rtick`, s => s.fontSize = `${w / 75}px`);
+    setClassStyle(`pp-${id}-rlabel`, s => s.fontSize = `${w / 90}px`);
+    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1250})`);
     svgAutoCropY();
 };
 
 
-const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoaded = null }) => {
+const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoaded = null, isOffscreen = false }) => {
     const [loaded, setLoaded] = useState(false);
     const barRef = useRef(null);
     const fontFamily = getCSSVar("pp-font-sans");
+    const id = isOffscreen ? "offscreen-chart" : "visible-chart";
     let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
@@ -68,12 +69,12 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
         patchLabel();
     });
 
-    return (<div className="grid grid-cols-1" id="downloadable-chart">
-        <svg className="mb-6 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
-            <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
+    return (<div className="grid grid-cols-1" id={id}>
+        <svg className={`${isOffscreen ? "mb-11" : "mb-6"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>
+            <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className={`pp-${id}-rtitle`} style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
-        <ResponsiveContainer aspect={8} width="100%" onResize={onResize}>
-            <BarChart title={title} label={title} width={200} height={400} data={[{value: percentage}]} layout='vertical' barCategoryGap="20%" margin={{left: 25, right: 25}} style={{ fontFamily: fontFamily }}>
+        <ResponsiveContainer aspect={8} width="100%" onResize={(w, h) => onResize(w, h, id)}>
+            <BarChart title={title} label={title} width={200} height={400} data={[{value: percentage}]} layout='vertical' barCategoryGap="20%" margin={(isOffscreen ? {left: 50, right: 50, bottom: 8} : {left: 25, right: 25, bottom: 2})} style={{ fontFamily: fontFamily }}>
                 <defs>
                     <linearGradient id="gradient" x1="0" y1="0" x2="1" y2="0">
                         <stop offset="0%" stopColor="red" />
@@ -85,15 +86,15 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
                 <CartesianGrid strokeDasharray="3 3" />
                 <ReferenceLine x={50} stroke="#ff9600" strokeDasharray="5 5" strokeWidth={2} />
                 <ReferenceLine x={75} stroke="#7dbe00" strokeDasharray="5 5" strokeWidth={2} />
-                <XAxis type="number" domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick className="pp-rtick" isYAxis={false}/>} />
+                <XAxis type="number" domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick className={`pp-${id}-rtick`} isYAxis={false} offset={isOffscreen ? 8 : 2}/>} />
                 <YAxis type="category" hide />
-                <Bar onAnimationStart={onAnimationStart} ref={barRef} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className="pp-rlabel">
+                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} ref={barRef} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className={`pp-${id}-rlabel`}>
                     <LabelList dataKey="value" content={FRCLabel}/>
                 </Bar>
             </BarChart>
         </ResponsiveContainer>
-        <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
-            <g className="pp-rmsg" children={resp[1].split(/[\r\n]+/).map((s, i) => {
+        <svg className={`${isOffscreen ? "mx-10 mt-4" : "mx-5"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>
+            <g className={`pp-${id}-rmsg`} children={resp[1].split(/[\r\n]+/).map((s, i) => {
                 return (<text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: resp[0] }}>{s.trim()}</text>);
             })}/>
         </svg>

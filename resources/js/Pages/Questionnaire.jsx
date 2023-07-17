@@ -26,7 +26,7 @@ const colorMap = Object.fromEntries(Object.entries({
 }).map(e => [e[0], getCSSVar(`pp-${e[1]}`)]));
 
 const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
-const centerToChart = () => centerTo(document.getElementById("downloadable-chart"));
+const centerToChart = () => centerTo(document.getElementById("visible-chart"));
 
 
 export default function Questionnaire({ auth, questionnaire, currentAnswers, analysisTitle, isDebug }) {
@@ -133,6 +133,15 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
                     <button type="button" onClick={gotoHome} className="pp-btn-yellow">
                         Start a new analysis
                     </button>
+                </div>
+                <div id="offscreen-chart-container">
+                    <div>
+                        {questionnaire.isRDM ? (
+                            <RDMChart percentages={result} title={questionnaire.title} isOffscreen={true} />
+                        ) : (
+                            <FRCChart percentage={result[0]} isOffscreen={true} />
+                        )}
+                    </div>
                 </div>
             </>)}
         </Layout>

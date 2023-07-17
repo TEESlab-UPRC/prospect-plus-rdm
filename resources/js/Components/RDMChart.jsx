@@ -18,19 +18,20 @@ const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autoc
     svg.setAttribute('height', yMax - yMin);
 });
 
-const onResize = (w, h, colNum) => {
-    setClassStyle("pp-rtitle", s => s.fontSize = `${w / 50}px`);
-    setClassStyle("pp-rval", s => s.fontSize = `${w / 75}px`);
-    setClassStyle("pp-rschemes", s => s.fontSize = `${w / (colNum * 15)}px`);
-    setClassStyle("pp-rlabel", s => s.fontSize = `${w / 85}px`);
-    setClassStyle("pp-rmsg", s => s.transform = `scale(${w / 1250})`);
+const onResize = (w, h, colNum, id) => {
+    setClassStyle(`pp-${id}-rtitle`, s => s.fontSize = `${w / 50}px`);
+    setClassStyle(`pp-${id}-rval`, s => s.fontSize = `${w / 75}px`);
+    setClassStyle(`pp-${id}-rschemes`, s => s.fontSize = `${w / (colNum * 15)}px`);
+    setClassStyle(`pp-${id}-rlabel`, s => s.fontSize = `${w / 85}px`);
+    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1250})`);
     svgAutoCropY();
 };
 
-const RDMChart = ({ percentages, title, onLoaded = null }) => {
+const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) => {
     const [loaded, setLoaded] = useState(false);
     const barRef = useRef(null);
     const fontFamily = getCSSVar("pp-font-sans");
+    const id = isOffscreen ? "offscreen-chart" : "visible-chart";
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
         let bar = barRef.current;
@@ -49,22 +50,22 @@ const RDMChart = ({ percentages, title, onLoaded = null }) => {
         patchLabel();
     });
 
-    return (<div className="grid grid-cols-1" id="downloadable-chart">
+    return (<div className="grid grid-cols-1" id={id}>
         <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
-            <g className="pp-rmsg" children={msg.map((s, i) => (
+            <g className={`pp-${id}-rmsg`} children={msg.map((s, i) => (
                 <text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: '#777' }} children={s}></text>)
             )}/>
         </svg>
-        <svg className="my-2 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
-            <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className="pp-rtitle" style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
+        <svg className={`${isOffscreen ? "my-4" : "my-2"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>
+            <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className={`pp-${id}-rtitle`} style={{ fontWeight: 'bold', fill: '#777' }}>{title}</text>
         </svg>
-        <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length)}>
-            <BarChart title={title} label={title} width={400} height={400} data={percentages} margin={{top: 15, bottom: 6}} style={{ fontFamily: fontFamily }}>
+        <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length, id)}>
+            <BarChart title={title} label={title} width={400} height={400} data={percentages} margin={(isOffscreen ? {top: 30, bottom: 20, right: 8, left: 4} : {top: 15, bottom: 8})} style={{ fontFamily: fontFamily }}>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className="pp-rschemes" style={{ fontWeight: 'bold' }}/>}/>
-                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className="pp-rval"/>}/>
-                <Bar onAnimationStart={onAnimationStart} ref={barRef} dataKey="result" fill="#0b2870" className="pp-rlabel">
-                    <LabelList dataKey="result" position="top" offset={4} formatter={Math.round}/>
+                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className={`pp-${id}-rschemes`} style={{ fontWeight: 'bold' }} offset={isOffscreen ? 8 : 2}/>}/>
+                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className={`pp-${id}-rval`} offset={isOffscreen ? 4 : 1}/>}/>
+                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} ref={barRef} dataKey="result" fill="#0b2870" className={`pp-${id}-rlabel`}>
+                    <LabelList dataKey="result" position="top" offset={isOffscreen ? 8 : 4} formatter={Math.round}/>
                 </Bar>
             </BarChart>
         </ResponsiveContainer>

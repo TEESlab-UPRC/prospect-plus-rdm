@@ -16,7 +16,7 @@ export default function AnalysisList({ auth, analyses }) {
 
     return (
         <Layout title="Your Analyses" auth={auth}>
-            <h1 className="text-center">Your analyses</h1>
+            <h1>Your analyses</h1>
             <hr />
             {analyses.length > 0 ? (
                 <>

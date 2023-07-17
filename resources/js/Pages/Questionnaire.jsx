@@ -91,7 +91,7 @@ export default function Questionnaire({ auth, questionnaire, currentAnswers, ana
     return (
         <Layout title={questionnaire.title} auth={auth}>
             {questionnaire.isRDM && (
-                <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-4 text-center">
                     <h2>Recommendation-Decision Matrix Tool</h2>
                     <img src={imgMap[questionnaire.title]} className="circle-img" />
                 </div>

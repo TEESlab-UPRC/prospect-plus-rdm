@@ -50,14 +50,14 @@ export default function Home({ auth }) {
                 </p>
                 <p><b>First-time user?</b> Check out the <GuidelinesLink text="Recommendation-Decision Matrix tool User Guide"/>.</p>
             </div>
-            <button type="button" onClick={start} className="self-center my-2 text-2xl pp-btn-green justify-self-center" style={{width: '250px'}}>Start!</button>
+            <button type="button" onClick={start} className="self-center my-2 text-2xl w-52 sm:w-64 pp-btn-green justify-self-center">Start!</button>
             <p className="text-sm">
                 The <b>Recommendation-Decision Matrix tool</b> has been developed in <PROSPECTplusLink />, a capacity-building HORIZON 2020 project aiming at bringing
                 together EU municipalities and empowering them to make more informed decisions on implementing their local energy and climate plans
                 (e.g. SEAPs, SECAPs, etc.) by using the appropriate <PPLearningProgrammeLink text="innovative financing schemes"/>.
             </p>
             <ConsortiumLogos />
-            <PrivacyPolicyLink className="mr-2 justify-self-end"/>
+            <PrivacyPolicyLink className="mr-2 text-right justify-self-end"/>
         </Layout>
     );
 }

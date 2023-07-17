@@ -31,7 +31,7 @@ export default function Welcome({ auth, pwReset, isRegister = false }) {
                 <hr />
             </div>
             <form onSubmit={submit} className={`gap-3 ${isRegister ? "pp-mark-required" : ""}`}>
-                <legend className="mb-0 small-legend">{isRegister ? "Register" : "Log in"}</legend>
+                <legend className="mb-0 text-center small-legend">{isRegister ? "Register" : "Log in"}</legend>
                 {isRegister && (<Input name="name" label="Name" errorObj={errors} autoComplete="name" required/>)}
                 <Input name="email" label="Email" errorObj={errors} autoComplete="username" type="email" required/>
                 <Input name="password" label="Password" errorObj={errors} autoComplete={isRegister ? "new-password" : (pwReset ? "off" : "current-password")} type="password" required/>
@@ -40,7 +40,7 @@ export default function Welcome({ auth, pwReset, isRegister = false }) {
                 ) : (
                     <div className="flex flex-row justify-between">
                         <Input name="remember" label="Remember me" type="checkbox"/>
-                        <Link href={route('password.request')} className="mr-2 pp-link-faint">forgot password?</Link>
+                        <Link href={route('password.request')} className="mr-2 text-right pp-link-faint">forgot password?</Link>
                     </div>
                 )}
                 <div className="flex items-center justify-end mt-2">
@@ -51,7 +51,7 @@ export default function Welcome({ auth, pwReset, isRegister = false }) {
             <hr />
             <div className="grid grid-cols-1 gap-2">
                 <button className="pp-btn-lime" onClick={skipToHome}>Proceed without an account</button>
-                <PrivacyPolicyLink className="mr-2 justify-self-end"/>
+                <PrivacyPolicyLink className="mr-2 text-right justify-self-end"/>
             </div>
         </Layout>
     );

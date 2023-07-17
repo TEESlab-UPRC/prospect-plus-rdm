@@ -14,7 +14,7 @@ const PoweredBy = () => (
     </div>
 );
 
-export default function Layout({ className, title, auth, children }) {
+export default function Layout({ className = "", title, auth, children }) {
     const isAltLayout = altLayoutRoutes.includes(route().current());
 
     return (

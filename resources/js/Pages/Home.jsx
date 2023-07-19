@@ -31,7 +31,7 @@ export default function Home({ auth }) {
                     authorities and their implementing agencies, who are looking at ways to increase or diversify their funding base
                     in order to bridge their municipal infrastructure needs across <b> 5 different sectors:</b>
                 </p>
-                <ul className="ml-10 list-disc">
+                <ul>
                     <li>Public Buildings</li>
                     <li>Private Buildings</li>
                     <li>Public Lightning</li>

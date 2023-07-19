@@ -91,6 +91,8 @@
     }
 
     a {@apply cursor-pointer;}
+    ul {@apply ml-10 list-disc;}
+    ol {@apply ml-10 list-decimal;}
 
     h1 {@apply pp-title;}
     h2 {@apply pp-title-small;}

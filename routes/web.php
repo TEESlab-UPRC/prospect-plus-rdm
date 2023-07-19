@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\AnalysisInfoController;
 use App\Http\Controllers\AnalysisListController;
 use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\SimplePageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,5 +64,7 @@ Route::post('/analyses/delete', [AnalysisListController::class, 'delete'])->name
 
 Route::get('/profile', [ProfileEditController::class, 'render'])->name('profile.render');
 Route::post('/profile/store', [ProfileEditController::class, 'store'])->name('profile.store');
+
+Route::get('/privacy-policy', [SimplePageController::class, 'renderPrivacyPolicy'])->name('privacy-policy.render');
 
 require __DIR__.'/auth.php';

@@ -2,7 +2,7 @@ import Input from '@/Components/Input';
 import { useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
 
-export default function ForgotPassword({ auth, status }) {
+export default function ForgotPassword({ auth, env, status }) {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
     });
@@ -13,7 +13,7 @@ export default function ForgotPassword({ auth, status }) {
     };
 
     return (
-        <Layout title="Forgot Password" auth={auth} className="max-w-2xl gap-7">
+        <Layout title="Forgot Password" auth={auth} env={env} className="max-w-2xl gap-7">
             <div className="pp-text">
                 Forgot your password? No problem. Just let us know your email address and we will email you a password
                 reset link that will allow you to choose a new one.

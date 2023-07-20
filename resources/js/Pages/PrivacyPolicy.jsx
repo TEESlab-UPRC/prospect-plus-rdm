@@ -1,8 +1,8 @@
 import Layout from '@/Layouts/GeneralLayout';
 
-export default function PrivacyPolicy({ auth }) {
+export default function PrivacyPolicy({ auth, env }) {
     return (
-        <Layout title="Privacy Policy" auth={auth} className="max-w-5xl gap-4 justify-items-start pp-text">
+        <Layout title="Privacy Policy" auth={auth} env={env} className="max-w-5xl gap-4 justify-items-start pp-text">
             <h1 className="justify-self-center">Privacy Policy</h1>
             <p><i>When using this web application you consent to the collection, storage, processing and utilization of your information as described in this Privacy Policy.</i></p>
             <h2>Who we are</h2>

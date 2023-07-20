@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { onPageLoad } from '@/Helpers/DomHelpers';
 import { toast } from 'react-toastify';
 
-export default function ProfileEdit({ auth }) {
+export default function ProfileEdit({ auth, env }) {
     const user = auth.user;
     const { data, setData, post, processing, errors, reset } = useForm({
         name: user.name,
@@ -43,7 +43,7 @@ export default function ProfileEdit({ auth }) {
     };
 
     return (
-        <Layout title="Edit Profile" auth={auth} className="max-w-2xl">
+        <Layout title="Edit Profile" auth={auth} env={env} className="max-w-2xl">
             <h1>Edit Profile</h1>
             <p className="pp-text">
                 You can change your profile info from here.<br />

@@ -89,7 +89,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     const gotoHome = () => router.get(route('home.render'));
 
     return (
-        <Layout title={questionnaire.title} auth={auth}>
+        <Layout title={questionnaire.title} auth={auth} env={env}>
             {questionnaire.isRDM && (
                 <div className="flex flex-col items-center gap-4 text-center">
                     <h2>Recommendation-Decision Matrix Tool</h2>

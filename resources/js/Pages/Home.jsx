@@ -8,11 +8,11 @@ import { GuidelinesLink, PPLearningProgrammeLink, PROSPECTplusLink, PrivacyPolic
 
 const start = () => router.post(route('info.load'));
 
-export default function Home({ auth }) {
+export default function Home({ auth, env }) {
     useEffect(() => onPageLoad(() => auth.user || toast.info("Guest mode: log in if you want your analyses to be saved!")), []);
 
     return (
-        <Layout title="Home" auth={auth} className="grid grid-cols-1">
+        <Layout title="Home" auth={auth} env={env} className="grid grid-cols-1">
             <h2 className="text-center">
                 Recommendation-Decision Matrix Tool<br />
                 for selecting financing schemes

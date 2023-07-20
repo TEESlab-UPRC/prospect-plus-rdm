@@ -3,7 +3,7 @@ import Input from '@/Components/Input';
 import { useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
 
-export default function ResetPassword({ auth, token, email }) {
+export default function ResetPassword({ auth, env, token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
         email: email,
@@ -23,7 +23,7 @@ export default function ResetPassword({ auth, token, email }) {
     };
 
     return (
-        <Layout title="Reset Password" auth={auth} className="max-w-2xl">
+        <Layout title="Reset Password" auth={auth} env={env} className="max-w-2xl">
             <form onSubmit={submit} className="flex flex-col gap-6">
                 <Input name="email" label="Email" formObj={{data, setData, errors}} autoComplete="username" type="email" required disabled/>
                 <Input name="password" label="Password" formObj={{data, setData, errors}} autoComplete="new-password" type="password" required/>

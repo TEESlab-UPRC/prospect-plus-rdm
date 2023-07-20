@@ -8,9 +8,9 @@ const ImgLink = ({img, dest}) => (
     }/>
 );
 
-export default function SectorSelection({ auth }) {
+export default function SectorSelection({ auth, env }) {
     return (
-        <Layout title="Sector Selection" auth={auth} className="text-center">
+        <Layout title="Sector Selection" auth={auth} env={env} className="text-center">
             <h2>Recommendation-Decision Matrix Tool</h2>
             <h3>Select sector for your analysis:</h3>
             <div className="sector-select">

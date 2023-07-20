@@ -4,7 +4,7 @@ import { onPageLoad, getFormData, setFormData } from '@/Helpers/DomHelpers';
 import { useEffect, useState } from 'react';
 import Layout from '@/Layouts/GeneralLayout';
 
-export default function AnalysisInfo({ auth, plans, types, phases, sectors, info, editMode }) {
+export default function AnalysisInfo({ auth, env, plans, types, phases, sectors, info, editMode }) {
     const [errors, setErrors] = useState({});
 
     const onSubmit = e => {
@@ -21,7 +21,7 @@ export default function AnalysisInfo({ auth, plans, types, phases, sectors, info
     })), []);
 
     return (
-        <Layout title="Analysis Details" auth={auth}>
+        <Layout title="Analysis Details" auth={auth} env={env}>
             <form id="analysis-info-form" onSubmit={onSubmit} className="pp-mark-required">
                 <legend>Your Analysis Details</legend>
                 <fieldset>

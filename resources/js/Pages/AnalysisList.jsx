@@ -3,7 +3,7 @@ import Layout from '@/Layouts/GeneralLayout';
 import { router } from '@inertiajs/react';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-export default function AnalysisList({ auth, analyses }) {
+export default function AnalysisList({ auth, env, analyses }) {
     const goToHome = () => router.get(route('home.render'));
 
     const NewAnalysisBtn = () => (
@@ -15,7 +15,7 @@ export default function AnalysisList({ auth, analyses }) {
     );
 
     return (
-        <Layout title="Your Analyses" auth={auth}>
+        <Layout title="Your Analyses" auth={auth} env={env}>
             <h1>Your analyses</h1>
             <hr />
             {analyses.length > 0 ? (

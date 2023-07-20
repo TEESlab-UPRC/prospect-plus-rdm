@@ -6,7 +6,7 @@ import Layout from '@/Layouts/GeneralLayout';
 import { PROSPECTplusLogo } from '@/Components/Logo';
 import { PrivacyPolicyLink } from '@/Components/ExtLink';
 
-export default function Welcome({ auth, pwReset, isRegister = false }) {
+export default function Welcome({ auth, env, pwReset, isRegister = false }) {
     const [errors, setErrors] = useState({});
 
     const submit = e => {
@@ -17,7 +17,7 @@ export default function Welcome({ auth, pwReset, isRegister = false }) {
     const skipToHome = () => router.get(route('home.render'));
 
     return (
-        <Layout title="Welcome" auth={auth} className="pb-4">
+        <Layout title="Welcome" auth={auth} env={env} className="pb-4">
             <div className="welcome-pp-logo">
                 <PROSPECTplusLogo />
                 <h3 className="pp-fg-blue-light">Capacity building for cities and regions<br />From learning to action!</h3>

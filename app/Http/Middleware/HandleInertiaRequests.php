@@ -39,6 +39,9 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'env' => [
+                'debug' => env('APP_DEBUG', false),
+            ]
         ]);
     }
 }

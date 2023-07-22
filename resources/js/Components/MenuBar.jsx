@@ -11,7 +11,7 @@ const MenuBar = ({ user }) => {
             </div>
             <div>
                 <GuidelinesLink />
-                <Menu user={user} />
+                <Menu user={user}/>
             </div>
         </div>
     );

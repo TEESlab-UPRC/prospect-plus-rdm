@@ -33,13 +33,16 @@ const centerToChart = () => centerTo(document.getElementById("visible-chart"));
 
 export default function Questionnaire({ auth, env, questionnaire, currentAnswers, analysisTitle }) {
     const isEdit = !!currentAnswers;
-    const resultFilename = [analysisTitle, questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check", "results"].filter(e => e).join(" - ");
+    const dlQuestionnaireTitle = questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check";
+    const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
 
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
     const onChartLoad = () => setTimeout(() => window.scrollY == 0 && centerToChart(), editChartCenterDelay);
+
+    const DLBtn = () => (<ChartDLBtn filename={resultFilename}/>);
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
         if(!isEdit || filled) return;
@@ -110,10 +113,10 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
                 {questionnaire.isRDM ? (<>
                     <RDMChart percentages={result} title={questionnaire.title} onLoaded={onChartLoad} />
                     {isEdit ? ( // edit mode
-                        <ChartDLBtn filename={resultFilename} />
+                        <DLBtn />
                     ) : (
                         <div className="grid grid-cols-2 gap-4">
-                            <ChartDLBtn filename={resultFilename} />
+                            <DLBtn />
                             <button type="button" onClick={gotoFRC} className="pp-btn-lime">
                                 Continue to the Quick Finance Readiness Check
                             </button>
@@ -121,7 +124,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
                     )}
                 </>) : (<>
                     <FRCChart percentage={result[0]} onLoaded={onChartLoad} />
-                    <ChartDLBtn filename={resultFilename} />
+                    <DLBtn />
                 </>)}
                 <div className="grid grid-cols-2 gap-4">
                     {auth.user ? (

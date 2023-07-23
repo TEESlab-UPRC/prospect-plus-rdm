@@ -1,5 +1,4 @@
 export const Guidelines = null;   // TODO: put guidelines link here
-export const PrivacyPolicy = "/privacy-policy";
 export const TEESlab = "https://teeslab.unipi.gr/";
 export const PROSPECTplus = "https://h2020prospect.eu/";
 export const PPLearningHandbooks = "https://h2020prospect.eu/learning-handbooks";
@@ -20,7 +19,6 @@ export const Consortium = {
 
 export default {
     Guidelines,
-    PrivacyPolicy,
     TEESlab,
     PROSPECTplus,
     PPLearningHandbooks,

@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { onPageLoad } from '@/Helpers/DomHelpers';
 import { toast } from 'react-toastify';
 import { ConsortiumLogos } from '@/Components/Logo';
-import { GuidelinesLink, PPLearningProgrammeLink, PROSPECTplusLink, PrivacyPolicyLink } from '@/Components/ExtLink';
+import { PrivacyPolicyLink } from '@/Components/IntLink';
+import { GuidelinesLink, PPLearningProgrammeLink, PROSPECTplusLink } from '@/Components/ExtLink';
 
 const start = () => router.post(route('info.load'));
 

@@ -4,7 +4,7 @@ import { getFormData } from '@/Helpers/DomHelpers';
 import { Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
 import { PROSPECTplusLogo } from '@/Components/Logo';
-import { PrivacyPolicyLink } from '@/Components/ExtLink';
+import { PrivacyPolicyLink } from '@/Components/IntLink';
 
 export default function Welcome({ auth, env, pwReset, isRegister = false }) {
     const [errors, setErrors] = useState({});

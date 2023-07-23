@@ -8,44 +8,48 @@ export default function PrivacyPolicy({ auth, env }) {
             <h2>Who we are</h2>
             <p>This web application was created and is hosted by <b>TEESlab</b>.</p>
             <h2>What data we collect</h2>
-            <p>
-                We collect the data <b>registered and logged in users directly provide</b> to us.<br />
-                More specifically, provided during registration or when editing your profile:
-                <ul className="mb-2">
+            <div>
+                <p>
+                    We collect the data <b>registered and logged in users directly provide</b> to us.<br />
+                    More specifically, provided during registration or when editing your profile:
+                </p>
+                <ul>
                     <li>User name</li>
                     <li>Email address</li>
                     <li>User password <i>(more accurately, its derivative hash)</i></li>
                 </ul>
-                Additionally, during your analyses, we collect the following:
-                <ul className="mb-2">
+            </div>
+            <div>
+                <p>Additionally, during your analyses, we collect the following:</p>
+                <ul>
                     <li>The analysis info you enter</li>
                     <li>Your questionnaire answers</li>
                 </ul>
-                When you create or edit the info of your account or analyses, we might also store <b>creation/modification timestamps</b>.
-            </p>
+            </div>
+            <p>When you create or edit the info of your account or analyses, we might also store <b>creation/modification timestamps</b>.</p>
             <p>
                 Your <b>IP address</b> might be stored, in order for the application to function and if required to protect our services from attacks.<br />
                 This applies to all users, not just the registered and logged in ones.
             </p>
             <p>No sensitive information gets collected by this application.</p>
             <h2>How we process your information</h2>
-            <p>
-                The reasons we process your information depend on how you interact with this service and include:
+            <div>
+                <p>The reasons we process your information depend on how you interact with this service and include:</p>
                 <ul>
                     <li>To facilitate account creation, recovery and user authentication</li>
                     <li>For the application to function</li>
                 </ul>
-            </p>
+            </div>
             <h2>Legal ground for processing your data</h2>
-            <p>
-                We process your data on the legal ground that such processing is necessary to:
+            <div>
+                <p>We process your data on the legal ground that such processing is necessary to:</p>
                 <ul>
                     <li>provide this service to you, as requested</li>
                     <li>detect, prevent and address potential security issues concerning our services</li>
                     <li>fulfil our legal obligations</li>
                     <li>protect your vital interests or the vital interests of a third party, such as situations involving potential threads to a person's safety</li>
                 </ul>
-            </p>
+            </div>
             <h2>With who we share your data</h2>
             <p>We do <b>not</b> share your data with any third parties.</p>
             <h2>Usage of cookies</h2>

@@ -9,7 +9,7 @@ import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
 import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
 
-const editChartCenterDelay = 200;
+const onChartLoadCenterDelay = 100;
 
 const imgMap = {
     'Public Buildings': SectorCircleImg.PublicBuildings,
@@ -36,11 +36,12 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     const dlQuestionnaireTitle = questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check";
     const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
+    const [initScrollY, setInitScrollY] = useState(window.scrollY);
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
 
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
-    const onChartLoad = () => setTimeout(() => window.scrollY == 0 && centerToChart(), editChartCenterDelay);
+    const onChartLoad = () => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay);
 
     const DLBtn = () => (<ChartDLBtn filename={resultFilename}/>);
 
@@ -71,7 +72,8 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     function onSubmit(e){
         e.preventDefault();
         let answers = showResults(e.target);
-        centerToChart();
+        setInitScrollY(window.scrollY);
+        if(filled) centerToChart();
         if(auth.user && answers) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true,
             onSuccess: () => toast.success(`Answers ${filled ? "edited" : "saved"} successfully!`),
             onError: () => toast.error("Failed to save answers!")
@@ -81,6 +83,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     function resetState(){
         setResult([0]);
         setFilled(false);
+        setInitScrollY(window.scrollY);
     };
 
     function gotoFRC(){

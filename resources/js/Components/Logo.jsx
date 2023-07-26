@@ -13,7 +13,7 @@ const Logo = ({ logo, website, ...props }) => (
 export const TEESlabLogo =      props => (<Logo {...props} logo={LogoImg.TEESlab}      website={Websites.TEESlab}/>);
 export const PROSPECTplusLogo = props => (<Logo {...props} logo={LogoImg.PROSPECTplus} website={Websites.PROSPECTplus}/>);
 
-export const ConsortiumLogo = {
+const ConsortiumLogo = {
     IEECPLogo:       props => (<Logo {...props} logo={CLogoImgs.IEECP}       website={CWebsites.IEECP}/>),
     FEDARENELogo:    props => (<Logo {...props} logo={CLogoImgs.FEDARENE}    website={CWebsites.FEDARENE}/>),
     InnolidLogo:     props => (<Logo {...props} logo={CLogoImgs.Innolid}     website={CWebsites.Innolid}/>),

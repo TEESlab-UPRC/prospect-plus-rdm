@@ -1,3 +1,4 @@
+import {GAOptOutAddonLink} from '@/Components/ExtLink';
 import Layout from '@/Layouts/GeneralLayout';
 
 export default function PrivacyPolicy({ auth, env }) {
@@ -31,6 +32,26 @@ export default function PrivacyPolicy({ auth, env }) {
                 Your <b>IP address</b> might be stored, in order for the application to function and if required to protect our services from attacks.<br />
                 This applies to all users, not just the registered and logged in ones.
             </p>
+            <div>
+                <p>
+                    In addition, we gather <b>analytics</b> data (using Google Analytics 4) in order to prepare <b>aggregated, anonymized statistics on visitor’s activity</b>.
+                    This data includes basic information about your device/browser (e.g. language), your region/country (<i>not</i> granular location or IP address),
+                    and information as you browse the website and perform certain actions (e.g. view results, edit stored information); specifically:
+                </p>
+                <ul>
+                    <li>whether or not you're logged in</li>
+                    <li>current page & title</li>
+                    <li>previous page & title (<i>only</i> if it was still within this application)</li>
+                    <li>if you're in editing mode (where it applies)</li>
+                    <li>current questionnaire title (where it applies)</li>
+                    <li>outbound link text/destination (where it applies)</li>
+                    <li>unexpected errors received</li>
+                </ul>
+            </div>
+            <div>
+                <b>None of this data contains personally identifiable information or specific data you submitted.</b>
+                <p>If you wish to <i><b>opt-out</b></i> from making your site activity available to Google Analytics, you can do so by installing the <GAOptOutAddonLink />.</p>
+            </div>
             <p>No sensitive information gets collected by this application.</p>
             <h2>How we process your information</h2>
             <div>
@@ -51,16 +72,19 @@ export default function PrivacyPolicy({ auth, env }) {
                 </ul>
             </div>
             <h2>With who we share your data</h2>
-            <p>We do <b>not</b> share your data with any third parties.</p>
-            <h2>Usage of cookies</h2>
             <p>
-                <i>Cookies are small text files that a website may store on your device when you visit.</i><br />
+                We do <b>not</b> share your personal data with any third parties.<br />
+                Your anonymized site activity will be gathered by Google Analytics, as described above.
+            </p>
+            <h2>Usage of cookies</h2>
+            <i>Cookies are small text files that a website may store on your device when you visit.</i>
+            <p>
                 <b>This application requires cookies to function</b> properly. As such, the application will store cookies on your device, while using it.<br />
                 You can configure your browser to block the use of cookies, but that might render this application unusable for you.<br />
                 Some of these cookies might be retained for a few days, but if you wish, you can manually delete them from your browser earlier, once you're done using the application.<br />
                 <i>Please note that deleting your cookies will also instantly log you out.</i><br />
-                <b>Cookies do not get used by this service for any other reason.</b>
             </p>
+            <p>In addition, Google Analytics uses cookies to function. For more information, please refer to the section <i>"What data we collect"</i>.</p>
             <h2>Data retention</h2>
             <p>
                 We keep the data listed above for <b>as long as necessary</b> to fulfil the purposes already described.<br />

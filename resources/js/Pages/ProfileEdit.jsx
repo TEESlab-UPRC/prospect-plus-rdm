@@ -4,6 +4,7 @@ import Layout from '@/Layouts/GeneralLayout';
 import { useEffect } from 'react';
 import { onPageLoad } from '@/Helpers/DomHelpers';
 import { toast } from 'react-toastify';
+import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
 
 export default function ProfileEdit({ auth, env }) {
     const user = auth.user;
@@ -37,9 +38,10 @@ export default function ProfileEdit({ auth, env }) {
 
     const submit = e => {
         e.preventDefault();
-        post(route('profile.store'), {preserveState: true, preserveScroll: true,
-            onSuccess: () => toast.success("Profile info saved successfully!")
-        });
+        post(route('profile.store'), {preserveState: true, preserveScroll: true, onSuccess: () => {
+            toast.success("Profile info saved successfully!");
+            analyticsEvent("edit_user_info");
+        }});
     };
 
     return (

@@ -1,11 +1,12 @@
 import LogoImg from '@/../img/logos/LogoImg';
 import Websites from '@/Constants/Websites';
+import { analyticsLinkClick } from '@/Helpers/AnalyticsHelpers';
 
 const CLogoImgs = LogoImg.Consortium;
 const CWebsites = Websites.Consortium;
 
 const Logo = ({ logo, website, ...props }) => (
-    <a {...props} href={website} target="_blank">
+    <a {...props} href={website} target="_blank" onClick={() => analyticsLinkClick(website)}>
         <img {...props} src={logo}/>
     </a>
 );

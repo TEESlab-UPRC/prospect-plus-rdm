@@ -1,3 +1,4 @@
+import { analyticsEvent, analyticsException } from '@/Helpers/AnalyticsHelpers';
 import { confirm } from '@/Helpers/DialogHelpers';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
@@ -15,8 +16,14 @@ const Analysis = ({ analysis }) => {
         setDeleting(true);
         confirm("Please confirm deletion", "Are you sure you want to delete this analysis?",
             () => router.post(route('analyses.delete'), {analysis: id}, {preserveState: true, preserveScroll: true,
-                onSuccess: () => toast.success("Analysis deleted successfully!"),
-                onError: () => toast.error("Failed to delete analysis!")
+                onSuccess: () => {
+                    toast.success("Analysis deleted successfully!");
+                    analyticsEvent("deleted_analysis");
+                },
+                onError: () => {
+                    toast.error("Failed to delete analysis!");
+                    analyticsException("failed to delete analysis");
+                }
             }), null, () => setDeleting(false)
         );
     };

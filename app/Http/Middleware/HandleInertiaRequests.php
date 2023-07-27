@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
             },
             'env' => [
                 'debug' => env('APP_DEBUG', false),
+                'gtag' => env('ANALYTICS_GTAG', null)
             ]
         ]);
     }

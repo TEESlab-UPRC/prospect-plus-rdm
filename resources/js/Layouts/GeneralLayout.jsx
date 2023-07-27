@@ -4,6 +4,8 @@ import { ToastContainer } from 'react-toastify';
 import { TEESlabLogo } from '@/Components/Logo';
 import Footer from '@/Components/Footer';
 import MiscImg from '@/../img/misc/MiscImg';
+import { useEffect } from 'react';
+import { analyticsInitPage } from '@/Helpers/AnalyticsHelpers';
 
 const altLayoutRoutes = ['welcome', 'login', 'register'];
 
@@ -16,6 +18,8 @@ const PoweredBy = () => (
 
 export default function Layout({ title, auth, env, className = "", children }) {
     const isAltLayout = altLayoutRoutes.includes(route().current());
+
+    useEffect(() => analyticsInitPage(env.gtag, title, auth.user), [title, auth.user]);
 
     return (
         <>

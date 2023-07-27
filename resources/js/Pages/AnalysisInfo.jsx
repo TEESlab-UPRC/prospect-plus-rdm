@@ -3,13 +3,16 @@ import Input from '@/Components/Input';
 import { onPageLoad, getFormData, setFormData } from '@/Helpers/DomHelpers';
 import { useEffect, useState } from 'react';
 import Layout from '@/Layouts/GeneralLayout';
+import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
 
 export default function AnalysisInfo({ auth, env, plans, types, phases, sectors, info, editMode }) {
     const [errors, setErrors] = useState({});
 
     const onSubmit = e => {
         e.preventDefault();
-        router.post(route('info.store'), {info: getFormData(e.target)}, {onError: setErrors, preserveScroll:true, preserveState: true});
+        router.post(route('info.store'), {info: getFormData(e.target)}, {preserveScroll: true, preserveState: true, onError: setErrors,
+            onSuccess: () => editMode && analyticsEvent("edit_analysis_info")
+        });
     };
 
     useEffect(() => onPageLoad(() => setFormData(document.getElementById("analysis-info-form"), info, el => {

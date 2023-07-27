@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Input from '@/Components/Input';
 import { getFormData } from '@/Helpers/DomHelpers';
 import { Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
 import { PROSPECTplusLogo } from '@/Components/Logo';
 import { PrivacyPolicyLink } from '@/Components/IntLink';
+import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
 
 export default function Welcome({ auth, env, pwReset, isRegister = false }) {
     const [errors, setErrors] = useState({});
 
+    useEffect(() => {pwReset && analyticsEvent("reset_password");}, []);
+
     const submit = e => {
         e.preventDefault();
-        router.post(route(isRegister ? 'register' : 'login'), getFormData(e.target), {onError: setErrors, preserveState: true, preserveScroll: true});
+        router.post(route(isRegister ? 'register' : 'login'), getFormData(e.target), {
+            preserveState: true, preserveScroll: true, onError: setErrors,
+            onSuccess: () => analyticsEvent(isRegister ? "sign_up" : "login")
+        });
     };
 
     const skipToHome = () => router.get(route('home.render'));

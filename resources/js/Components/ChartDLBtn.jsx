@@ -41,8 +41,11 @@ const dlChart = (filename, margin = {}, transparency = false) => {
     });
 }
 
-const ChartDLBtn = ({filename = "results", text = "Download results", className = "pp-btn-green", margin={}}) => {
-    return (<button type="button" onClick={() => dlChart(filename, margin)} className={className}>{text}</button>);
+const ChartDLBtn = ({filename = "results", text = "Download results", className = "pp-btn-green", margin={}, callback = null}) => {
+    return (<button type="button" onClick={() => {
+        dlChart(filename, margin);
+        callback && callback();
+    }} className={className}>{text}</button>);
 }
 
 export default ChartDLBtn;

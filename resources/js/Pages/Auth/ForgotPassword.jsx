@@ -1,6 +1,7 @@
 import Input from '@/Components/Input';
 import { useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
+import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
 
 export default function ForgotPassword({ auth, env, status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -9,7 +10,7 @@ export default function ForgotPassword({ auth, env, status }) {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('password.email'));
+        post(route('password.email'), {onSuccess: () => analyticsEvent("request_password_reset")});
     };
 
     return (

@@ -8,6 +8,7 @@ import { onPageLoad, centerTo, getCSSVar } from '@/Helpers/DomHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
 import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
+import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
 
 const onChartLoadCenterDelay = 100;
 
@@ -43,7 +44,10 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
     const onChartLoad = () => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay);
 
-    const DLBtn = () => (<ChartDLBtn filename={resultFilename}/>);
+    const DLBtn = () => (<ChartDLBtn filename={resultFilename} callback={() => analyticsEvent("download_results", {
+        questionnaire_title: dlQuestionnaireTitle,
+        questionnaire_context: isEdit ? "later" : "initial"
+    })}/>);
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
         if(!isEdit || filled) return;
@@ -65,6 +69,10 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
             'fill': colorMap[questionnaire.title]
         })));
         else setResult([reduceAns2Percent(answers)]);
+        analyticsEvent("view_results", {
+            questionnaire_title: dlQuestionnaireTitle,
+            questionnaire_context: isEdit ? (filled ? "later edit" : "later view") : (filled ? "initial submission edit" : "initial submission view")
+        });
         setFilled(true);
         return answers;
     }
@@ -88,6 +96,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
 
     function gotoFRC(){
         resetState();
+        analyticsEvent("continue_to_finance_readiness_check");
         router.post(route('questionnaire.load'), {type: 'frc'});
     };
 

@@ -41,7 +41,7 @@ export default function AnalysisInfo({ auth, env, plans, types, phases, sectors,
                     <Input name="sector" label="Sector:" errorObj={errors} options={sectors}/>
                     <Input name="phase" label="Phase:" errorObj={errors} options={phases}/>
                     <Input name="implementation_start" label="(Estimated) Starting date of implementation:" errorObj={errors} type="date"/>
-                    <Input name="completion_start" label="(Estimated) Starting date of completion:" errorObj={errors} type="date"/>
+                    <Input name="completion_start" label="(Estimated) Date of completion:" errorObj={errors} type="date"/>
                 </fieldset>
                 <button type="submit" className="pp-btn-green">{editMode ? "Save" : "Next"}</button>
             </form>

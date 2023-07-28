@@ -52,7 +52,7 @@ const Analyses = ({ analyses }) => (
         ))}/>
         <thead>
             <tr children={[
-                "Authority/Agency", "Project Title", "Sector", "Financial Readiness Check", "Recommendation-Decision Matrix", "Analysis Actions"
+                "Authority/Agency", "Project Title", "Sector", "Quick Finance Readiness Check", "Recommendation-Decision Matrix", "Analysis Actions"
             ].map((h, i) => (
                 <th key={`h${i}`}>{h}</th>
             ))}/>

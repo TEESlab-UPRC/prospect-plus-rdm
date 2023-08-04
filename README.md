@@ -1,5 +1,5 @@
 # Recommendations-Decision Matrix Tool
-Prospect+ Recommendations-Decision Matrix tool, powered by TEESlab.
+[PROSPECT+](https://h2020prospect.eu/) [Recommendations-Decision Matrix tool](https://rdmtool.teeslab.unipi.gr/), powered by [TEESlab](https://teeslab.unipi.gr/).
 
 ## Requirements
 - PHP 8.1
@@ -60,4 +60,4 @@ The [LICENSE](LICENSE) does not apply to the images included in this repo.
 
 ## Disclaimer
 This tool was developed under the H2020 PROSPECT+ project.  
-The PROSPECT+ project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101023271. The content of this page is for information purpose only. The relevant legal instruments and the text of the call shall take precedence over the information contained in this page. The European Commission or CINEA does not accept responsibility for any use made of the information contained therein.
+_The PROSPECT+ project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 101023271. The content of this page is for information purpose only. The relevant legal instruments and the text of the call shall take precedence over the information contained in this page. The European Commission or CINEA does not accept responsibility for any use made of the information contained therein._

@@ -12,6 +12,7 @@ const showHelp = e => {
         <div class="flex flex-col gap-2 my-1">
             <span><b>Need help using the app?</b> Check out the <a ${Websites.Guidelines ? `href="${Websites.Guidelines}"` : ""} target="_blank" class="pp-link">User Guide</a>!</span>
             <span><b>Need further support or to contact us?</b> Email us: rdmtool.teeslab [at] unipi.gr</span>
+            <span><b>Want to look at the app's code?</b> Check out our <a ${Websites.Repo ? `href="${Websites.Repo}"` : ""} target="_blank" class="pp-link">repository</a>!</span>
         </div>
     `, null, "45rem");
 };

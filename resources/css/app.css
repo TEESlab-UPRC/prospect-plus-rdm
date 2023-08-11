@@ -135,7 +135,10 @@
     }
 
     .pp-outer-container {@apply relative flex flex-col min-h-screen bg-gray-100 bg-center bg-img;}
-    .pp-middle-container {@apply flex flex-col items-center justify-center h-full grow pt-20;}
+    .pp-middle-container {
+        @apply flex flex-col items-center justify-center h-full grow pt-20;
+        margin-bottom: -0.5rem;
+    }
     .pp-inner-container {@apply sm:min-w-[500px] grid grid-cols-1 gap-5 p-6 mx-16 mb-6 scale-100 bg-white rounded-lg shadow-2xl max-w-7xl from-gray-700/50 via-transparent shadow-gray-500/20;}
 
     .pp-table {@apply bg-white rounded-md shadow-md pp-text text-left;}

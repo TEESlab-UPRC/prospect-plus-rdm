@@ -94,8 +94,8 @@ export default function Layout({ title, auth, env, locale = {current: "en", avai
                     <div className={`pp-inner-container ${className}`}>
                         {children}
                     </div>
-                    <SetLocaleBtn />
                 </div>
+                <SetLocaleBtn />
                 <Footer />
             </div>
             <ToastContainer autoClose={6000} className="toastify-customizations"/>

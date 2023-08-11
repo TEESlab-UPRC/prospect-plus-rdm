@@ -78,13 +78,13 @@ class AnalysisInfoController extends Controller{
                 'phase' => 'nullable|in:' . join(',', static::getPhases()),
                 'implementation_start' => 'nullable|date_format:Y-m-d',
                 'completion_start' => 'nullable|date_format:Y-m-d'
-            ], [], [
+            ], [], array_map(fn($v) => __($v), [
                 'org' => 'authority/agency',
                 'region' => 'city/region',
                 'plan' => 'plan/strategy',
                 'title' => 'project title',
                 'type' => 'type of measure'
-            ])->validate();
+            ]))->validate();
             return $i;
         }
         return null;

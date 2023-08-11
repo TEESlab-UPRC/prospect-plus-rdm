@@ -5,9 +5,11 @@ import { useEffect } from 'react';
 import { onPageLoad } from '@/Helpers/DomHelpers';
 import { toast } from 'react-toastify';
 import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
+import useTransHelper from '@/Helpers/TransHelpers';
 
-export default function ProfileEdit({ auth, env }) {
+export default function ProfileEdit({ auth, env, locale }) {
     const user = auth.user;
+    const { t, tHTML } = useTransHelper();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: user.name,
         email: user.email,
@@ -39,29 +41,29 @@ export default function ProfileEdit({ auth, env }) {
     const submit = e => {
         e.preventDefault();
         post(route('profile.store'), {preserveState: true, preserveScroll: true, onSuccess: () => {
-            toast.success("Profile info saved successfully!");
+            toast.success(t("Profile info saved successfully!"));
             analyticsEvent("edit_user_info");
         }});
     };
 
     return (
-        <Layout title="Edit Profile" auth={auth} env={env} className="max-w-2xl">
-            <h1>Edit Profile</h1>
-            <p className="pp-text">
+        <Layout title="Edit Profile" auth={auth} env={env} locale={locale} className="max-w-2xl">
+            <h1>{t("Edit Profile")}</h1>
+            <p className="pp-text" {...tHTML(`
                 You can change your profile info from here.<br />
                 To keep the same password, just leave the "New Password" field empty.<br />
                 If you wish to set a new password, you will also need to enter your current password.
-            </p>
+            `)}/>
             <hr />
             <form id="profile-info-form" onSubmit={submit} className="flex flex-col gap-5">
-                <Input name="name" label="Name" formObj={{data, setData, errors}} autoComplete="name" required/>
-                <Input name="email" label="Email" formObj={{data, setData, errors}} type="email" required/>
+                <Input name="name" label={t("Name")} formObj={{data, setData, errors}} autoComplete="name" required/>
+                <Input name="email" label={t("Email")} formObj={{data, setData, errors}} type="email" required/>
                 <hr className="mt-2" />
-                <Input name="current_password" label="Current Password" className="reqOnPw" formObj={{data, setData, errors}} autoComplete="current-password" type="password"/>
-                <Input name="password" label="New Password" formObj={{data, setData, errors}} autoComplete="new-password" type="password"/>
-                <Input name="password_confirmation" label="Confirm Password" className="reqOnPw" formObj={{data, setData, errors}} autoComplete="new-password" type="password"/>
+                <Input name="current_password" label={t("Current Password")} className="reqOnPw" formObj={{data, setData, errors}} autoComplete="current-password" type="password"/>
+                <Input name="password" label={t("New Password")} formObj={{data, setData, errors}} autoComplete="new-password" type="password"/>
+                <Input name="password_confirmation" label={t("Confirm Password")} className="reqOnPw" formObj={{data, setData, errors}} autoComplete="new-password" type="password"/>
                 <div className="flex items-center justify-end">
-                    <button type="submit" className="pp-btn-blue" disabled={processing}>Save</button>
+                    <button type="submit" className="pp-btn-blue" disabled={processing}>{t("Save")}</button>
                 </div>
             </form>
         </Layout>

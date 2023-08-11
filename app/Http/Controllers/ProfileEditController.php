@@ -26,7 +26,7 @@ class ProfileEditController extends Controller{
             'current_password' => $hasPw ? 'required|current_password' : '',
             'password' => ['nullable', 'confirmed', Password::defaults()]
         ], [], [
-            'password' => 'new password'
+            'password' => __('new password')
         ]);
 
         $in = $request->only(['name', 'email']);

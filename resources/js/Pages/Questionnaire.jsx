@@ -9,6 +9,7 @@ import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
 import SectorCircleImg from '@/../img/sectors/SectorCircleImg';
 import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
+import useTransHelper from '@/Helpers/TransHelpers';
 
 const onChartLoadCenterDelay = 100;
 
@@ -32,7 +33,7 @@ const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.nam
 const centerToChart = () => centerTo(document.getElementById("visible-chart"));
 
 
-export default function Questionnaire({ auth, env, questionnaire, currentAnswers, analysisTitle }) {
+export default function Questionnaire({ auth, env, locale, questionnaire, currentAnswers, analysisTitle }) {
     const isEdit = !!currentAnswers;
     const dlQuestionnaireTitle = questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check";
     const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
@@ -40,6 +41,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     const [initScrollY, setInitScrollY] = useState(window.scrollY);
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
+    const { t } = useTransHelper();
 
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
     const onChartLoad = () => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay);
@@ -83,8 +85,8 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
         setInitScrollY(window.scrollY);
         if(filled) centerToChart();
         if(auth.user && answers) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true,
-            onSuccess: () => toast.success(`Answers ${filled ? "edited" : "saved"} successfully!`),
-            onError: () => toast.error("Failed to save answers!")
+            onSuccess: () => toast.success(t(`Answers ${filled ? "edited" : "saved"} successfully!`)),
+            onError: () => toast.error(t("Failed to save answers!"))
         });
     }
 
@@ -104,7 +106,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
     const gotoHome = () => router.get(route('home.render'));
 
     return (
-        <Layout title={questionnaire.title} auth={auth} env={env}>
+        <Layout title={questionnaire.title} auth={auth} env={env} locale={locale}>
             {questionnaire.isRDM && (
                 <div className="flex flex-col items-center gap-4 text-center">
                     <h2>Recommendation-Decision Matrix Tool</h2>
@@ -114,12 +116,12 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
             <form onSubmit={onSubmit} id="questionnaire-form">
                 <legend className="mb-2" style={
                     colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title]} : {}
-                }>{questionnaire.title}</legend>
+                }>{t(questionnaire.title)}</legend>
                 <hr />
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (
                     <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1} isDebug={env.debug}/>
                 ))} />
-                <button type="submit" className="pp-btn-cyan">{`S${isEdit ? "ave & s" : ""}how results`}</button>
+                <button type="submit" className="pp-btn-cyan">{t(`S${isEdit ? "ave & s" : ""}how results`)}</button>
             </form>
             {filled && (<>
                 {questionnaire.isRDM ? (<>
@@ -130,7 +132,7 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
                         <div className="grid grid-cols-2 gap-4">
                             <DLBtn />
                             <button type="button" onClick={gotoFRC} className="pp-btn-lime">
-                                Continue to the Quick Finance Readiness Check
+                                {t("Continue to the Quick Finance Readiness Check")}
                             </button>
                         </div>
                     )}
@@ -141,15 +143,15 @@ export default function Questionnaire({ auth, env, questionnaire, currentAnswers
                 <div className="grid grid-cols-2 gap-4">
                     {auth.user ? (
                         <button type="button" onClick={gotoAnalyses} className="pp-btn-yellow">
-                            My analyses
+                            {t("My analyses")}
                         </button>
                     ) : (
                         <button type="button" className="pp-btn-yellow" disabled>
-                            Log in to save and view your analyses
+                            {t("Log in to save and view your analyses")}
                         </button>
                     )}
                     <button type="button" onClick={gotoHome} className="pp-btn-yellow">
-                        Start a new analysis
+                        {t("Start a new analysis")}
                     </button>
                 </div>
                 <div id="offscreen-chart-container">

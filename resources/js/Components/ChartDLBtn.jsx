@@ -1,3 +1,4 @@
+import useTransHelper from '@/Helpers/TransHelpers';
 import { saveAs } from 'file-saver';
 
 const defMargin = {top: 10, bottom: 10, left: 10, right: 10};
@@ -42,10 +43,12 @@ const dlChart = (filename, margin = {}, transparency = false) => {
 }
 
 const ChartDLBtn = ({filename = "results", text = "Download results", className = "pp-btn-green", margin={}, callback = null}) => {
+    const { t } = useTransHelper();
+
     return (<button type="button" onClick={() => {
         dlChart(filename, margin);
         callback && callback();
-    }} className={className}>{text}</button>);
+    }} className={className}>{t(text)}</button>);
 }
 
 export default ChartDLBtn;

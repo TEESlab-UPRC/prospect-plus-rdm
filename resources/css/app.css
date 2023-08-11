@@ -136,7 +136,7 @@
 
     .pp-outer-container {@apply relative flex flex-col min-h-screen bg-gray-100 bg-center bg-img;}
     .pp-middle-container {@apply flex flex-col items-center justify-center h-full grow pt-20;}
-    .pp-inner-container {@apply sm:min-w-[500px] grid grid-cols-1 gap-5 p-6 mx-3 mb-6 scale-100 bg-white rounded-lg shadow-2xl max-w-7xl from-gray-700/50 via-transparent shadow-gray-500/20;}
+    .pp-inner-container {@apply sm:min-w-[500px] grid grid-cols-1 gap-5 p-6 mx-16 mb-6 scale-100 bg-white rounded-lg shadow-2xl max-w-7xl from-gray-700/50 via-transparent shadow-gray-500/20;}
 
     .pp-table {@apply bg-white rounded-md shadow-md pp-text text-left;}
     .pp-table th {@apply bg-gray-200;}
@@ -213,4 +213,13 @@
 
     #offscreen-chart-container {@apply fixed invisible w-1 h-1 overflow-scroll;}
     #offscreen-chart-container > div {@apply w-[1900px];}   /* controls downloaded chart size (not including added margins: defMargin @ ChartDLBtn component etc) */
+
+    #locale-btn {
+        @apply h-12 pp-btn-common pp-circle cursor-pointer relative;
+        box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.2);
+        top: -3rem;
+    }
+    #locale-btn > * {@apply h-full w-full pp-fg-cyan;}
+    #locale-btn-wrapper {@apply h-0 overflow-visible sticky bottom-2 mb-2 right-2 self-end;}
 }

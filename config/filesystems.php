@@ -44,6 +44,24 @@ return [
             'throw' => false,
         ],
 
+        'lang' => [
+            'driver' => 'local',
+            'root' => lang_path(),
+            'throw' => false,
+        ],
+
+        'resources' => [
+            'driver' => 'local',
+            'root' => resource_path(),
+            'throw' => false,
+        ],
+
+        'app' => [
+            'driver' => 'local',
+            'root' => app_path(),
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

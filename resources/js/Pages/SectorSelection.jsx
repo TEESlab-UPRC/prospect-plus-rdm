@@ -1,5 +1,6 @@
 import SectorImg from '@/../img/sectors/SectorImg';
 import PostLink from '@/Components/PostLink';
+import useTransHelper from '@/Helpers/TransHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 
 const ImgLink = ({img, dest}) => (
@@ -8,11 +9,13 @@ const ImgLink = ({img, dest}) => (
     }/>
 );
 
-export default function SectorSelection({ auth, env }) {
+export default function SectorSelection({ auth, env, locale }) {
+    const { t } = useTransHelper();
+
     return (
-        <Layout title="Sector Selection" auth={auth} env={env} className="text-center">
+        <Layout title="Sector Selection" auth={auth} env={env} locale={locale} className="text-center">
             <h2>Recommendation-Decision Matrix Tool</h2>
-            <h3>Select sector for your analysis:</h3>
+            <h3>{t("Select sector for your analysis:")}</h3>
             <div className="sector-select">
                 <div>
                     <ImgLink img={SectorImg.PublicBuildings} dest="Public Buildings"/>

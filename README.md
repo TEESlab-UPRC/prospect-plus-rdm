@@ -46,6 +46,21 @@ $this->call([
 ]);
 ```
 
+### i18n
+Translations in PHP: `__($key, $replacements)`  
+Text Translations in JS: `t(key, replacements)`  
+HTML Translations in React element properties: `{...tHTML(key, replacements)}`  
+_see [resources/js/Helpers/TransHelpers.js](resources/js/Helpers/TransHelpers.js)_
+
+The language files are in JSON and in [lang](lang).  
+They can automatically be added to and translated using the following commands:
+- Auto-add simple entries (from code & DB) and translate lang files: `php artisan lang:gen`
+- Add new EN entry, no translation: `php artisan lang:add <langKey>`
+- Translate lang files from EN: `php artisan lang:translate <engine> <lang>`
+
+Automatic translations require a DeepL API key and a Google Cloud Translation API key to be set in [.env](.env).  
+Extra settings for the automatic translations can be found in [config/autotranslate.php](config/autotranslate.php).
+
 ## Building & deploying
 Adjust [.env](.env) accordingly.
 ```sh

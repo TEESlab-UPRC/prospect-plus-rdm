@@ -9,8 +9,11 @@ const ExtLink = ({ dest = null, className = "", text = null, noAnalytics = false
     </a>
 );
 
-const ExtLinkWDef = ({ defText, text = null, ...props }) => (<ExtLink {...props} text={text ?? defText}/>);
+const ExtLinkWDef = ({ defText, text = null, ...props }) => {
+    return (<ExtLink {...props} text={text ?? defText}/>);
+}
 
+export const RepoLink = props => (<ExtLinkWDef {...props} defText="repository" dest={Websites.Repo}/>);
 export const GuidelinesLink = props => (<ExtLinkWDef {...props} defText="Guidelines" dest={Websites.Guidelines}/>);
 export const PROSPECTplusLink = props => (<ExtLinkWDef {...props} defText="PROSPECT+" dest={Websites.PROSPECTplus}/>);
 export const PPLearningProgrammeLink = props => (<ExtLinkWDef {...props} defText="CBP" dest={Websites.PPLearningProgramme}/>);

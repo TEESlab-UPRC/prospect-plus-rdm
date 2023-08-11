@@ -10,6 +10,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\ProfileEditController;
 use App\Http\Controllers\AnalysisInfoController;
 use App\Http\Controllers\AnalysisListController;
+use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SimplePageController;
 
@@ -66,5 +67,7 @@ Route::get('/profile', [ProfileEditController::class, 'render'])->name('profile.
 Route::post('/profile/store', [ProfileEditController::class, 'store'])->name('profile.store');
 
 Route::get('/privacy-policy', [SimplePageController::class, 'renderPrivacyPolicy'])->name('privacy-policy.render');
+
+Route::post('/locale/set', [LocaleController::class, 'setLocale'])->name('locale.set');
 
 require __DIR__.'/auth.php';

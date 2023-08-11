@@ -42,6 +42,10 @@ class HandleInertiaRequests extends Middleware
             'env' => [
                 'debug' => env('APP_DEBUG', false),
                 'gtag' => env('ANALYTICS_GTAG', null)
+            ],
+            'locale' => [
+                'current' => session('locale') ?? config('app.fallback_locale', 'en'),
+                'available' => config('autotranslate.target_languages')
             ]
         ]);
     }

@@ -6,8 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "bernskioldmedia/laravel-autotranslate": "^1.1",
         "doctrine/dbal": "^3.6",
         "erusev/parsedown": "^1.7",
+        "google/cloud-translate": "^1.14",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^10.8",

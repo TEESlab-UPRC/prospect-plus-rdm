@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { TEESlabLogo } from '@/Components/Logo';
 import Footer from '@/Components/Footer';
 import MiscImg from '@/../img/misc/MiscImg';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { analyticsInitPage } from '@/Helpers/AnalyticsHelpers';
 import useTransHelper from '@/Helpers/TransHelpers';
 import LanguageIcon from '@mui/icons-material/Language';
@@ -38,40 +38,56 @@ const PoweredBy = () => (
 export default function Layout({ title, auth, env, locale = {current: "en", available: []}, className = "", children }) {
     const isAltLayout = altLayoutRoutes.includes(route().current());
     const { t, setLocale } = useTransHelper();
+    const [selLangOpen, setSelLangOpen] = useState(false);
+    const selLang = {
+        title: "Select language",
+        text: "Note: The translations provided by this application have been automatically generated through the Google Cloud Translation API and the DeepL API.",
+        cancel: "Cancel",
+        confirm: "Select"
+    };
     var currLocale = locale.current;
     var origLocale;
+
+    const setElTxt = (clazz, txt) => document.getElementsByClassName(clazz)[0].innerText = t(txt);
 
     useEffect(() => analyticsInitPage(env.gtag, title, auth.user), [title, auth.user]);
     useEffect(() => {
         setLocale(locale.current);
         currLocale = locale.current;
     }, [title, locale.current]);
+    useEffect(() => {
+        if(document.getElementsByClassName("swal2-container").length < 1 || !selLangOpen) return;
+        Object.entries(selLang) // update selectLang dialog's translations
+            .map(e => e[0] == "text" ? ["html-container", e[1]] : e)
+            .forEach(e => setElTxt(`swal2-${e[0]}`, e[1]));
+    });
 
     const selectLang = () => select(
-        t("Select language"),
-        t("Note: The translations provided by this application have been automatically generated through the Google Cloud Translation API and the DeepL API."),
+        t(selLang.title),
+        t(selLang.text),
         Object.fromEntries(Object.entries({
             "None": ["en"],
             "DeepL": locale.available?.deepl,
             "Google": locale.available?.google}
         ).map(c => [c[0], Object.fromEntries(c[1].map(l => [l, langMap[l]]))])),
         locale.current,
-        res => {
+        res => {    // save locale, send to server
             setLocale(res, true);
             currLocale = res;
         },
-        () => {
+        () => {     // abort & revert
             if(currLocale != origLocale) setLocale(origLocale);
             currLocale = origLocale;
         },
-        null,
-        d => {
+        () => setSelLangOpen(false),    // on dialog close
+        d => {      // on dialog open
             d.getElementsByClassName("swal2-select")[0].onclick = e => {
                 let v = e.target.value;
                 if(v != currLocale) setLocale(v);
                 currLocale = v;
             }
             origLocale = currLocale;
+            setSelLangOpen(true);
         },
         t
     );

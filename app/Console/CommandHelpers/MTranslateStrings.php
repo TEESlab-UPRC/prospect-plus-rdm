@@ -36,9 +36,9 @@ class MTranslateStrings extends TranslateStrings{   // mod that patches some bug
 
         $stringsToTranslate = $this->resetNewlyExcludedWords($strings);
         $stringsToTranslate = $this->removePreviouslyTranslatedStrings($stringsToTranslate)
-            ->map(fn ($string) => $this->wrapVariablesInTags($string))
-            ->map(fn ($string) => $this->wrapExcludedWordsInTags($string));
-        if($isHTML) $stringsToTranslate = $stringsToTranslate->map(fn ($string) => $this->mapTagWraps($string));
+            ->map(fn($string) => $this->wrapVariablesInTags($string))
+            ->map(fn($string) => $this->wrapExcludedWordsInTags($string));
+        if($isHTML) $stringsToTranslate = $stringsToTranslate->map(fn($string) => $this->mapTagWraps($string));
 
         $s2tVals = $stringsToTranslate->values()->toArray();
         if(count($s2tVals) == 0) return $strings;   // patch exception on empty input
@@ -50,7 +50,7 @@ class MTranslateStrings extends TranslateStrings{   // mod that patches some bug
                     $stringsToTranslate->values()->toArray(),
                     $this->getGTransOpts($targetLanguage)
                 );
-                $translations = collect($rawTranslations)->map(fn ($translation) => $translation['text']);
+                $translations = collect($rawTranslations)->map(fn($translation) => $translation['text']);
                 break;
             case 'deepl':
                 $rawTranslations = $this->translator->translateText(
@@ -59,17 +59,24 @@ class MTranslateStrings extends TranslateStrings{   // mod that patches some bug
                     targetLang: strtoupper($targetLanguage),
                     options: $this->getDeepLTextOptions()
                 );
-                $translations = collect($rawTranslations)->map(fn ($translation) => $translation->text);
+                $translations = collect($rawTranslations)->map(fn($translation) => $translation->text);
                 break;
             default: throw new RuntimeException('Selected engine not implemented.');
         }
 
-        if($isHTML) $translations = $translations->map(fn ($translation) => $this->unmapTagWraps($translation));
-        $translations = $translations->map(fn ($translation) => $this->removeTagsFromVariables($translation))
-            ->map(fn ($translation) => $this->unencodeHtmlEntities($translation));
+        if($isHTML) $translations = $translations->map(fn($translation) => $this->unmapTagWraps($translation));
+        $translations = $translations->map(fn($translation) => $this->removeTagsFromVariables($translation))
+            ->map(fn($translation) => $this->unencodeHtmlEntities($translation))
+            ->map(fn($translation) => $this->fixGlitches($translation));
 
         $translatedStrings = $stringsToTranslate->keys()->combine($translations);
         return $this->mergeNewTranslationsWithPrevious($translatedStrings, $strings);
+    }
+
+    protected function fixGlitches(string $string): string{
+        $string = preg_replace('/\s([,.:;!?)](\W|$))/', '$1', $string);     // remove redundant pre-punctuation spaces
+        $string = preg_replace('/: : /', ': ', $string);                    // fix double colon glitch
+        return $string;
     }
 
     protected function wrapExcludedWordsInTags(string $string): string{ // patch unescaped preg_replace delimiter

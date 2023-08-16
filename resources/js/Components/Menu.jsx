@@ -23,7 +23,7 @@ const Menu = ({ user }) => {
         `, {
             GuidelinesLink: (<GuidelinesLink text={t("User Guide")}/>),
             RepoLink: (<RepoLink text={t("repository")} />)
-        }), null, "45rem");
+        }), null, t, "45rem");
     };
 
     return (

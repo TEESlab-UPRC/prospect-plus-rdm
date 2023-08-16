@@ -72,7 +72,8 @@ export default function Layout({ title, auth, env, locale = {current: "en", avai
                 currLocale = v;
             }
             origLocale = currLocale;
-        }
+        },
+        t
     );
 
     const SetLocaleBtn = () => (

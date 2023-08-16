@@ -26,7 +26,7 @@ const Analysis = ({ analysis }) => {
                     toast.error(t("Failed to delete analysis!"));
                     analyticsException("failed to delete analysis");
                 }
-            }), null, () => setDeleting(false)
+            }), null, () => setDeleting(false), t
         );
     };
 

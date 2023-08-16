@@ -42,11 +42,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $locale = session('locale') ?? config('app.fallback_locale', 'en');
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        $request->session()->put('locale', $locale);
 
         return redirect('/');
     }

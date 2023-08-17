@@ -34,6 +34,12 @@
     font-weight: 600;
 }
 
+:root{
+    --pp-font-serif: 'Times New Roman', Times, 'Liberation Serif', serif;
+    --pp-font-sans: Arial, 'Liberation Sans', sans-serif;
+    --pp-font-def: Figtree, Inter, ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, 'Liberation Sans', sans-serif;
+}
+
 @layer components{
     .pp-font-serif {font-family: var(--pp-font-serif);}
     .pp-font-sans {font-family: var(--pp-font-sans);}

@@ -1,5 +1,5 @@
 html {@apply scroll-pt-28 scroll-pb-12;}
-body {@apply pp-selection;}
+body {@apply pp-font-def pp-selection;}
 
 .pp-outer-container {@apply relative flex flex-col min-h-screen bg-gray-100 bg-center bg-img;}
 .pp-middle-container {

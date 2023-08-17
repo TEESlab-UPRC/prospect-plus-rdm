@@ -16,8 +16,26 @@
     font-weight: 600;
 }
 
+@font-face {
+    font-family: Inter;
+    src: url(../fonts/Inter/Inter-Regular.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url(../fonts/Inter/Inter-Medium.ttf);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Inter;
+    src: url(../fonts/Inter/Inter-SemiBold.ttf);
+    font-weight: 600;
+}
+
 @layer components{
     .pp-font-serif {font-family: var(--pp-font-serif);}
     .pp-font-sans {font-family: var(--pp-font-sans);}
-    .pp-font-def {@apply font-sans;}
+    .pp-font-def {font-family: var(--pp-font-def);}
 }

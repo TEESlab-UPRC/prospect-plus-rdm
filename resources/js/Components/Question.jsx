@@ -13,7 +13,7 @@ const Question = ({ question, answers, num, isDebug }) => {
                 <div key={`q${question.id}a${a.id}`} >
                     <label className="pp-input">
                         <input type="radio" className="pp-input" name={`q${question.id}`} value={a.value} {...(isDebug ? {} : {required: true})}/>
-                        <span className={`ml-3 text-base italic font-semibold text-gray-700 a${a.id}`}>{t(a.answer)}</span>
+                        <span className={`ml-3 text-base italic font-semibold text-gray-700`} data-answer-id={a.id}>{t(a.answer)}</span>
                     </label>
                 </div>
             ))} />

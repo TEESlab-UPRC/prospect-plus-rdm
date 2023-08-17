@@ -19,7 +19,7 @@ class QuestionnaireController extends Controller{
             if(!$q) return;  // nothing to edit
             $ans = AnalysisAnswer::where('analysis_id', $analysis->id)
                     ->where('questionnaire_id', $q->id)->get()
-                    ->map(fn($m) => [$m->question->id, $m->answer->answer])->toArray();
+                    ->map(fn($m) => [$m->question->id, $m->answer->id])->toArray();
             $ans = array_combine(array_column($ans, 0), array_column($ans, 1));
             $analysisTitle = $analysis->title ?? $analysis->org;
             session(['analysis' => $analysis]);

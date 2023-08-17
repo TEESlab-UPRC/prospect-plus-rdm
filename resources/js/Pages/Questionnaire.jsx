@@ -29,7 +29,8 @@ const colorMap = Object.fromEntries(Object.entries({
     'Cross Sectoral': "lime"
 }).map(e => [e[0], getCSSVar(`pp-${e[1]}`)]));
 
-const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), el.parentElement.innerText.trim()]));
+const in2AnsID = inputEl => inputEl.parentElement.getElementsByTagName("span")[0].dataset.answerId;
+const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), parseInt(in2AnsID(el))]));
 const centerToChart = () => centerTo(document.getElementById("visible-chart"));
 
 
@@ -56,8 +57,8 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
         let form = document.getElementById("questionnaire-form");
         let formEls = form.elements;
         Object.entries(currentAnswers).map(
-                e => Array.from(formEls["q" +  e[0]].values())                                                      // get question's inputs
-                        .filter(el => el.parentElement.getElementsByTagName("span")[0].dataset.answerId == e[1])[0] // get selected answer
+                e => Array.from(formEls["q" +  e[0]].values())  // get question's inputs
+                        .filter(el => in2AnsID(el) == e[1])[0]   // get selected answer
                 ).forEach(el => el.checked = true);
         showResults(form);
     }), [currentAnswers]);

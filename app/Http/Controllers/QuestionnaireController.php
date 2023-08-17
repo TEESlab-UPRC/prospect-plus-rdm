@@ -7,6 +7,7 @@ use App\Models\AnalysisAnswer;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
+use Illuminate\Validation\Rule;
 
 class QuestionnaireController extends Controller{
     function load(Request $request){
@@ -86,17 +87,13 @@ class QuestionnaireController extends Controller{
         $analysis = session('analysis');
         if(!$analysis && !$i) return;   // no current analysis or info to create one - can't proceed
         $qIDs = $q->questionnaireQuestions->map(fn($m) => $m->question->id)->toArray(); // valid question IDs
-        $ansMap = $q->questionnaireAnswers->map(function($m){
-            $a = $m->answer;
-            return [$a->id, $a->answer];
-        })->toArray();
-        $ansMap = array_combine(array_column($ansMap, 1), array_column($ansMap, 0));    // map: answer => id
+        $aIDs = $q->questionnaireAnswers->map(fn($m) => $m->answer->id)->toArray();     // valid answer IDs
         $request->validate([
             'answers' => 'required|array:' . join(',', $qIDs),                          // keys must be valid question IDs
-            'answers.*' => 'required|string|in:' . join(',', array_keys($ansMap))       // values must be valid answers
+            'answers.*' => ['required', Rule::in($aIDs)]                                // values must be valid answer IDs
         ]);
 
-        $ans = array_map(fn($a) => $ansMap[$a], $request->input('answers'));            // answer array in format question_id => answer_id
+        $ans = $request->input('answers');                                              // answer array in format question_id => answer_id
 
         // Make/update analysis
         if($analysis){  // existing analysis found, update questionnaire IDs

@@ -1,3 +1,21 @@
+@font-face {
+    font-family: Figtree;
+    src: url(../fonts/Figtree/Figtree-Regular.ttf);
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Figtree;
+    src: url(../fonts/Figtree/Figtree-Medium.ttf);
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: Figtree;
+    src: url(../fonts/Figtree/Figtree-SemiBold.ttf);
+    font-weight: 600;
+}
+
 @layer components{
     .pp-font-serif {font-family: var(--pp-font-serif);}
     .pp-font-sans {font-family: var(--pp-font-sans);}

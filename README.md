@@ -71,7 +71,8 @@ The web server should serve [public](public/).
 More deployment info [here](https://laravel.com/docs/10.x/deployment).
 
 ## Licensing notes
-The [LICENSE](LICENSE) does not apply to the images included in this repo.
+The [LICENSE](LICENSE) does not apply to the images included in this repo.  
+The fonts in this repo are licensed under the [SIL Open Font License, Version 1.1.](https://scripts.sil.org/OFL)
 
 ## Disclaimer
 This tool was developed under the H2020 PROSPECT+ project.  

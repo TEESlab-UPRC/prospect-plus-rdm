@@ -1,0 +1,29 @@
+@layer components{
+    .pp-input input, .pp-input select, .pp-checkbox input {@apply border-gray-400 disabled:hover:border-gray-400 hover:border-gray-500 focus:border-transparent focus:pp-br-cyan-light pp-disabled;}
+    .pp-input input:not([type="radio"]), .pp-input select {@apply rounded-md;}
+    .pp-checkbox input {@apply rounded;}
+    .pp-input input[type="text"], .pp-input input[type="email"], .pp-input input[type="password"] {@apply cursor-text disabled:cursor-default;}
+    .pp-checkbox input, .pp-checkbox label, .pp-input select, .pp-input input[type="date"], .pp-input input[type="radio"], .pp-input input[type="radio"] + span, .pp-btn {@apply cursor-pointer disabled:cursor-default;}
+
+    .pp-input p {@apply cursor-default;}
+
+    .pp-btn-common {@apply pp-disabled font-bold enabled:pp-hover;}
+    .pp-btn {@apply pp-btn-common text-base rounded-lg px-5 py-2.5 gap-1 flex items-center justify-center;}
+    .pp-btn-blue, .pp-btn-cyan, .pp-btn-lime, .pp-btn-green, .pp-btn-red {@apply pp-btn pp-fg-btn-light;}
+    .pp-btn-yellow {@apply pp-btn pp-fg-btn-dark;}
+    .pp-btn-blue {@apply pp-bg-blue;}
+    .pp-btn-yellow {@apply pp-bg-yellow;}
+    .pp-btn-cyan {@apply pp-bg-cyan;}
+    .pp-btn-lime {@apply pp-bg-lime;}
+    .pp-btn-green {@apply pp-bg-green;}
+    .pp-btn-red {@apply pp-bg-red;}
+
+    #locale-btn {
+        @apply h-12 pp-btn-common pp-circle cursor-pointer relative;
+        box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.2);
+        background-color: rgba(0,0,0,0.2);
+        top: -3rem;
+    }
+    #locale-btn > * {@apply h-full w-full pp-fg-cyan;}
+    #locale-btn-wrapper {@apply h-0 overflow-visible sticky bottom-2 mb-2 right-2 self-end;}
+}

@@ -1,0 +1,21 @@
+.menubar-logos a {@apply sm:w-fit w-12 overflow-hidden transition-transform;}
+.menubar-logos a:first-child {@apply sm:w-fit w-11;}
+.menubar-logos a:hover {@apply scale-90;}
+.menubar-logos img {@apply max-h-12 sm:max-w-full max-w-none;}
+
+.powered-by-logo {@apply absolute top-0 right-0 z-10 flex flex-col gap-1 lg:px-4 lg:pt-1 lg:pb-3 px-2 pt-0 pb-2 bg-white tl-fg-blue lg:w-60 w-40 text-left lg:pp-title-smaller pp-title-tiny rounded-bl-lg shadow-lg transition-all;}
+.powered-by-logo span {@apply transition-opacity;}
+.powered-by-logo a {@apply transition-transform;}
+.powered-by-logo:hover {@apply lg:w-64;}
+.powered-by-logo:hover span {@apply opacity-0;}
+.powered-by-logo:hover a {@apply lg:-translate-y-3 -translate-y-2;}
+
+.welcome-pp-logo {@apply h-40 flex flex-col items-center justify-between text-center;}
+.welcome-pp-logo * {@apply transition-all;}
+.welcome-pp-logo img {@apply p-1 w-[27rem];}
+.welcome-pp-logo a:hover img {@apply p-1 sm:translate-y-0 translate-y-2 sm:w-[28rem];}
+.welcome-pp-logo a:hover + h3 {@apply sm:scale-95 scale-90 sm:origin-top;}
+.welcome-pp-logo a + h3 {@apply sm:scale-100 scale-95;}
+
+.consortium-logos {@apply flex flex-row flex-wrap items-center justify-center gap-5 py-1;}
+.consortium-logos img {@apply max-h-[4.5rem] max-w-[6.0rem] block w-full h-auto;}

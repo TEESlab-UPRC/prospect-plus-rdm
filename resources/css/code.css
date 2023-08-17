@@ -1,0 +1,5 @@
+@keyframes onAutoFill {}                                /* Dummy animation for JS hook */
+input:-webkit-autofill {animation-name: onAutoFill;}    /* Expose autofill event hook for JS */
+
+#offscreen-chart-container {@apply fixed invisible w-1 h-1 overflow-scroll;}
+#offscreen-chart-container > div {@apply w-[1900px];}   /* controls downloaded chart size (not including added margins: defMargin @ ChartDLBtn component etc) */

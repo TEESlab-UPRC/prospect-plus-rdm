@@ -1,0 +1,9 @@
+@layer components{
+    .pp-darker {filter: brightness(85%);}
+    .pp-hover {@apply hover:pp-darker transition;}
+    .pp-disabled {@apply disabled:cursor-not-allowed disabled:grayscale disabled:pp-fg-text-faint;}
+    .pp-circle {border-radius: 50%;}
+    .pp-shadow {box-shadow: 1px 6px 23px 5px rgba(0,0,0,0.17);}
+
+    .refilled-data {@apply text-gray-500 italic;}
+}

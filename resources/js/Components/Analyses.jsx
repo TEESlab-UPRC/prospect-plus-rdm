@@ -51,7 +51,7 @@ const Analyses = ({ analyses }) => {
     const { t } = useTransHelper();
 
     return (
-        <table className="pp-table pp-analysis-list-table">
+        <table className="pp-analysis-list-table">
             <colgroup children={Array.from({length: 6}, (_, i) => (
                 <col key={`c${i}`}/>
             ))}/>

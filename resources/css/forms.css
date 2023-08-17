@@ -1,0 +1,11 @@
+@layer components{
+    form {@apply grid grid-cols-1 gap-5;}
+    .pp-required+label::after {content: "*"; @apply ml-1 pp-fg-red;}
+    .pp-required+label:hover::after {content: "*required";}
+    form.pp-mark-required input:required,
+    form.pp-mark-required select:required {@apply pp-required;}
+    form legend {@apply pp-title justify-self-center;}
+    .small-legend {@apply underline mb-2 pp-title-smaller;}
+    form fieldset > legend {@apply small-legend;}
+    form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
+}

@@ -1,0 +1,5 @@
+@layer components{
+    .pp-font-serif {font-family: var(--pp-font-serif);}
+    .pp-font-sans {font-family: var(--pp-font-sans);}
+    .pp-font-def {@apply font-sans;}
+}

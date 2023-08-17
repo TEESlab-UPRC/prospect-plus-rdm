@@ -1,0 +1,5 @@
+.sector-select, .sector-select > * {@apply flex flex-col gap-1 sm:gap-2;}
+.sector-select > * {@apply flex-row justify-center;}
+.sector-select > :last-child {margin: 0 16.85%;}
+.sector-select img {@apply transition-transform w-80;}
+.sector-select button:hover img {@apply scale-95;}

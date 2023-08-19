@@ -1,5 +1,11 @@
 .sector-select, .sector-select > * {@apply flex flex-col gap-1 sm:gap-2;}
 .sector-select > * {@apply flex-row justify-center;}
 .sector-select > :last-child {margin: 0 16.85%;}
-.sector-select img {@apply transition-transform w-80;}
-.sector-select button:hover img {@apply scale-95;}
+.sector-select button {@apply transition-transform w-80 relative;}
+.sector-select button:hover {@apply scale-95;}
+.sector-title-container{
+    @apply absolute w-4/5 left-1/2 -translate-x-1/2;
+    height: 15.4%;
+    bottom: 6%;
+}
+.sector-title-container span {@apply relative inline-block top-1/2 text-base pp-font-sector text-white;}

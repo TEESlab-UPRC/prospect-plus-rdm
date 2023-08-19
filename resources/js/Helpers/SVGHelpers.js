@@ -12,8 +12,8 @@ export const getBoundaries = svg => {
         if (!acc.yMin || y < acc.yMin) acc.yMin = y;
         if (!acc.yMax || y + height > acc.yMax) acc.yMax = y + height;
         return acc;
-      }, {});
-      return {xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax};
+    }, {});
+    return {xMin, xMax, yMin, yMax};
 }
 
 export default {

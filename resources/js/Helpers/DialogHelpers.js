@@ -46,9 +46,9 @@ export const select = (title, message, options, initVal, submitCallback, cancelC
     inputValue: initVal,
     didOpen: openCallbback,
 }).then(res => {
-    if(res.isConfirmed) submitCallback(res.value);
-    else if(cancelCallback) cancelCallback(res.dismiss);
-    if(finallyCallback) finallyCallback();
+    if(res.isConfirmed) submitCallback(res.value, initVal);
+    else if(cancelCallback) cancelCallback(res.value, initVal, res.dismiss);
+    if(finallyCallback) finallyCallback(res.value, initVal);
 });
 
 export default {

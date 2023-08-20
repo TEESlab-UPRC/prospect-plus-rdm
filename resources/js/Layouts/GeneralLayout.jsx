@@ -37,7 +37,7 @@ const PoweredBy = () => (
 
 export default function Layout({ title, auth, env, locale = {current: "en", available: []}, className = "", children }) {
     const isAltLayout = altLayoutRoutes.includes(route().current());
-    const { t, setLocale } = useTransHelper();
+    const { t, setLocale, setSessionLocale } = useTransHelper();
     const selLang = {
         title: "Select language",
         text: "Note: The translations provided by this application have been automatically generated through the Google Cloud Translation API and the DeepL API.",
@@ -65,10 +65,10 @@ export default function Layout({ title, auth, env, locale = {current: "en", avai
             "Google": locale.available?.google
         }).map(c => [c[0], Object.fromEntries(c[1].map(l => [l, langMap[l]]))])),
         locale.current,
-        n => setLocale(n, true),                                                                    // save locale, send to server
+        (n, p) => (n != p) && setSessionLocale(n),                                                  // save locale, send to server
         (n, p) => (n != p) && setLocale(p),                                                         // abort & revert
         null,
-        d => d.getElementsByClassName("swal2-select")[0].onchange = e => setLocale(e.target.value), // on dialog open
+        d => d.getElementsByClassName("swal2-select")[0].onchange = e => setLocale(e.target.value), // on dialog open -> on selection change
         t
     );
 

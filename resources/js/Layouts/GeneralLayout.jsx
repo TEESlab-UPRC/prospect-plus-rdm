@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { TEESlabLogo } from '@/Components/Logo';
 import Footer from '@/Components/Footer';
 import MiscImg from '@/../img/misc/MiscImg';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { analyticsInitPage } from '@/Helpers/AnalyticsHelpers';
 import useTransHelper from '@/Helpers/TransHelpers';
 import LanguageIcon from '@mui/icons-material/Language';

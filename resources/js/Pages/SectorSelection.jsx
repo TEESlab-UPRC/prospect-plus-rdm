@@ -1,11 +1,10 @@
 import SectorImg from '@/../img/sectors/SectorImg';
 import PostLink from '@/Components/PostLink';
 import { onPageLoad } from '@/Helpers/DomHelpers';
+import { postAnimFrame } from '@/Helpers/RenderHelpers';
 import useTransHelper from '@/Helpers/TransHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 import { useEffect } from 'react';
-
-const postAnimFrame = callback => window.requestAnimationFrame(() => setTimeout(callback, 0));
 
 const ratiosAreClose = (f1, f2) => Math.abs(f1 - f2) < 0.0001;
 

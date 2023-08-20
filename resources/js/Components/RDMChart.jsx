@@ -1,6 +1,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList } from 'recharts';
 import { useEffect, useRef, useState } from 'react';
-import { getCSSVar, setClassStyle } from '../Helpers/DomHelpers';
+import { setClassStyle } from '../Helpers/DomHelpers';
+import { getCSSVar } from '../Helpers/RenderHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
 import { PPLearningHandbooks } from '@/Constants/Websites';

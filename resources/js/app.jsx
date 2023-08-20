@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { LaravelReactI18nProvider } from 'laravel-react-i18n';
-import { getCSSVar } from './Helpers/DomHelpers';
+import { getCSSVar } from './Helpers/RenderHelpers';
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 

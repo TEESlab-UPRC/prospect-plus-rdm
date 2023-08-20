@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2'
-import { getCSSVar } from './DomHelpers';
+import { getCSSVar } from './RenderHelpers';
 
 const t = (transFunc, key) => transFunc ? transFunc(key) : key;
 

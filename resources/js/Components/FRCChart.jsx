@@ -41,7 +41,7 @@ const onResize = (w, h, id) => {
     setClassStyle(`pp-${id}-rtitle`, s => s.fontSize = `${w / 50}px`);
     setClassStyle(`pp-${id}-rtick`, s => s.fontSize = `${w / 75}px`);
     setClassStyle(`pp-${id}-rlabel`, s => s.fontSize = `${w / 90}px`);
-    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1250})`);
+    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1150})`);
     svgAutoCropY();
 };
 
@@ -94,8 +94,8 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
                 </Bar>
             </BarChart>
         </ResponsiveContainer>
-        <svg className={`${isOffscreen ? "mx-10 mt-4" : "mx-5"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <g className={`pp-${id}-rmsg`} children={resp[1].split(/[\r\n]+/).map((s, i) => {
+        <svg className={`${isOffscreen ? "mx-10 mt-4" : "mx-5"} svg-autocrop-y`} height="100%" style={{ width: `calc(100% - ${isOffscreen ? "5" : "2.5"}rem)`, fontFamily: fontFamily }}>
                 return (<text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: resp[0] }}>{s.trim()}</text>);
             })}/>
         </svg>

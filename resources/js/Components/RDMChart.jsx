@@ -24,7 +24,7 @@ const onResize = (w, h, colNum, id) => {
     setClassStyle(`pp-${id}-rval`, s => s.fontSize = `${w / 75}px`);
     setClassStyle(`pp-${id}-rschemes`, s => s.fontSize = `${w / (colNum * 15)}px`);
     setClassStyle(`pp-${id}-rlabel`, s => s.fontSize = `${w / 85}px`);
-    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1250})`);
+    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1190})`);
     svgAutoCropY();
 };
 
@@ -52,9 +52,9 @@ const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) 
     });
 
     return (<div className="grid grid-cols-1" id={id}>
-        <svg className="mx-5 svg-autocrop-y" width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <g className={`pp-${id}-rmsg`} children={msg.map((s, i) => (
                 <text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: '#777' }} children={s}></text>)
+        <svg className="mx-5 svg-autocrop-y" height="100%" style={{ width: "calc(100% - 2.5rem)", fontFamily: fontFamily }}>
             )}/>
         </svg>
         <svg className={`${isOffscreen ? "my-4" : "my-2"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>

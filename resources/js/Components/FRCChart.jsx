@@ -32,9 +32,9 @@ const FRCLabel = ({x, y, width, height, value}) => {
 };
 
 const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
-    const { yMin, yMax } = getBoundaries(svg);
-    svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${yMax - yMin}`);
-    svg.setAttribute('height', yMax - yMin);
+    const { yMin, height } = getBoundaries(svg);
+    svg.setAttribute('viewBox', `0 ${yMin} ${svg.parentElement.clientWidth} ${height}`);
+    svg.setAttribute('height', height);
 });
 
 const onResize = (w, h, id) => {

@@ -1,6 +1,7 @@
 export const cropToContent = svg => {
-    const { xMin, xMax, yMin, yMax } = getBoundaries(svg);
-    svg.setAttribute('viewBox', `${xMin} ${yMin} ${xMax - xMin} ${yMax - yMin}`);
+    const { xMin, xMax, yMin, yMax, width, height } = getBoundaries(svg);
+    svg.setAttribute('viewBox', `${xMin} ${yMin} ${width} ${height}`);
+    return {xMin, xMax, yMin, yMax, width, height};
 };
 
 export const getBoundaries = svg => {
@@ -13,7 +14,7 @@ export const getBoundaries = svg => {
         if (!acc.yMax || y + height > acc.yMax) acc.yMax = y + height;
         return acc;
     }, {});
-    return {xMin, xMax, yMin, yMax};
+    return {xMin, xMax, yMin, yMax, width: xMax - xMin, height: yMax - yMin};
 }
 
 export default {

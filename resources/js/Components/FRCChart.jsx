@@ -1,22 +1,30 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, ReferenceLine, LabelList } from 'recharts';
 import { useEffect, useState, useRef } from 'react';
-import { setClassStyle } from '../Helpers/DomHelpers';
-import { getCSSVar } from '../Helpers/RenderHelpers';
+import { forClassEls, setClassStyle } from '../Helpers/DomHelpers';
+import { getCSSVar, getTextWidth } from '../Helpers/RenderHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
 import CustomizedAxisTick from '@/Components/ChartComponents/CustomizedAxisTick';
-
-const FRCResponses = [
-    ["good", `Great! You have gathered and prepared all or most of the relevant information needed. Your project is financially ready.
-            You can now approach investors of financing institutions or proceed with setting up your planned financing scheme.`],
-    ["mid", `You are almost there. Please make sure to provide the missing information about your planned project so that investors can quickly and easily understand
-            what the project is about. This includes most importantly the planned measures and the anticipated energy savings or renewable energy produced resulting
-            from these measures. You should also consider risks your project might face and assess challenging and supporting regulations within your country that
-            have an effect on your planned project.`],
-    ["bad", `More information required. You still lack much for the required information before you can consider your project financially ready.
-            Please make sure to prepare the missing information. The more information you have prepared the easier it will be to obtain financial means for your project.`]
-].map(e => [getCSSVar(`pp-frc-resp-${e[0]}-color`), e[1]]);
+import useTransHelper from '@/Helpers/TransHelpers';
 
 const h = 1.35, r = 2;  // bar rendering modifiers
+const lg = 0.3;        // msg vertical line gap mod
+
+const FRCResponses = [
+    ["good", `
+        Great! You have gathered and prepared all or most of the relevant information needed. Your project is financially ready.
+        You can now approach investors of financing institutions or proceed with setting up your planned financing scheme.
+    `],
+    ["mid", `
+        You are almost there. Please make sure to provide the missing information about your planned project so that investors can quickly and easily understand
+        what the project is about. This includes most importantly the planned measures and the anticipated energy savings or renewable energy produced resulting
+        from these measures. You should also consider risks your project might face and assess challenging and supporting regulations within your country that
+        have an effect on your planned project.
+    `],
+    ["bad", `
+        More information required. You still lack much for the required information before you can consider your project financially ready.
+        Please make sure to prepare the missing information. The more information you have prepared the easier it will be to obtain financial means for your project.
+    `]
+].map(e => [getCSSVar(`pp-frc-resp-${e[0]}-color`), e[1]]);
 
 const FRCBar = ({ fill, x, y, width, height }) => {
     let nh = height * h, nw = nh / r;
@@ -37,21 +45,48 @@ const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autoc
     svg.setAttribute('height', height);
 });
 
+const scaleG = (el, maxH) => {
+    const sRect = el.parentElement.getBoundingClientRect();     // <svg>
+    const sW = sRect.width, sH = sRect.height;
+    const gW = Math.max(...Array.from(el.children).map(t => {   // max <text> text width in <g>
+        let s = getComputedStyle(t);
+        return getTextWidth(t.textContent, s.fontSize, s.fontFamily);
+    }));
+    const wR = sW / gW;
+    const newSH = sH * wR;
+    if(newSH <= maxH) el.style.transform = `scale(${wR})`;
+};
+
+const scaleMsg = id => {
+    let maxH = 0;
+    forClassEls(`pp-${id}-rmsg`, el => {
+        let fs = el.parentElement.parentElement.getBoundingClientRect().width / 72;
+        let lh = fs * (lg + 1);
+        let ml = +el.dataset.msgLine;
+        maxH = lh * (ml + 1);
+        el.style.fontSize = `${fs}px`
+        el.setAttribute("y", lh * ml); // adjust y pos
+    });
+    maxH -= lg;
+    Array.from(document.getElementById(id).getElementsByClassName("svg-autoscale")).forEach(el => scaleG(el, maxH));
+};
+
 const onResize = (w, h, id) => {
     setClassStyle(`pp-${id}-rtitle`, s => s.fontSize = `${w / 50}px`);
     setClassStyle(`pp-${id}-rtick`, s => s.fontSize = `${w / 75}px`);
     setClassStyle(`pp-${id}-rlabel`, s => s.fontSize = `${w / 90}px`);
-    setClassStyle(`pp-${id}-rmsg`, s => s.transform = `scale(${w / 1150})`);
+    scaleMsg(id);
     svgAutoCropY();
 };
 
 
 const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoaded = null, isOffscreen = false }) => {
+    const { t } = useTransHelper();
     const [loaded, setLoaded] = useState(false);
     const barRef = useRef(null);
     const fontFamily = getCSSVar("pp-font-sans");
     const id = isOffscreen ? "offscreen-chart" : "visible-chart";
-    let resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
+    const resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
 
     const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
         let bar = barRef.current;
@@ -69,6 +104,8 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
         svgAutoCropY();
         patchLabel();
     });
+
+    useEffect(() => scaleMsg(id), [t(resp[1])]);
 
     return (<div className="grid grid-cols-1" id={id}>
         <svg className={`${isOffscreen ? "mb-11" : "mb-6"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>
@@ -94,9 +131,9 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
                 </Bar>
             </BarChart>
         </ResponsiveContainer>
-            <g className={`pp-${id}-rmsg`} children={resp[1].split(/[\r\n]+/).map((s, i) => {
         <svg className={`${isOffscreen ? "mx-10 mt-4" : "mx-5"} svg-autocrop-y`} height="100%" style={{ width: `calc(100% - ${isOffscreen ? "5" : "2.5"}rem)`, fontFamily: fontFamily }}>
-                return (<text key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: resp[0] }}>{s.trim()}</text>);
+            <g className="svg-autoscale" children={t(resp[1]).split(/[\r\n]+/).map((s, i) => {
+                return (<text data-msg-line={i} className={`pp-${id}-rmsg`} key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: resp[0] }}>{s.trim()}</text>);
             })}/>
         </svg>
     </div>);

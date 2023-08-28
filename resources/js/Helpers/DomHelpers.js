@@ -1,4 +1,6 @@
-export const setClassStyle = (clazz, callback) => Array.from(document.getElementsByClassName(clazz)).forEach(el => callback(el.style));
+export const forClassEls = (clazz, callback) => Array.from(document.getElementsByClassName(clazz)).forEach(el => callback(el));
+
+export const setClassStyle = (clazz, callback) => forClassEls(clazz, el => callback(el.style));
 
 export const onPageLoad = callback => { // page load hook - likely desired usage: useEffect(() => onPageLoad(your_callback), []);
     if(document.readyState === 'complete') callback();
@@ -37,6 +39,7 @@ export const centerTo = el => el ? el.scrollIntoView({
 export const getCSSVar = varName => getComputedStyle(document.body).getPropertyValue(`--${varName}`);
 
 export default {
+    forClassEls,
     setClassStyle,
     onPageLoad,
     setFormInputVal,

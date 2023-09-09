@@ -64,7 +64,7 @@ const scaleMsg = id => {
         let lh = fs * (lg + 1);
         let ml = +el.dataset.msgLine;
         maxH = lh * (ml + 1);
-        el.style.fontSize = `${fs}px`
+        el.style.fontSize = `${fs}px`;
         el.setAttribute("y", lh * ml); // adjust y pos
     });
     maxH -= lg;

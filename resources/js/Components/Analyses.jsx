@@ -1,5 +1,6 @@
 import { analyticsEvent, analyticsException } from '@/Helpers/AnalyticsHelpers';
 import { confirm } from '@/Helpers/DialogHelpers';
+import { getCSSVar, getTextWidth } from '@/Helpers/RenderHelpers';
 import useTransHelper from '@/Helpers/TransHelpers';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
@@ -31,14 +32,15 @@ const Analysis = ({ analysis }) => {
     };
 
     const btnTxt = type => t((type == 'rdm' ? hasRDM : hasFRC) ? "View/Edit" : "Create");
+    const frcBtnW = Math.max(64, getTextWidth(t("View/Edit"), 14, getCSSVar("pp-font-def"), 700));
 
     return (
         <tr className={deleting ? "pp-table-del" : ""} children={[
             org, title, sector,
-            (<button className={`w-20 ${hasFRC ? "pp-table-btn-lime" : "pp-table-btn-lime-trans"}`} onClick={editFRC}>{btnTxt("frc")}</button>),
-            (<button className="w-20 pp-table-btn-green" onClick={editRDM}>{btnTxt("rdm")}</button>),
+            (<button style={{minWidth: `${frcBtnW}px`}} className={`${hasFRC ? "pp-table-btn-lime" : "pp-table-btn-lime-trans"}`} onClick={editFRC}>{btnTxt("frc")}</button>),
+            (<button className="min-w-[64px] pp-table-btn-green" onClick={editRDM}>{btnTxt("rdm")}</button>),
             (<>
-                <button className="pp-table-btn-cyan" onClick={editInfo}>{t("View/Edit Info")}</button>
+                <button className="min-w-[95px] pp-table-btn-cyan" onClick={editInfo}>{t("View/Edit Info")}</button>
                 <button className="pp-table-btn-red" onClick={delA}>{t("Delete")}</button>
             </>)
         ].map((c, i) => (

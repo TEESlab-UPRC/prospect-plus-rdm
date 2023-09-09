@@ -27,7 +27,9 @@
     .pp-analysis-list-table {@apply pp-table;}
     .pp-analysis-list-table tr > *:nth-last-child(-n+3) {@apply text-center;}
     .pp-analysis-list-table tr > td:last-child {@apply flex flex-row flex-wrap gap-1 justify-end;}
+    .pp-analysis-list-table tr > td:last-child > button {@apply flex-grow;}
     .pp-analysis-list-table col:nth-child(3) {@apply w-[146px];}
     .pp-analysis-list-table col:nth-last-child(-n+3):not(:last-child) {@apply w-[170px];}
     .pp-analysis-list-table col:last-child {@apply w-[206px];}
+    .pp-analysis-list-table button {@apply box-content;}
 }

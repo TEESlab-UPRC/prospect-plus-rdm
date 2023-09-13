@@ -10,4 +10,11 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                assetFileNames: assetInfo => `assets/[name]${assetInfo.name.endsWith(".pdf") ? "" : "-[hash]"}[extname]`,
+            },
+        },
+    },
 });

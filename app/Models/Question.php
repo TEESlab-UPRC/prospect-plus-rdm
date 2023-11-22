@@ -5,7 +5,8 @@ namespace App\Models;
 use Parsedown;
 
 class Question extends TextModel{
-    protected $fillable = ['question', 'note_id'];
+    protected $fillable = ['question', 'invert_ans_val', 'note_id'];
+    protected $casts = ['invert_ans_val' => 'boolean'];
     protected $parsedown;
 
     public function __construct(){
@@ -15,7 +16,6 @@ class Question extends TextModel{
 
     public function text(){
         return $this->question;
-    }
     }
 
     public function analysesAnswers(){

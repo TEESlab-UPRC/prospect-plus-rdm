@@ -61,7 +61,8 @@ class QuestionnaireController extends Controller{
                     return [
                         'id' => $q->id,
                         'question' => $q->formattedQuestion(),
-                        'note' => $n ? $n->formattedNote() : null
+                        'note' => $n ? $n->formattedNote() : null,
+                        'invert_ans_val' => $q->invert_ans_val
                     ];
                 }),
                 'schemes' => $q->isRDM ? $q->questionnairesSchemes->map(function($m){

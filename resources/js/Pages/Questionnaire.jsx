@@ -40,11 +40,13 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     const dlQuestionnaireTitle = questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check";
     const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
+    const ansInversionMap = Object.fromEntries(questionnaire.questions.map(q => [q.id, q.invert_ans_val]));
     const [initScrollY, setInitScrollY] = useState(window.scrollY);
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
     const { t } = useTransHelper();
 
+    const getAnswersWithInversions = answers => answers.map(a => Object.assign(a, {value: (ansInversionMap[parseInt(a.name.substr(1))] ? maxAns - parseInt(a.value) : a.value)}));
     const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
     const onChartLoad = () => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay);
 
@@ -67,12 +69,13 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     function showResults(form){
         let answers = Array.from(form.querySelectorAll(":checked"));
         if(answers.length == 0) return;
-        if(questionnaire.isRDM) setResult(questionnaire.schemes.map((s, i) => ({                                // for each scheme included in this questionnaire
+        let answersWithInversions = getAnswersWithInversions(answers);
+        if(questionnaire.isRDM) setResult(questionnaire.schemes.map(s => ({                                // for each scheme included in this questionnaire
             'title': s.title,
-            'result': reduceAns2Percent(answers.filter(a => s.questions.includes(parseInt(a.name.substr(1))))), // filter for included questions in scheme and reduce answers to percentage
+            'result': reduceAns2Percent(answersWithInversions.filter(a => s.questions.includes(parseInt(a.name.substr(1))))), // filter for included questions in scheme and reduce answers to percentage
             'fill': colorMap[questionnaire.title]
         })));
-        else setResult([reduceAns2Percent(answers)]);
+        else setResult([reduceAns2Percent(answersWithInversions)]);
         analyticsEvent("view_results", {
             questionnaire_title: dlQuestionnaireTitle,
             questionnaire_context: isEdit ? (filled ? "later edit" : "later view") : (filled ? "initial submission edit" : "initial submission view")

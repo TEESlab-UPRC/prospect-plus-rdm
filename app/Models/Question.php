@@ -14,7 +14,8 @@ class Question extends TextModel{
     }
 
     public function text(){
-        $this->question;
+        return $this->question;
+    }
     }
 
     public function analysesAnswers(){

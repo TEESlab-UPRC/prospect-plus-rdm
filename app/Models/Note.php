@@ -14,7 +14,7 @@ class Note extends TextModel{
     }
 
     public function text(){
-        $this->note;
+        return $this->note;
     }
 
     public function questions(){

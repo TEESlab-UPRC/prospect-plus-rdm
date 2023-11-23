@@ -14,7 +14,7 @@ const getMsg = t => t(`
     or ongoing local sustainable energy project for your city. Please note that all results have been automatically determined based on your answers, indicating an ease of
     implementation rate (%) for each available financing scheme against the general framework conditions. More information on the set of financing alternatives is also
     available on the PROSPECT+ :PPLearningHandbooksLink.
-`, {PPLearningHandbooksLink: (<PPLearningHandbooksLink style={{ fill: getCSSVar("pp-cyan") }} dominantBaseline="auto" noStyle={true} text={t("Learning Handbooks")}/>)});
+`, {PPLearningHandbooksLink: (<PPLearningHandbooksLink text={t("Learning Handbooks")}/>)});
 
 const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {
     const { yMin, height } = getBoundaries(svg);
@@ -95,7 +95,7 @@ const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) 
         <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length, id)}>
             <BarChart title={title} label={title} width={400} height={400} data={percentages} margin={(isOffscreen ? {top: 30, bottom: 20, right: 8, left: 4} : {top: 15, bottom: 8})} style={{ fontFamily: fontFamily }}>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className={`pp-${id}-rschemes`} style={{ fontWeight: 'bold' }} offset={isOffscreen ? 8 : 2}/>}/>
+                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className={`pp-${id}-rschemes`} style={{ fontWeight: 'bold', fill: '#777' }} offset={isOffscreen ? 8 : 2}/>}/>
                 <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className={`pp-${id}-rval`} offset={isOffscreen ? 4 : 1}/>}/>
                 <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} ref={barRef} dataKey="result" fill="#0b2870" className={`pp-${id}-rlabel`}>
                     <LabelList dataKey="result" position="top" offset={isOffscreen ? 8 : 4} formatter={Math.round}/>

@@ -20,6 +20,16 @@ export const Consortium = {
     TEA:         "https://tippenergy.ie/",
     TEESlabUPRC: TEESlab
 };
+export const SchemePDF = {
+    CooperativesCrowdfunding: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Cooperatives-Crowdfunding.pdf",
+    EPC: "https://h2020prospect.eu/sites/default/files/learning_programme/EPC_new.pdf",
+    GreenBonds: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Green_Bonds.pdf",
+    GuaranteeFunds: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Guarantee_funds.pdf",
+    Interacting: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Intracting_new.pdf",
+    RevolvingFunds: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Revolving%20funds_new.pdf",
+    SoftLoans: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Soft%20loans_new.pdf",
+    ThirdPartyFinancing: "https://h2020prospect.eu/sites/default/files/learning_programme/P%2B_Third-party_financing_new.pdf"
+}
 
 export default {
     GAOptOutAddon,
@@ -29,5 +39,6 @@ export default {
     PROSPECTplus,
     PPLearningHandbooks,
     PPLearningProgramme,
-    Consortium
+    Consortium,
+    SchemePDF
 };

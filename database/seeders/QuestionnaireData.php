@@ -88,7 +88,7 @@ class QuestionnaireData extends Seeder{
             ["Is the city's cooperation and communication with non-traditional investment actors (e.g. ESCOs) sufficient to implement the respective scheme?", [0, 3, 9]],
             ["Is a Steering Committee or similar internal mechanism in place or planned as a governing body to fully oversee and guide your city's project implementation?"],
             ["Does the municipality plan to sub-contract its roles and responsibilities with respect to project implementation, and/or transfer all or part of the necessary proceeds,  to a third implementing entity either internal or external?", [0, 3, 4, 7]],
-            ["In case the municipality plans to sub-contract and/or transfer all or part of the necessary proceeds, to a private third implementing entity is a clear explanation of the contractual arrangements, including transactional flow and/or flow of information, in place?", [0, 3, 4, 7]],
+            ["In case the municipality plans to sub-contract and/or transfer all or part of the necessary proceeds, to a private third implementing entity is a clear explanation of the contractual arrangements, including transactional flow and/or flow of information, in place?", [0, 1, 3, 4, 7]],
             ["Is your city's project anticipated duration and implementation schedule reasonable and fully coordinated with all relevant investment actors and stakeholders involved?"]
         ]);
     }

@@ -58,7 +58,7 @@ class QuestionnaireData extends Seeder{
             ['Have you assessed any **challenging regulations or policies** that could pose a risk or barrier for your project?', 'It is important to understand which political factors or regulations negatively influence your project, such as e.g. long and bureaucratic licensing processes, requirements for impact assessments, land-use and ownership barriers etc.']
         ]);
 
-        array_map(fn($a) => static::newQ($rdm, $a[0], array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), count($a) > 1 ? $a[1] : []))), [    // Add RDM questions ([question, disabled schemes?])
+        array_map(fn($a) => static::newQ($rdm, $a[0], array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), count($a) > 1 ? $a[1] : [])), null, array_key_exists('invertAnsVal', $a) && $a['invertAnsVal']), [    // Add RDM questions ([question, disabled schemes?, 'invertAnsVal' => bool?])
             ["Has your city's project been formally validated by your City's Council at a high political level?"],
             ["Does your city's project demonstrate a national investment prioritization process directly supported by existing municipal budgets and/or dedicated national or international funding sources?", [3, 4, 5, 6, 7, 8, 9]],
             ["Does your city's project demonstrate a clear national ownership and national direction on its strategic priorities, with a long-term finance orientation, considering potential options for refinancing or repaying investment (e.g. through energy bills or taxation etc)?", [6, 7]],
@@ -76,7 +76,7 @@ class QuestionnaireData extends Seeder{
             ["Are city's own capital requirements (e.g. available city budget) sufficient to implement the financing scheme?", [5, 6, 7, 8, 9]],
             ["Does your city's financing strategy analyze both public and private, domestic and international, potential funding sources for supporting the priorities identified?"],
             ["Can your municipality capitalize from lending institutions to support your city's project implementation?", [0, 1]],
-            ["Does the city have a history on default on debt?", [0, 3, 5, 7]],
+            ["Does the city have a history on default on debt?", [0, 3, 5, 7], 'invertAnsVal' => true],
             ["Is the typical nominal bank lending rate relatively low?", [0, 3, 5, 7, 9]],
             ["Is co-financing available and complete detail provided in your city's project proposal budget?", [0, 1]],
             ["Will your city's project utilize other innovative sources, such as levies?", [0, 1]],
@@ -113,10 +113,11 @@ class QuestionnaireData extends Seeder{
         return $aID;
     }
 
-    public static function newQ(array $questionnaireIDs, string $question, array $schemeIDs, string $note = null){
+    public static function newQ(array $questionnaireIDs, string $question, array $schemeIDs, string $note = null, bool $invertAnsVal = false){
         $qID = Question::create([
             'question' => $question,
-            'note_id' => $note ? Note::create(['note' => $note])->id : null
+            'note_id' => $note ? Note::create(['note' => $note])->id : null,
+            'invert_ans_val' => $invertAnsVal
         ])->id;
         foreach ($schemeIDs as $schemeID)
             QuestionScheme::create([

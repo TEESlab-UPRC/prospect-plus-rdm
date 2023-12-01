@@ -74,7 +74,7 @@ class QuestionnaireData extends Seeder{
             ["Does your municipality have the necessary capacity to conduct business development activities among which investigating alternative funding sources?"],
             ["Does your municipality have the necessary know-how and/or technical expertise to support the implementation of the respective financing scheme?"],
             ["Are city's own capital requirements (e.g. available city budget) sufficient to implement the financing scheme?", [5, 6, 7, 8, 9]],
-            ["Does your city's financing strategy analyze both public and private, domestic and international, potential funding sources for supporting the priorities identified?"],
+            ["Does your city's financing strategy analyze both public and private, domestic and international, potential funding sources for supporting the priorities identified?", [0]],
             ["Can your municipality capitalize from lending institutions to support your city's project implementation?", [0, 1]],
             ["Does the city have a history on default on debt?", [0, 3, 5, 7], 'invertAnsVal' => true],
             ["Is the typical nominal bank lending rate relatively low?", [0, 3, 5, 7, 9]],

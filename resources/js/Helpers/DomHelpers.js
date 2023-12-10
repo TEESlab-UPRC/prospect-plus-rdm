@@ -4,7 +4,7 @@ export const setClassStyle = (clazz, callback) => forClassEls(clazz, el => callb
 
 export const onPageLoad = callback => { // page load hook - likely desired usage: useEffect(() => onPageLoad(your_callback), []);
     if(document.readyState === 'complete') callback();
-        else{
+    else{
         window.addEventListener('load', callback, false);
         return () => window.removeEventListener('load', callback);    // remove listener on component unmount
     }

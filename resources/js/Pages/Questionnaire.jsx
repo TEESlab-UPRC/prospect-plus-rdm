@@ -76,6 +76,8 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
             questionnaire_context: isEdit ? (filled ? "later edit" : "later view") : (filled ? "initial submission edit" : "initial submission view")
         });
         setFilled(true);
+        if(!env.debug && answers.length < form.getElementsByClassName("answer-list").length)
+            toast.warning(t("Missing answers detected! The results might be inaccurate."), {autoClose: 10000});
         return answers;
     }
 

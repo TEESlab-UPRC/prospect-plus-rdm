@@ -30,8 +30,9 @@ const colorMap = Object.fromEntries(Object.entries({
     'Cross Sectoral': "lime"
 }).map(e => [e[0], getCSSVar(`pp-${e[1]}`)]));
 
-const in2AnsID = inputEl => inputEl.parentElement.getElementsByTagName("span")[0].dataset.answerId;
-const ans2Obj = answers => Object.fromEntries(answers.map(el => [parseInt(el.name.substr(1)), parseInt(in2AnsID(el))]));
+const simplifiedAnswers = answers => answers.map(({value, dataset}) => Object.fromEntries(Object.entries({value, ...dataset}).map(e => [e[0], parseInt(e[1])])));   // to Objects, keeping only their values & related IDs
+const ans2Obj = answers => Object.fromEntries(answers.map(d => [d.questionId, d.schemeId ? Object.fromEntries([[d.schemeId, d.answerId]]) : d.answerId])            // format each entry
+        .reduce((a, c) => a.has(c[0]) ? Object.assign(a.get(c[0]), c[1]) && a : a.set(c[0], c[1]), new Map())); // merge multiple entries belonging to the same questions and transform entry array to object
 const centerToChart = () => centerTo(document.getElementById("visible-chart"));
 
 
@@ -41,13 +42,14 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const ansInversionMap = Object.fromEntries(questionnaire.questions.map(q => [q.id, q.invert_ans_val]));
+    const [currentAnswersState, setCurrentAnswersState] = useState(currentAnswers);
     const [initScrollY, setInitScrollY] = useState(window.scrollY);
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
     const { t } = useTransHelper();
 
-    const getAnswersWithInversions = answers => answers.map(a => Object.assign(a, {value: (ansInversionMap[parseInt(a.name.substr(1))] ? maxAns - parseInt(a.value) : a.value)}));
-    const reduceAns2Percent = answers => answers.map(a => parseInt(a.value)).reduce((p, n) => p + n, 0) / (answers.length * maxAns) * 100;
+    const getAnswersWithInversions = answers => answers.map(a => ansInversionMap[a.questionId] ? Object.assign({}, a, {value: maxAns - a.value}) : a);
+    const reduceAns2Percent = answers => answers.reduce((a, c) => a + c.value, 0) / (answers.length * maxAns) * 100;
     const onChartLoad = () => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay);
 
     const DLBtn = () => (<ChartDLBtn filename={resultFilename} callback={() => analyticsEvent("download_results", {
@@ -56,23 +58,16 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     })}/>);
 
     useEffect(() => onPageLoad(() => {  // executed when loaded in edit mode
-        if(!isEdit || filled) return;
-        let form = document.getElementById("questionnaire-form");
-        let formEls = form.elements;
-        Object.entries(currentAnswers).map(
-                e => Array.from(formEls["q" +  e[0]].values())  // get question's inputs
-                        .filter(el => in2AnsID(el) == e[1])[0]   // get selected answer
-                ).forEach(el => el.checked = true);
-        showResults(form);
+        if(isEdit && !filled) showResults(document.getElementById("questionnaire-form"));
     }), [currentAnswers]);
 
     function showResults(form){
-        let answers = Array.from(form.querySelectorAll(":checked"));
+        let answers = simplifiedAnswers(Array.from(form.querySelectorAll(":checked")));
         if(answers.length == 0) return;
         let answersWithInversions = getAnswersWithInversions(answers);
-        if(questionnaire.isRDM) setResult(questionnaire.schemes.map(s => ({                                // for each scheme included in this questionnaire
+        if(questionnaire.isRDM) setResult(questionnaire.schemes.map(s => ({ // for each scheme included in this questionnaire
             'title': s.title,
-            'result': reduceAns2Percent(answersWithInversions.filter(a => s.questions.includes(parseInt(a.name.substr(1))))), // filter for included questions in scheme and reduce answers to percentage
+            'result': reduceAns2Percent(answersWithInversions.filter(a => a.schemeId == s.id || (a.schemeId == null && s.questions.includes(a.questionId)))), // filter for included questions in scheme (and scheme, for questions requiring separate answers) and reduce answers to percentage
             'fill': colorMap[questionnaire.title]
         })));
         else setResult([reduceAns2Percent(answersWithInversions)]);
@@ -87,9 +82,12 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     function onSubmit(e){
         e.preventDefault();
         let answers = showResults(e.target);
+        if(!answers) return;
         setInitScrollY(window.scrollY);
-        if(filled) centerToChart();
-        if(auth.user && answers) router.post(route('questionnaire.store'), {answers: ans2Obj(answers)}, {preserveState: true, preserveScroll: true,
+        centerToChart();
+        answers = ans2Obj(answers);
+        setCurrentAnswersState(answers);
+        if(auth.user) router.post(route('questionnaire.store'), {answers}, {preserveState: true, preserveScroll: true,
             onSuccess: () => toast.success(t(`Answers ${filled ? "edited" : "saved"} successfully!`)),
             onError: () => toast.error(t("Failed to save answers!"))
         });
@@ -124,7 +122,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                 }>{t(questionnaire.title)}</legend>
                 <hr />
                 <div className="gap-6" children={questionnaire.questions.map((q, i) => (
-                    <Question question={q} answers={questionnaire.answers} key={`q${q.id}`} num={i+1} isDebug={env.debug}/>
+                    <Question question={q} answers={questionnaire.answers} schemes={questionnaire.schemes} currentAnswers={currentAnswersState} key={`q${q.id}`} num={i+1} isDebug={env.debug}/>
                 ))} />
                 <button type="submit" className="pp-btn-cyan">{t(`S${isEdit ? "ave & s" : ""}how results`)}</button>
             </form>

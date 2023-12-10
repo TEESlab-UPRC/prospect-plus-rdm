@@ -4,7 +4,7 @@ namespace App\Models;
 
 class AnalysisAnswer extends Model{
     protected $table = 'analyses_answers';
-    protected $fillable = ['question_id', 'questionnaire_id', 'analysis_id', 'answer_id'];
+    protected $fillable = ['question_id', 'questionnaire_id', 'analysis_id', 'answer_id', 'scheme_id'];
 
     public function question(){
         return $this->belongsTo(Question::class);
@@ -20,5 +20,9 @@ class AnalysisAnswer extends Model{
 
     public function analysis(){
         return $this->belongsTo(Analysis::class);
+    }
+
+    public function scheme(){
+        return $this->belongsTo(Scheme::class);
     }
 }

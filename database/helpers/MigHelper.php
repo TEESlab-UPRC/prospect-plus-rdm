@@ -3,17 +3,19 @@
 namespace Database\Helpers;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\ColumnDefinition;
 
 abstract class MigHelper{
     /**
-     * Add foreign key column that references a table's "id" column. If not $nullable, deletes will cascade.
+     * Add foreign key column that references a table's "id" column. If not $nullable, deletes will cascade. Returns created column.
      */
-    public static function ref(Blueprint $table, string $column, bool $index = false, bool $nullable = false, string $refTable = null): void{
+    public static function ref(Blueprint $table, string $column, bool $index = false, bool $nullable = false, string $refTable = null): ColumnDefinition{
         $cDef = $table->foreignId($column);
         !$index ?: $cDef->index();
         !$nullable ?: $cDef->nullable();
         $fRef = $cDef->constrained($refTable);
         $nullable ? $fRef->nullOnDelete() : $fRef->cascadeOnDelete();
+        return $cDef;
     }
 
     /**
@@ -28,10 +30,10 @@ abstract class MigHelper{
     }
 
     /**
-     * Shortcut for bool column. Indexed and true by default.
+     * Shortcut for bool column. Indexed and true by default. Returns created column.
      */
-    public static function bool(Blueprint $table, string $colName): void{
-        $table->boolean($colName)->default(true)->index();
+    public static function bool(Blueprint $table, string $colName): ColumnDefinition{
+        return $table->boolean($colName)->default(true)->index();
     }
 
     /**

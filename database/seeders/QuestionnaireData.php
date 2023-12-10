@@ -15,6 +15,7 @@ use App\Models\QuestionnaireQuestion;
 
 class QuestionnaireData extends Seeder{
     public function run(): void{
+        Scheme::firstOrCreate(['title' => '']); // special scheme, referred to in analyses_answers, instead of setting NULL (important for compound unique index constraint)
         $schemes = array_map(fn($t) => Scheme::create(['title' => $t])->id, [
             'Own Funds',
             'Interacting/Internal Contracting',

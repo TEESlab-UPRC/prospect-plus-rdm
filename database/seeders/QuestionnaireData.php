@@ -59,7 +59,7 @@ class QuestionnaireData extends Seeder{
             ['Have you assessed any **challenging regulations or policies** that could pose a risk or barrier for your project?', 'It is important to understand which political factors or regulations negatively influence your project, such as e.g. long and bureaucratic licensing processes, requirements for impact assessments, land-use and ownership barriers etc.']
         ]);
 
-        array_map(fn($a) => static::newQ($rdm, $a[0], array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), count($a) > 1 ? $a[1] : [])), null, array_key_exists('invertAnsVal', $a) && $a['invertAnsVal']), [    // Add RDM questions ([question, disabled schemes?, 'invertAnsVal' => bool?])
+        array_map(fn($a) => static::newQ($rdm, $a[0], array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), count($a) > 1 ? $a[1] : [])), null, array_key_exists('invertAnsVal', $a) && $a['invertAnsVal'], array_key_exists('splitSchemeAnswers', $a) && $a['splitSchemeAnswers']), [    // Add RDM questions ([question, disabled schemes?, 'invertAnsVal' => bool?, 'splitSchemeAnswers' => bool?])
             ["Has your city's project been formally validated by your City's Council at a high political level?"],
             ["Does your city's project demonstrate a national investment prioritization process directly supported by existing municipal budgets and/or dedicated national or international funding sources?", [3, 4, 5, 6, 7, 8, 9]],
             ["Does your city's project demonstrate a clear national ownership and national direction on its strategic priorities, with a long-term finance orientation, considering potential options for refinancing or repaying investment (e.g. through energy bills or taxation etc)?", [6, 7]],
@@ -70,11 +70,11 @@ class QuestionnaireData extends Seeder{
             ["Is the process to gain a construction/renovation permit fast and efficient?"],
             ["Are Budgetary Rules for public and regional authorities revised to exclude financing schemes (e.g. EPC) from debt quota obligations?", [0, 1, 7]],
             ["Does your municipality have the necessary resources to support your city's project development and implementation within the planned timeframe?"],
-            ["Is the city's personnel for project underwriting & evaluation sufficient to support the implementation of the respective financing scheme?", [5]],
+            ["Is the city's personnel for project underwriting & evaluation sufficient to support the implementation of the respective financing scheme?", [5], 'splitSchemeAnswers' => true],
             ["Does your municipality have the appropriate (multi-departmental) structure responsible for the ultimate oversight, including co-ordination, monitoring, performance risks management etc, over your city's project efficient implementation?"],
             ["Does your municipality have the necessary capacity to conduct business development activities among which investigating alternative funding sources?"],
-            ["Does your municipality have the necessary know-how and/or technical expertise to support the implementation of the respective financing scheme?"],
-            ["Are city's own capital requirements (e.g. available city budget) sufficient to implement the financing scheme?", [5, 6, 7, 8, 9]],
+            ["Does your municipality have the necessary know-how and/or technical expertise to support the implementation of the respective financing scheme?", 'splitSchemeAnswers' => true],
+            ["Are city's own capital requirements (e.g. available city budget) sufficient to implement the financing scheme?", [5, 6, 7, 8, 9], 'splitSchemeAnswers' => true],
             ["Does your city's financing strategy analyze both public and private, domestic and international, potential funding sources for supporting the priorities identified?", [0]],
             ["Can your municipality capitalize from lending institutions to support your city's project implementation?", [0, 1]],
             ["Does the city have a history on default on debt?", [0, 3, 5, 7], 'invertAnsVal' => true],
@@ -84,9 +84,9 @@ class QuestionnaireData extends Seeder{
             ["Does your city's project describe how priority objectives will be translated into specific concept notes, utilizing new financial instruments or mobilizing large scale finance from third development partners in the future?"],
             ["Does the public stance support your city's project related investments within the planned timeframe?"],
             ["Are your city's SECAP related projects and initiatives adequately disseminated to prospect investors and actors?"],
-            ["Is the city's cooperation and communication with public actors for SECAP or other investment projects adequate so as to implement the financing scheme?", [5]],
-            ["Is the city's cooperation and communication with traditional private actors for SECAP or other investment projects (e.g. banks, utilities, energy providers, etc) sufficient in order to implement the scheme?"],
-            ["Is the city's cooperation and communication with non-traditional investment actors (e.g. ESCOs) sufficient to implement the respective scheme?", [0, 3, 9]],
+            ["Is the city's cooperation and communication with public actors for SECAP or other investment projects adequate so as to implement the financing scheme?", [5], 'splitSchemeAnswers' => true],
+            ["Is the city's cooperation and communication with traditional private actors for SECAP or other investment projects (e.g. banks, utilities, energy providers, etc) sufficient in order to implement the scheme?", 'splitSchemeAnswers' => true],
+            ["Is the city's cooperation and communication with non-traditional investment actors (e.g. ESCOs) sufficient to implement the respective scheme?", [0, 3, 9], 'splitSchemeAnswers' => true],
             ["Is a Steering Committee or similar internal mechanism in place or planned as a governing body to fully oversee and guide your city's project implementation?"],
             ["Does the municipality plan to sub-contract its roles and responsibilities with respect to project implementation, and/or transfer all or part of the necessary proceeds,  to a third implementing entity either internal or external?", [0, 3, 4, 7]],
             ["In case the municipality plans to sub-contract and/or transfer all or part of the necessary proceeds, to a private third implementing entity is a clear explanation of the contractual arrangements, including transactional flow and/or flow of information, in place?", [0, 1, 3, 4, 7]],
@@ -114,11 +114,12 @@ class QuestionnaireData extends Seeder{
         return $aID;
     }
 
-    public static function newQ(array $questionnaireIDs, string $question, array $schemeIDs, string $note = null, bool $invertAnsVal = false){
+    public static function newQ(array $questionnaireIDs, string $question, array $schemeIDs, string $note = null, bool $invertAnsVal = false, bool $splitSchemeAnswers = false){
         $qID = Question::create([
             'question' => $question,
             'note_id' => $note ? Note::create(['note' => $note])->id : null,
-            'invert_ans_val' => $invertAnsVal
+            'invert_ans_val' => $invertAnsVal,
+            'split_scheme_answers' => $splitSchemeAnswers
         ])->id;
         foreach ($schemeIDs as $schemeID)
             QuestionScheme::create([

@@ -1,17 +1,16 @@
 import useTransHelper from "@/Helpers/TransHelpers";
+import { num2Letter } from '@/Helpers/RenderHelpers';
 
 const Question = ({ question, answers, schemes, currentAnswers, num, isDebug }) => {
     const currentAns = currentAnswers ? currentAnswers[question.id] : null;
     const { t } = useTransHelper();
 
-    const AnswerList = ({ ansKeyPrefix, scheme = null }) => {
-        const isCurrentAns = answer => {
-            return currentAns != null && (scheme == null ? currentAns : currentAns[scheme.id]) == answer.id;
-        };
+    const AnswerList = ({ ansKeyPrefix, scheme = null, num = 0 }) => {
+        const isCurrentAns = answer => currentAns != null && (scheme == null ? currentAns : currentAns[scheme.id]) == answer.id;
 
         return (
             <div className="grid grid-cols-1 gap-1 answer-list">
-                {scheme && (<span className="text-base font-semibold pp-fg-cyan">{scheme.title}</span>)}
+                {scheme && (<span className="text-base font-semibold pp-fg-cyan">{`${num > 0 ? `${num2Letter(num)}. ` : ""}${scheme.title}`}</span>)}
                 <div className="flex flex-row flex-wrap gap-x-4" children={answers.map(a => (
                     <div key={`${ansKeyPrefix}a${a.id}`} >
                         <label className="pp-input">
@@ -34,8 +33,8 @@ const Question = ({ question, answers, schemes, currentAnswers, num, isDebug }) 
             </div>
             {question.split_scheme_answers ? (
                 <div className="flex flex-row flex-wrap mx-8 gap-y-6 gap-x-12" children={
-                    schemes.filter(s => s.questions.includes(question.id)).map(s => [s, `q${question.id}s${s.id}`]).map(m => (
-                        <AnswerList ansKeyPrefix={m[1]} key={m[1]} scheme={m[0]} />
+                    schemes.filter(s => s.questions.includes(question.id)).map(s => [s, `q${question.id}s${s.id}`]).map((m, i) => (
+                        <AnswerList ansKeyPrefix={m[1]} key={m[1]} scheme={m[0]} num={i+1} />
                     ))
                 } />
             ) : (<AnswerList ansKeyPrefix={`q${question.id}`} />)}

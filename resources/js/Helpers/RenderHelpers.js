@@ -9,8 +9,11 @@ export const getTextWidth = (text, fontSize, fontFamily, fontWeight = "", fontSt
     return ctx.measureText(text).width;
 };
 
+export const num2Letter = n => (n + 9).toString(36);
+
 export default {
     postAnimFrame,
     getCSSVar,
-    getTextWidth
+    getTextWidth,
+    num2Letter
 };

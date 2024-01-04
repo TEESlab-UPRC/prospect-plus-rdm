@@ -24,6 +24,7 @@ export const SVGCompatExtLink = ({ style = {}, text = null, chartCompat = false,
 );
 
 export const RepoLink = props => (<ExtLinkWDef {...props} defText="repository" dest={Websites.Repo}/>);
+export const GlossaryLink = props => (<ExtLinkWDef {...props} defText="Glossary of financial terms" dest={Websites.Glossary} forceNewTab={true}/>);
 export const GuidelinesLink = props => (<ExtLinkWDef {...props} defText="Guidelines" dest={Websites.Guidelines} forceNewTab={true}/>);
 export const PROSPECTplusLink = props => (<ExtLinkWDef {...props} defText="PROSPECT+" dest={Websites.PROSPECTplus}/>);
 export const PPLearningHandbooksLink = props => (<SVGCompatExtLink {...props} dest={Websites.PPLearningHandbooks}/>);

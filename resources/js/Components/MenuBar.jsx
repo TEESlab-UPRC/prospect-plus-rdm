@@ -1,6 +1,6 @@
 import Menu from '@/Components/Menu';
 import { TEESlabLogo, PROSPECTplusLogo } from '@/Components/Logo';
-import { GuidelinesLink } from './ExtLink';
+import { GlossaryLink, GuidelinesLink } from './ExtLink';
 import useTransHelper from '@/Helpers/TransHelpers';
 
 const MenuBar = ({ user }) => {
@@ -13,6 +13,7 @@ const MenuBar = ({ user }) => {
                 <PROSPECTplusLogo />
             </div>
             <div>
+                <GlossaryLink text={t("Glossary of financial terms")}/>
                 <GuidelinesLink text={t("Guidelines")}/>
                 <Menu user={user}/>
             </div>

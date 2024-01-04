@@ -2,6 +2,7 @@ import Files from "@/../files/Files"
 
 export const GAOptOutAddon = "https://tools.google.com/dlpage/gaoptout/";
 export const Repo = "https://github.com/TEESlab-UPRC/prospect-plus-rdm";
+export const Glossary = "https://h2020prospect.eu/glossary-financial-terms";
 export const Guidelines = Files.Guidelines;
 export const TEESlab = "https://teeslab.unipi.gr/";
 export const PROSPECTplus = "https://h2020prospect.eu/";
@@ -34,6 +35,7 @@ export const SchemePDF = {
 export default {
     GAOptOutAddon,
     Repo,
+    Glossary,
     Guidelines,
     TEESlab,
     PROSPECTplus,

@@ -44,13 +44,17 @@ export default function Home({ auth, env, locale }) {
                 </ul>
                 <p {...tHTML("For each <b>sector of recommendation</b>, there are specific <b>innovative financing schemes</b> that could be best employed.")}/>
                 <p {...tHTML(`
-                    For each <b>specific scheme</b> an easy-to-grasp checklist of selected decision criteria identifies an <b>ease of implementation
-                    rate (%)</b>, based on the <b>project-specific characteristics</b> and the <b>general framework conditions</b>.
+                    For each <b>specific scheme</b> an easy-to-grasp list of questions is used to identify an <b>ease of implementation
+                    rate (%)</b>, based on the user’s responses on <b>project-specific characteristics</b> and the <b>general framework conditions</b>.
                 `)}/>
                 <p {...tHTML(`
                     <b>Analysis</b> is meant to be repeated <b>over time</b> alongside the early stages of city planning or projects’ preparation
-                    process and can also serve as a <b>stand-alone capacity building resource</b> enabling a concise overview of new and innovative
+                    process and can also serve as a <b>capacity building resource</b> enabling a concise overview of new and innovative
                     financing instruments and an interpretation of their mechanisms and areas of application.
+                `)}/>
+                <p {...tHTML(`
+                    How does the tool work? All the questions are equally weighted and by positively responding
+                    to them the ease of implementation rate increases - this holds reversely for question 18.
                 `)}/>
                 <p {...tHTML("<b>First-time user?</b> Check out the :GuidelinesLink.", {GuidelinesLink: (<GuidelinesLink text={t("Recommendation-Decision Matrix tool User Guide")}/>)})}/>
             </div>

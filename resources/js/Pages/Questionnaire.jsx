@@ -50,7 +50,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
 
     const getAnswersWithInversions = answers => answers.map(a => ansInversionMap[a.questionId] ? Object.assign({}, a, {value: maxAns - a.value}) : a);
     const reduceAns2Percent = answers => answers.reduce((a, c) => a + c.value, 0) / (answers.length * maxAns) * 100;
-    const onChartLoad = () => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay);
+    const onChartLoad = () => onPageLoad(() => setTimeout(() => window.scrollY == initScrollY && centerToChart(), onChartLoadCenterDelay));
 
     const DLBtn = () => (<ChartDLBtn filename={resultFilename} callback={() => analyticsEvent("download_results", {
         questionnaire_title: dlQuestionnaireTitle,

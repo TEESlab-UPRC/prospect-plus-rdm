@@ -9,7 +9,9 @@ import { analyticsInitPage } from '@/Helpers/AnalyticsHelpers';
 import useTransHelper from '@/Helpers/TransHelpers';
 import LanguageIcon from '@mui/icons-material/Language';
 import { select } from '@/Helpers/DialogHelpers';
+import {onPageLoad} from '@/Helpers/DomHelpers';
 
+const patchers = import.meta.glob('../Patchers/**/*.{js,jsx}');
 const altLayoutRoutes = ['welcome', 'login', 'register'];
 const langMap = {
     "pt-PT": "Portuguese",
@@ -47,6 +49,7 @@ export default function Layout({ title, auth, env, locale = {current: "en", avai
 
     const setElTxt = (clazz, txt) => document.getElementsByClassName(clazz)[0].innerText = t(txt);
 
+    useEffect(() => onPageLoad(() => Object.values(patchers).forEach(v => v())));   // when done loading, import patchers
     useEffect(() => analyticsInitPage(env.gtag, title, auth.user), [title, auth.user]);
     useEffect(() => setLocale(locale.current), [title, locale.current]);
     useEffect(() => {

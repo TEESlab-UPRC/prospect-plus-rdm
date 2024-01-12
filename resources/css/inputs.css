@@ -22,8 +22,8 @@
         @apply h-12 pp-btn-common pp-circle cursor-pointer relative;
         box-shadow: 0px 0px 6px 3px rgba(0,0,0,0.2);
         background-color: rgba(0,0,0,0.2);
-        top: -3rem;
+        bottom: 4rem;
     }
     #locale-btn > * {@apply h-full w-full pp-fg-cyan;}
-    #locale-btn-wrapper {@apply h-0 overflow-visible sticky bottom-2 mb-2 right-2 self-end;}
+    #locale-btn-wrapper {@apply h-0 overflow-visible sticky bottom-2 right-2 self-end;}
 }

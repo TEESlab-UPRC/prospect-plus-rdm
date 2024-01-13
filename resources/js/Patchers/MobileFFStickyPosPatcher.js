@@ -8,14 +8,16 @@
 ;(() => {
     if(!(!!navigator.userAgent.match(/(Mozilla|Gecko|Firefox)/i) && !!navigator.userAgent.match(/(Android|iPhone|Mobi|Tablet|TV)/i))) return;
 
-    const stickyEl = document.getElementById("locale-btn-wrapper");
-    const innerEl = stickyEl?.children[0];
+    var stickyEl = document.getElementById("locale-btn-wrapper");
+    var innerEl = stickyEl?.children[0];
     if(!innerEl) return;
 
     const against = stickyEl.nextSibling ? [stickyEl.nextSibling, "top"] : [stickyEl.parentNode, "bottom"];
     const halfRem = parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
 
     function runPatch(){
+        stickyEl = document.getElementById("locale-btn-wrapper");
+        innerEl = stickyEl?.children[0];
         if(against[0].getBoundingClientRect()[against[1]] - halfRem > visualViewport.height){
             stickyEl.style.position = "fixed";
             innerEl.style.bottom = "3rem";

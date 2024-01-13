@@ -23,7 +23,6 @@
             stickyEl.style.position = "relative";
             innerEl.style.bottom = "3.5rem";
         }
-        console.log("test");
     }
 
     ["scroll", "resize"].forEach(e => document.addEventListener(e, runPatch));

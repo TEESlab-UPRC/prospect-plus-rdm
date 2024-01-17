@@ -1,7 +1,9 @@
 html {@apply scroll-pt-28 scroll-pb-12;}
 body {@apply pp-font-def pp-selection;}
 
-.pp-outer-container {@apply relative flex flex-col min-h-screen bg-gray-100 bg-center bg-img;}
+.pp-chrome-patch .pp-outer-container::before {@apply content-empty inset-0 fixed -z-10 bg-top portrait:scale-[var(--pp-chrome-patch-scale-p,1.17)] landscape:scale-[var(--pp-chrome-patch-scale-l,1.6)] bg-gray-100 bg-img;}
+.pp-chrome-patch .pp-outer-container {@apply bg-transparent bg-none}
+.pp-outer-container {@apply relative flex flex-col min-h-screen bg-gray-100 bg-img;}
 .pp-middle-container {
     @apply flex flex-col items-center justify-center h-full grow pt-20;
     margin-bottom: -0.5rem;

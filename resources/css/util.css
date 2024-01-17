@@ -6,4 +6,6 @@
     .pp-shadow {box-shadow: 1px 6px 23px 5px rgba(0,0,0,0.17);}
 
     .refilled-data {@apply text-gray-500 italic;}
+
+    .content-empty {@apply content-[''];}
 }

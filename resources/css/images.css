@@ -1,8 +1,5 @@
 @layer components{
-    .bg-img {
-        @apply bg-no-repeat bg-center bg-cover bg-fixed;
-        background-image: url("../img/misc/Background-Compressed.jpg");
-    }
+    .bg-img {@apply bg-fixed bg-cover bg-center bg-no-repeat bg-[url('../img/misc/Background-Compressed.jpg')];}
 
     .circle-img {@apply pp-circle w-40 pp-shadow;}
 }

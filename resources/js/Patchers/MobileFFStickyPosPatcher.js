@@ -6,7 +6,8 @@
  * Currently only applies to the locale button, since it's the only element using sticky positioning.
  */
 ;(() => {
-    if(!(!!navigator.userAgent.match(/(Mozilla|Gecko|Firefox)/i) && !!navigator.userAgent.match(/(Android|iPhone|Mobi|Tablet|TV)/i))) return;
+    if(!navigator.userAgent.match(/(Android|iPhone|Mobi|Tablet|TV)/i)) return;
+    if(!navigator.userAgent.match(/(Firefox|FxiOS)/i) || !!navigator.userAgent.match(/(CriOS|Chrome|Safari)/i)) return;
 
     var stickyEl = document.getElementById("locale-btn-wrapper");
     var innerEl = stickyEl?.children[0];

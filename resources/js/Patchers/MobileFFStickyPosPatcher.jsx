@@ -5,6 +5,8 @@
  * This patch mimics normal behavior by instead alternating between fixed & relative positioning using JS.
  * Currently only applies to the locale button, since it's the only element using sticky positioning.
  */
+import { debounce } from '@/Helpers/RenderHelpers';
+
 ;(() => {
     if(!navigator.userAgent.match(/(Android|iPhone|Mobi|Tablet|TV)/i)) return;
     if(!navigator.userAgent.match(/(Firefox|FxiOS)/i) || !!navigator.userAgent.match(/(CriOS|Chrome|Safari)/i)) return;
@@ -13,10 +15,26 @@
     var innerEl = stickyEl?.children[0];
     if(!innerEl) return;
 
-    const against = stickyEl.nextSibling ? [stickyEl.nextSibling, "top"] : [stickyEl.parentNode, "bottom"];
-    const halfRem = parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
+    var isInit = false;
+    var against, halfRem;
+    const initAgainst = () => against = stickyEl.nextSibling ? [stickyEl.nextSibling, "top"] : [stickyEl.parentNode, "bottom"];
+    const initHalfRem = () => halfRem = parseFloat(getComputedStyle(document.documentElement).fontSize) / 2;
+    const init = () => {
+        stickyEl = document.getElementById("locale-btn-wrapper");
+        initAgainst();
+        initHalfRem();
+        isInit = true;
+    };
+
+    init();
+    document.addEventListener("inertia:navigate", () => {
+        init();
+        isInit = false;
+    });
+    document.addEventListener("resize", debounce(initHalfRem, 100));
 
     function runPatch(){
+        if(!isInit) init();
         stickyEl = document.getElementById("locale-btn-wrapper");
         innerEl = stickyEl?.children[0];
         if(against[0].getBoundingClientRect()[against[1]] - halfRem > visualViewport.height){
@@ -28,6 +46,6 @@
         }
     }
 
-    ["scroll", "resize"].forEach(e => document.addEventListener(e, runPatch));
+    ["scroll", "resize"].forEach(e => document.addEventListener(e, debounce(runPatch, 10)));
     runPatch();
 })();

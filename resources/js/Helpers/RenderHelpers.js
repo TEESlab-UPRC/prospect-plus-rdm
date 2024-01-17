@@ -12,10 +12,19 @@ export const getTextWidth = (text, fontSize, fontFamily, fontWeight = "", fontSt
 
 export const num2Letter = n => (n + 9).toString(36);
 
+export const debounce = (callback, delay) => {
+    let debounceTimeout;
+    return () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(callback, delay);
+    };
+}
+
 export default {
     postAnimFrame,
     getCSSVar,
     setCSSVar,
     getTextWidth,
-    num2Letter
+    num2Letter,
+    debounce
 };

@@ -1,6 +1,9 @@
-#menubar, #menubar > * {@apply flex flex-row items-center gap-6;}
+#menubar, #menubar > *, .menubar-links {@apply flex flex-row items-center gap-6;}
 #menubar {@apply fixed top-0 w-full h-[65px] z-50 justify-between py-2 px-4 bg-gray-100 border-b border-gray-300;}
-.menubar-menu {@apply sm:flex sm:items-center;}
+#menubar > :last-child {@apply basis-56 sm:basis-0 min-[720px]:basis-56 min-[920px]:basis-auto justify-end;}
+.menubar-links {@apply flex-wrap min-[720px]:flex-nowrap gap-y-1 min-[720px]:gap-y-6 justify-end;}
+.menubar-links > a:first-child {@apply min-w-28;}
+.menubar-menu {@apply sm:flex sm:items-center md:min-w-[82px];}
 button.menubar-menu-trigger {@apply flex flex-row items-center gap-2 min-h-[34px] min-w-[34px] md:pl-4 pl-1 md:pr-2 pr-1 md:py-2 py-1 text-base leading-4 pp-text font-bold transition duration-150 ease-in-out pp-bg-cyan-light border border-transparent rounded-md hover:brightness-95 focus:outline-none;}
 .menubar-menu-trigger img {@apply md:w-4 w-6;}
 .menubar-menu-trigger:focus {@apply pp-darker;}

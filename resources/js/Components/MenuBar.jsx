@@ -13,8 +13,11 @@ const MenuBar = ({ user }) => {
                 <PROSPECTplusLogo />
             </div>
             <div>
-                <GlossaryLink text={t("Glossary of financial terms")}/>
-                <GuidelinesLink text={t("Guidelines")}/>
+                <div className="menubar-links">
+                    <GlossaryLink text={t("Glossary of financial terms")} className="hidden min-[842px]:block"/>
+                    <GlossaryLink text={t("Glossary")} className="min-[842px]:hidden"/>
+                    <GuidelinesLink text={t("Guidelines")}/>
+                </div>
                 <Menu user={user}/>
             </div>
         </div>

@@ -14,7 +14,7 @@ const transSTc = (c, pWR = 10, pHR = 10) => {
     const cW = cB.width, cH = cB.height;
     const tW = t.clientWidth, tH = t.clientHeight;
     const wR = cW / tW, hR = cH / tH;
-    t.style.transform = `translateY(-50%) scale(${Math.min(wR, hR)})`;
+    t.style.transform = `translateY(-50%) scale(min(${wR}, ${hR}))`;
     if(!(ratiosAreClose(pWR, wR) && ratiosAreClose(pHR, hR)))
         postAnimFrame(() => transSTc(c, wR, hR));
 }

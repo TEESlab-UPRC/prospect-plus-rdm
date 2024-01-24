@@ -36,6 +36,13 @@ export const centerTo = el => el ? el.scrollIntoView({
     inline: "center"
 }) : false;
 
+export const isCentered = el => {
+    let rect = el.getBoundingClientRect();
+    let vp = window.visualViewport;
+    let scrPT = parseInt(getComputedStyle(document.documentElement).scrollPaddingTop.match(/\d+/));
+    return Math.abs(rect.top + el.offsetParent.offsetTop - scrPT + rect.height / 2 - (vp.offsetTop + vp.height / 2)) < 1;
+};
+
 export default {
     forClassEls,
     setClassStyle,
@@ -43,5 +50,6 @@ export default {
     setFormInputVal,
     setFormData,
     getFormData,
-    centerTo
+    centerTo,
+    isCentered
 };

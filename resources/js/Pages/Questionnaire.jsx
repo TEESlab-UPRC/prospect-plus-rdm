@@ -4,7 +4,7 @@ import Question from '@/Components/Question';
 import RDMChart from '@/Components/RDMChart';
 import FRCChart from '@/Components/FRCChart';
 import ChartDLBtn from '@/Components/ChartDLBtn';
-import { onPageLoad, centerTo } from '@/Helpers/DomHelpers';
+import { onPageLoad, centerTo, isCentered } from '@/Helpers/DomHelpers';
 import { getCSSVar } from '@/Helpers/RenderHelpers';
 import Layout from '@/Layouts/GeneralLayout';
 import { toast } from 'react-toastify';
@@ -33,8 +33,14 @@ const colorMap = Object.fromEntries(Object.entries({
 const simplifiedAnswers = answers => answers.map(({value, dataset}) => Object.fromEntries(Object.entries({value, ...dataset}).map(e => [e[0], parseInt(e[1])])));   // to Objects, keeping only their values & related IDs
 const ans2Obj = answers => Object.fromEntries(answers.map(d => [d.questionId, d.schemeId ? Object.fromEntries([[d.schemeId, d.answerId]]) : d.answerId])            // format each entry
         .reduce((a, c) => a.has(c[0]) ? Object.assign(a.get(c[0]), c[1]) && a : a.set(c[0], c[1]), new Map())); // merge multiple entries belonging to the same questions and transform entry array to object
-const centerToChart = () => centerTo(document.getElementById("visible-chart"));
-
+const centerToChart = () => {
+    let chart = document.getElementById("visible-chart");
+    addEventListener("scrollend", function scr(){
+        removeEventListener("scrollend", scr);
+        if(!isCentered(chart)) centerToChart(); // retry
+    });
+    centerTo(chart);
+};
 
 export default function Questionnaire({ auth, env, locale, questionnaire, currentAnswers, analysisTitle }) {
     const isEdit = !!currentAnswers;

@@ -2,13 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Answer;
-use App\Models\Note;
-use App\Models\Phase;
-use App\Models\Plan;
-use App\Models\Question;
-use App\Models\Questionnaire;
-use App\Models\Type;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use PDOException;

@@ -92,16 +92,10 @@ class LangGen extends Command{
     }
 
     protected function addFromDB($oJson){
-        return $this->mergeEntries($oJson, array_merge(   // DB entries to translate
-            Question::all()->map(fn($m) => $m->formattedText())->toArray(),
-            Note::all()->map(fn($m) => $m->formattedText())->toArray(),
-            Answer::all()->map(fn($m) => $m->text())->toArray(),
-            Phase::all()->map(fn($m) => $m->text())->toArray(),
-            Type::all()->map(fn($m) => $m->text())->toArray(),
-            Plan::all()->map(fn($m) => $m->text())->toArray(),
-            // Scheme::all()->map(fn($m) => $m->text())->toArray(),
-            Questionnaire::all()->map(fn($m) => $m->text())->toArray(),
-        ));
+        return $this->mergeEntries($oJson, array_merge(...array_map(
+            fn($e) => $e[0]::all()->map(fn($m) => $m->{$e[1]}())->toArray(),
+            config("autotranslate.db_entry_sources")
+        )));
     }
 
     protected function cannotTranslate($configApiKey, $engine){
@@ -167,6 +161,9 @@ class LangGen extends Command{
 
         // SORT
         $oJson = $this->sortEntries($oJson);
+
+        // CLEANUP
+        $oJson = array_filter($oJson, fn($f) => strlen($f) > 0, ARRAY_FILTER_USE_KEY);
 
         // TRANSLATE
         if($this->option('skip-trans')) $this->info('Skipping translation.');

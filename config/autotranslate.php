@@ -1,5 +1,13 @@
 <?php
 
+use App\Models\Answer;
+use App\Models\Note;
+use App\Models\Phase;
+use App\Models\Plan;
+use App\Models\Question;
+use App\Models\Questionnaire;
+use App\Models\Type;
+
 return [
     'source_language' => 'en',
     'target_languages' => [
@@ -16,6 +24,15 @@ return [
         'glossary' => null,                         // The ID of the DeepL glossary to use. Default: null
     ],
     'language_options' => [],                       // Language-specific overrides. The key is the language code and the value is an array of options.
+    'db_entry_sources' => [                         // DB entries to translate [model class, text entry function]
+        [Question::class, 'formattedText'],
+        [Note::class, 'formattedText'],
+        [Answer::class, 'text'],
+        [Phase::class, 'text'],
+        [Type::class, 'text'],
+        [Plan::class, 'text'],
+        [Questionnaire::class, 'text']
+    ],
     'excluded_words' => [                           // Excluded strings.
         '\\n',
         '\\r',

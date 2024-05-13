@@ -4,8 +4,9 @@
     .pp-required+label:hover::after {content: "*required";}
     form.pp-mark-required input:required,
     form.pp-mark-required select:required {@apply pp-required;}
+    .fix-ff-legend-center {@apply mx-auto;} /* use to center fieldset > legend in FF, text-align is borked */
     form legend {@apply pp-title justify-self-center;}
-    .small-legend {@apply underline mb-2 pp-title-smaller;}
+    .small-legend {@apply underline mb-2 pp-title-smaller fix-ff-legend-center;}
     form fieldset > legend {@apply small-legend;}
     form > div, form > fieldset {@apply grid grid-cols-1 gap-4;}
 }

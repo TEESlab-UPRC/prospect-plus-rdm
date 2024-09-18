@@ -74,7 +74,7 @@ export default function PrivacyPolicy({ auth, env, locale }) {
                     <li>{t("provide this service to you, as requested")}</li>
                     <li>{t("detect, prevent and address potential security issues concerning our services")}</li>
                     <li>{t("fulfil our legal obligations")}</li>
-                    <li>{t("protect your vital interests or the vital interests of a third party, such as situations involving potential threads to a person's safety")}</li>
+                    <li>{t("protect your vital interests or the vital interests of a third party, such as situations involving potential threats to a person's safety")}</li>
                 </ul>
             </div>
             <h2>{t("With who we share your data")}</h2>
@@ -94,7 +94,7 @@ export default function PrivacyPolicy({ auth, env, locale }) {
             <h2>{t("Data retention")}</h2>
             <p {...tHTML(`
                 We keep the data listed above for <b>as long as necessary</b> to fulfil the purposes already described.<br />
-                When you perform <b>changes</b> your account or analysis data, the <b>previous data will not be retained</b>.<br />
+                When you perform <b>changes</b> on your account or analysis data, the <b>previous data will not be retained</b>.<br />
                 When account or analysis data gets <b>deleted by the user</b>, we <b>do not keep</b> it on our infrastructure anymore.
             `)}/>
             <h2>{t("Data safety")}</h2>

@@ -40,6 +40,7 @@ const Menu = ({ user }) => {
                     <Link dest="home.render" text={t("Home")}/>
                     {user && (<Link dest="analyses.render" text={t("My Analyses")}/>)}
                     <Link onClick={showHelp} text={t("Help & Support")} as="button"/>
+                    <Link dest="privacy-policy.render" text={t("Privacy Policy")} />
                     {user && (<Link dest="profile.render" text={t("Edit Profile")}/>)}
                     {user ? (<PLink dest="logout" text={t("Log Out")} onClick={() => analyticsEvent("logout")}/>) : (<Link dest="login" text={t("Log In")}/>)}
                 </Dropdown.Content>

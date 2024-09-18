@@ -59,7 +59,7 @@ export default function Home({ auth, env, locale }) {
                 <p {...tHTML("<b>First-time user?</b> Check out the :GuidelinesLink.", {GuidelinesLink: (<GuidelinesLink text={t("Recommendation-Decision Matrix tool User Guide")}/>)})}/>
             </div>
             <button type="button" onClick={start} className="self-center my-2 text-2xl w-52 sm:w-64 pp-btn-green justify-self-center">{t("Start!")}</button>
-            <p className="text-sm" {...tHTML(`
+            <p className="text-sm pp-text" {...tHTML(`
                 The <b>Recommendation-Decision Matrix tool</b> has been developed in :PROSPECTplusLink, a capacity-building HORIZON 2020 project aiming at bringing
                 together EU municipalities and empowering them to make more informed decisions on implementing their local energy and climate plans
                 (e.g. SEAPs, SECAPs, etc.) by using the appropriate :PPLearningProgrammeLink.

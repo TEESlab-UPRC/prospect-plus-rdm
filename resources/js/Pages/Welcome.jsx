@@ -51,16 +51,16 @@ export default function Welcome({ auth, env, locale, pwReset, isRegister = false
                         <Link href={route('password.request')} className="mr-2 text-right pp-link-faint">{t("forgot password?")}</Link>
                     </div>
                 )}
-                <div className="flex items-center justify-end mt-2">
-                    <Link href={route(isRegister ? 'login' : 'register')} className="pp-link">{t(isRegister ? "Already registered?" : "Not registered?")}</Link>
-                    <button type="submit" className="pp-btn-blue">{t(isRegister ? "Register" : "Log In")}</button>
+                <div className="flex items-center justify-between mt-2">
+                    <PrivacyPolicyLink className="mr-2 justify-self-end"/>
+                    <div className="flex items-center justify-end gap-4">
+                        <Link href={route(isRegister ? 'login' : 'register')} className="text-right pp-link">{t(isRegister ? "Already registered?" : "Not registered?")}</Link>
+                        <button type="submit" className="pp-btn-blue">{t(isRegister ? "Register" : "Log In")}</button>
+                    </div>
                 </div>
             </form>
             <hr />
-            <div className="grid grid-cols-1 gap-2">
-                <button className="pp-btn-lime" onClick={skipToHome}>{t("Proceed without an account")}</button>
-                <PrivacyPolicyLink className="mr-2 text-right justify-self-end"/>
-            </div>
+            <button className="pp-btn-lime" onClick={skipToHome}>{t("Proceed without an account")}</button>
         </Layout>
     );
 }

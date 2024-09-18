@@ -13,7 +13,7 @@ const start = () => router.post(route('info.load'));
 export default function Home({ auth, env, locale }) {
     const { t, tHTML } = useTransHelper();
 
-    useEffect(() => onPageLoad(() => auth.user || toast.info(t("Guest mode: log in if you want your analyses to be saved!"))), []);
+    useEffect(() => onPageLoad(() => auth.user || toast.info(t("Guest mode: log in if you want your analyses to be saved!"), {autoClose: 10000})), []);
 
     return (
         <Layout title="Home" auth={auth} env={env} locale={locale} className="grid grid-cols-1">

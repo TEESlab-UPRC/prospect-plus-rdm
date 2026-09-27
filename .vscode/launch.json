@@ -1,0 +1,78 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Start Vite",
+            "presentation": { "group": "3: Main dev configurations", "order": 1 },
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "npm run dev && exit",
+            "cwd": "${workspaceFolder}/public"
+        },
+        {
+            "name": "Start Artisan server",
+            "presentation": { "group": "3: Main dev configurations", "order": 2 },
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "composer run-script dev && exit",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Listen for XDebug",
+            "presentation": { "group": "3: Main dev configurations", "order": 3 },
+            "type": "php",
+            "request": "launch",
+            "port": 9000
+        },
+        {
+            "name": "Start MySQL",
+            "presentation": { "group": "3: Main dev configurations", "order": 4 },
+            "type": "node-terminal",
+            "request": "launch",
+            "command": "ps -ef | grep -v grep | grep mysql >/dev/null || (echo 'MySQL not running, starting...' && sudo service mysql start); exit"
+        },
+        {
+            "name": "Launch Firefox for debugging",
+            "presentation": { "group": "2: Browser configurations", "order": 1 },
+            "type": "node-terminal",
+            "request": "launch",
+            // "command": "firefox -profile \"~/.mozilla/firefox/RDM-debugging\" -url \"localhost:8000\" -start-debugger-server -no-remote && exit",
+            "command": "cmd.exe /c start firefox.exe -profile \"%AppData%\\Mozilla\\Firefox\\Profiles\\RDM-debugging\" -url \"localhost:8000\" -start-debugger-server -no-remote && exit",
+            "preLaunchTask": "Init browser debugging profile"
+        },
+        {
+            "name": "Attach debugger to Firefox",
+            "presentation": { "group": "2: Browser configurations", "order": 2 },
+            "type": "firefox",
+            "request": "attach",
+            "enableCRAWorkaround": true,
+            "url": "http://localhost:8000",
+            "pathMappings": [
+                { "url": "http://localhost:8000", "path": "${workspaceFolder}/public" },
+                { "url": "http://localhost:3000/resources", "path": "${workspaceFolder}/resources" }
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Start Artisan server with XDebug",
+            "presentation": { "group": "3: Main dev configurations", "order": 5 },
+            "configurations": [
+                "Listen for XDebug",
+                "Start Artisan server"
+            ],
+            "stopAll": true
+        },
+        {
+            "name": "Start debugging",
+            "presentation": { "group": "1: Quick configurations", "order": 1 },
+            "configurations": [
+                "Listen for XDebug",
+                "Start Artisan server",
+                "Start Vite",
+                "Start MySQL"
+            ],
+            "stopAll": true
+        }
+    ]
+}

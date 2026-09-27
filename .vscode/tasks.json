@@ -1,0 +1,19 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Init browser debugging profile",
+            "type": "shell",
+            "command": "node",
+            "args": ["${workspaceFolder}/.debug_helpers/init_browser_debug_profile.mjs"],
+            "hide": true,
+            "presentation": {
+                "reveal": "silent",
+                "close": true,
+                "showReuseMessage": false
+            }
+        }
+    ]
+}

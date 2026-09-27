@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "firefox-devtools.vscode-firefox-debug",
+        "xdebug.php-debug",
+        "nhedger.inertia",
+        "bmewburn.vscode-intelephense-client",
+        "laravel.vscode-laravel",
+        "ryannaddy.laravel-artisan",
+        "jawandarajbir.react-vscode-extension-pack",
+        "bradlc.vscode-tailwindcss",
+        "austenc.tailwind-docs",
+        "antfu.vite",
+        "mikestead.dotenv",
+        "ctf0.env-symbol-provider",
+    ]
+}

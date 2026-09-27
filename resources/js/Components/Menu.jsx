@@ -13,7 +13,7 @@ const Menu = ({ user }) => {
     const showHelp = e => {
         e.preventDefault();                                                             // abort link navigation
         e.target.parentElement.dispatchEvent(new MouseEvent("click", {bubbles: true})); // close menu
-        analyticsEvent("view_help", true);
+        analyticsEvent("view_help");
         htmlInfo(t("Help & Support"), t(`
             <div class="flex flex-col gap-2 my-1">
                 <span><b>Need help using the app?</b> Check out the :GuidelinesLink!</span>

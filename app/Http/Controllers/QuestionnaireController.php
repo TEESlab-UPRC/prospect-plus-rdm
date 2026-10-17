@@ -110,9 +110,11 @@ class QuestionnaireController extends Controller{
     function store(Request $request){
         // validation
         if(!$request || !$request->user()) return;
+        /** @var ?Questionnaire */
         $q = session('questionnaire');
         if(!$q) return redirect('/');
         $i = session('info');
+        /** @var ?Analysis */
         $analysis = session('analysis');
         if(!$analysis && !$i) return;   // no current analysis or info to create one - can't proceed
         $qQuestions = $q->questionnaireQuestions->map(fn($m) => $m->question);          // questionnaire's questions

@@ -2,6 +2,23 @@
 
 namespace App\Models;
 
+/**
+ * @property string $org
+ * @property string $region
+ * @property string $country
+ * @property string $title
+ * @property \Illuminate\Support\Carbon $implementation_start
+ * @property \Illuminate\Support\Carbon $completion_start
+ * @property integer $user_id
+ * @property integer $rdm_id
+ * @property integer $frc_id
+ * @property integer $plan_id
+ * @property integer $type_id
+ * @property integer $phase_id
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property integer $sector_id
+ */
 class Analysis extends Model{
     public $timestamps = true;
 

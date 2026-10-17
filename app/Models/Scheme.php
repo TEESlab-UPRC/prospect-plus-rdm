@@ -15,8 +15,6 @@ class Scheme extends TitleModel{
         return $this->hasMany(AnalysisAnswer::class);
     }
 
-    public function text(){
-        return $this->title;
     }
 
     public static function none(): Scheme{

@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+/**
+ * @property boolean $isRDM
+ */
 class Questionnaire extends TitleModel{
     protected $fillable = ['title', 'isRDM'];
     protected $casts = ['isRDM' => 'boolean'];
@@ -26,7 +29,5 @@ class Questionnaire extends TitleModel{
         return $this->hasMany(QuestionnaireScheme::class);
     }
 
-    public function text(){
-        return $this->title;
     }
 }

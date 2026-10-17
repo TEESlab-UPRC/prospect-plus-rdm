@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Parsedown;
 
+/**
+ * @property string $note
+ */
 class Note extends TextModel{
     protected $fillable = ['note'];
+    /** @var Parsedown */
     protected $parsedown;
 
     public function __construct(){

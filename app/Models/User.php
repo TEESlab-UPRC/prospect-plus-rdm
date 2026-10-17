@@ -9,6 +9,16 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property integer $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon $email_verified_at
+ * @property string $password
+ * @property string $remember_token
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ */
 class User extends Authenticatable{
     use HasApiTokens, HasFactory, Notifiable;
 

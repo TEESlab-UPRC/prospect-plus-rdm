@@ -2,6 +2,13 @@
 
 namespace App\Models;
 
+/**
+ * @property integer $question_id
+ * @property integer $questionnaire_id
+ * @property integer $analysis_id
+ * @property integer $answer_id
+ * @property integer $scheme_id
+ */
 class AnalysisAnswer extends Model{
     protected $table = 'analyses_answers';
     protected $fillable = ['question_id', 'questionnaire_id', 'analysis_id', 'answer_id', 'scheme_id'];

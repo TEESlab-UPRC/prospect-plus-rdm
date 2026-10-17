@@ -4,9 +4,16 @@ namespace App\Models;
 
 use Parsedown;
 
+/**
+ * @property string $question
+ * @property integer $note_id
+ * @property boolean $invert_ans_val
+ * @property boolean $split_scheme_answers
+ */
 class Question extends TextModel{
     protected $fillable = ['question', 'invert_ans_val', 'split_scheme_answers', 'note_id'];
     protected $casts = ['invert_ans_val' => 'boolean', 'split_scheme_answers' => 'boolean'];
+    /** @var Parsedown */
     protected $parsedown;
 
     public function __construct(){

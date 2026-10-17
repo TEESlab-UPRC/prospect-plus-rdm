@@ -7,6 +7,7 @@
     --pp-yellow: #FFD500;
     --pp-cyan: #009999;
     --pp-lime: #97B42A;
+    --pp-lime-light: #AEC76B;
     --pp-green: #00883B;
     --pp-red: #DC2626;
     --pp-lime-trans: #96b42a62;
@@ -28,6 +29,7 @@
     .pp-bg-cyan {background-color: var(--pp-cyan);}
     .pp-bg-lime {background-color: var(--pp-lime);}
     .pp-bg-lime-trans{background-color: var(--pp-lime-trans);}
+    .pp-bg-lime-light {background-color: var(--pp-lime-light);}
     .pp-bg-green {background-color: var(--pp-green);}
     .pp-bg-red {background-color: var(--pp-red);}
     .pp-bg-table-hover {background-color: var(--pp-yellow-light);}
@@ -39,6 +41,7 @@
     .pp-fg-yellow {color: var(--pp-yellow);}
     .pp-fg-cyan {color: var(--pp-cyan);}
     .pp-fg-lime {color: var(--pp-lime);}
+    .pp-fg-lime-light {color: var(--pp-lime-light);}
     .pp-fg-green {color: var(--pp-green);}
     .pp-fg-red {color: var(--pp-red);}
     .pp-fg-text-base {color: var(--pp-base-text-color);}

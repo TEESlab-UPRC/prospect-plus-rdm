@@ -28,6 +28,4 @@ class Questionnaire extends TitleModel{
     public function questionnairesSchemes(){
         return $this->hasMany(QuestionnaireScheme::class);
     }
-
-    }
 }

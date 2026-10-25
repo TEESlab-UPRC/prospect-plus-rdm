@@ -15,6 +15,4 @@ class Answer extends AnswerModel{
     public function questionnairesAnswers(){
         return $this->hasMany(QuestionnaireAnswer::class);
     }
-
-    }
 }

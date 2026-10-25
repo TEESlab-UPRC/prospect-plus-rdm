@@ -15,8 +15,6 @@ class Scheme extends TitleModel{
         return $this->hasMany(AnalysisAnswer::class);
     }
 
-    }
-
     public static function none(): Scheme{
         return Scheme::firstWhere('title', '');
     }

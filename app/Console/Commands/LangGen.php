@@ -156,7 +156,7 @@ class LangGen extends Command{
         $oJson = $this->sortEntries($oJson);
 
         // CLEANUP
-        $oJson = array_filter($oJson, fn($f) => strlen($f) > 0, ARRAY_FILTER_USE_KEY);
+        $oJson = array_filter($oJson, fn($f) => strlen($f) > 0 && !is_numeric($f), ARRAY_FILTER_USE_KEY);
 
         // TRANSLATE
         if($this->option('skip-trans')) $this->info('Skipping translation.');

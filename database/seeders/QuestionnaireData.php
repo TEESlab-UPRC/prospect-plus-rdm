@@ -5,45 +5,65 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Note;
 use App\Models\Answer;
+use App\Models\Pillar;
+use App\Models\PillarScheme;
 use App\Models\Scheme;
 use App\Models\Question;
+use App\Models\QuestionAnswer;
 use App\Models\Questionnaire;
 use App\Models\QuestionScheme;
 use App\Models\QuestionnaireAnswer;
 use App\Models\QuestionnaireScheme;
 use App\Models\QuestionnaireQuestion;
+use App\Models\SchemeEnabler;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class QuestionnaireData extends Seeder{
     public function run(): void{
-        Scheme::firstOrCreate(['title' => '']); // special scheme, referred to in analyses_answers, instead of setting NULL (important for compound unique index constraint)
-        $schemes = array_map(fn($t) => Scheme::create(['title' => $t])->id, [
+        static::resetFreshSchemes();
+        $schemes = array_map(fn($t) => Scheme::create(['title' => $t])->id, [   // Add schemes (title)
             'Own Funds',
-            'Interacting/Internal Contracting',
+            'Internal Contracting',
             'Revolving Funds',
             'Soft Loans',
             'Green Bonds',
             'EPC',
-            '3rd Party Financing',
+            'Third-Party Financing',
             'Guarantee Funds',
-            'On-bill financing',
-            'Citizens Financing - Cooperatives/Crowdfunding'
+            'On-bill Financing',
+            'Citizens Finance'
+        ]);
+        static::mkNoneScheme();
+
+        $pillars = array_map(fn($a) => static::newPillar($schemes, $a[0], array_combine($schemes, $a[1])), [    // Add pillars ([title, scheme weights])
+            ['Political & Strategic Readiness',     [15.00, 15.83, 15.83, 16.83, 19.33, 17.00, 15.00, 15.67, 11.83, 14.33]],
+            ['Regulatory & Procedural Feasibility', [ 7.33, 20.83, 15.00, 15.00, 24.17, 23.67, 16.67, 18.33, 22.50, 19.33]],
+            ['Internal Capacity & Governance',      [20.00, 24.17, 22.50, 17.50, 14.00, 14.50, 17.33, 18.50, 17.67, 16.50]],
+            ['Financial Strength & Bankability',    [30.00, 14.17, 20.00, 20.67, 24.17, 15.33, 16.67, 19.17, 14.00, 13.00]],
+            ['Market & Stakeholder Engagement',     [10.17,  8.33, 10.00, 14.17, 10.17, 13.67, 18.83, 13.33, 16.50, 19.17]],
+            ['Execution & Contracting Readiness',   [17.50, 16.67, 16.67, 15.83,  8.17, 15.83, 15.50, 15.00, 17.50, 17.67]],
         ]);
 
-        $frc = static::newQuestionnaire('Quick Finance Readiness Check', [], false);
-        $rdm = array_map(fn($a) => static::newQuestionnaire($a[0], array_map(fn($i) => $schemes[$i], $a[1])), [ // Add RDM questionnaires ([title, schemes])
-            ['Public Buildings',    [0, 1, 2, 3, 4, 5, 6, 7, 8]],
-            ['Private Buildings',   [0, 2, 3, 4, 5, 6, 7, 8, 9]],
-            ['Transport',           [0, 1, 3, 4, 5, 8, 9]],
-            ['Public Lighting',     [0, 2, 5, 7, 8]],
-            ['Cross Sectoral',      [0, 2, 3, 4, 5, 6, 9]]
+        $frc = static::newQuestionnaire('Quick Finance Readiness Check');
+        $rdm = array_map(fn($a) => static::newQuestionnaire($a[0], array_map(fn($i) => $schemes[$i], $a[1]), count($a) > 2 ? $a[2] : false), [ // Add RDM questionnaires ([title, schemes, isLegacy?])
+            ['Public Buildings',            [0, 1, 2, 3, 4, 5, 6, 7, 8]             ],
+            ['Private Buildings',           [0, 2, 3, 4, 5, 6, 7, 8, 9]             ],
+            ['Transport & E-mobility',      [0, 1, 3, 4, 5, 8, 9]                   ],
+            ['Lighting',                    [0, 2, 5, 7, 8]                         ],
+            ['Cross Sectoral',              [0, 2, 3, 4, 5, 6, 9],              true],
+            ['District Heating & Cooling',  [3, 4, 5, 6, 7, 9]                      ],
+            ['Renewable Energy Projects',   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]          ]
         ]);
         $both = array_merge([$frc], $rdm);
 
-        static::newA($both, 'No', 0);
-        static::newA($rdm, 'Partially', 1);
-        static::newA($both, 'Yes', 2);
+        $enablers = array_map(fn($a) => static::newEnabler($a[0], array_combine($schemes, $a[1]), count($a) > 2 ? $a[2] : false), [   // Add enablers ([title, scheme Relevance Coefficient, isLegacy?])
+            ['Energy Community', [2.000, 1.167, 1.333, 1.667, 1.333, 1.500, 1.833, 2.167, 2.833, 4.333]],
+            ['Energy Agency',    [2.500, 3.833, 3.167, 3.500, 3.333, 4.167, 3.000, 3.333, 4.167, 2.833]],
+            ['One-stop Shop',    [2.000, 2.167, 2.333, 2.833, 1.667, 3.167, 3.167, 3.167, 3.167, 3.167]]
+        ]);
 
-        array_map(fn($a) => static::newQ([$frc], $a[0], [], count($a) > 1 ? $a[1] : null), [    // Add FRC questions ([question, note?])
+        array_map(fn($a) => static::newQuestion([$frc], $a[0], [], [], count($a) > 1 ? $a[1] : null), [    // Add FRC questions ([question, note?])
             ['Have you defined the **measures** that you intend to implement in your project?', 'These include all measures that result in energy savings or the production of renewable energies. You need to have a clear understanding of which measures you plan to implement in your project in order to understand the project costs and revenues.'],
             ['Has a baseline **energy consumption** been determined?', 'In order to calculate the impacts of your project, you need to know your baseline energy consumption before the implementation of any measures.'],
             ['Have you determined the energy savings and/or renewable energy production resulting from your planned measures?', 'In order to calculate the revenues of your project you need to have a clear understanding of your impacts in terms of energy savings and/or renewable energy produced.'],
@@ -59,78 +79,156 @@ class QuestionnaireData extends Seeder{
             ['Have you assessed any **challenging regulations or policies** that could pose a risk or barrier for your project?', 'It is important to understand which political factors or regulations negatively influence your project, such as e.g. long and bureaucratic licensing processes, requirements for impact assessments, land-use and ownership barriers etc.']
         ]);
 
-        array_map(fn($a) => static::newQ($rdm, $a[0], array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), array_key_exists(1, $a) ? $a[1] : [])), array_key_exists('note', $a) && $a['note'], array_key_exists('invertAnsVal', $a) && $a['invertAnsVal'], array_key_exists('splitSchemeAnswers', $a) && $a['splitSchemeAnswers']), [    // Add RDM questions ([question, disabled schemes?, 'invertAnsVal' => bool?, 'splitSchemeAnswers' => bool?])
-            ["Has your municipality’s project been formally approved by your municipal council at a high political level?"],
-            ["Is your municipality’s project linked to a national investment prioritization process directly supported by existing municipal budgets and/or dedicated national or international funding sources?", [3, 4, 5, 6, 7, 8, 9], 'note' => 'The question refers to supporting central government projects and/or long term national strategies that can serve as framework condition for mobilizing intergovernmental transfers to address differences in expenditure needs and fiscal capacity across cities, thus ensure the successful implementation of the respective local action plan or project.'],
-            ["Does your city's project demonstrate a clear municipal ownership and direction on its strategic priorities, with a long-term finance orientation, considering potential options for refinancing or repaying investment (e.g. through energy bills or taxation etc)?", [6, 7], 'note' => 'Ownership may refer to different levels of government, including subnational government (regions and municipalities) and may take different legal forms such as public-private partnerships with local authorities, co-operatives, community trusts and foundations, limited liability companies, non-profit customer-owned enterprises, housing associations and municipal ownership. Local projects that demonstrate a clear ownership direction indicate an increased operational role of local authorities and their economic decisions that may lead for example to an increase of municipal control over a project’s management (e.g. setting up new or taking back control over existing local energy companies and energy infrastructure), whilst also improving transparency and accountability in public service delivery.'],
-            ["Does your municipality’s project financing strategy foresee a mix of financial instruments and/or business models to create public-private partnerships, multiple financiers and service providers (e.g. for coordinating and mobilizing resources, sharing associated investment risks etc)?", [0, 1, 7]],
-            ["Do public procurement procedures facilitate sustainable energy investments?"],
-            ["Are subsidies, tax benefits, or other incentives or obligations (e.g energy savings, EEOs, etc) available for private project investors and lenders?", [0, 1, 3, 4, 7]],
-            ["Do ownership issues with regard to municipality’s assets (e.g. buildings) facilitate the implementation of your local project related investments in these assets?"],
-            ["Is the process to gain a construction/renovation permit fast and efficient?"],
-            ["Are Budgetary Rules for local and regional authorities revised to exclude financing schemes (e.g. EPC) from debt quota obligations?", [0, 1, 7]],
-            ["Does your municipality have the necessary resources to support the project’s development and implementation within the planned timeframe?"],
-            ["Is the municipality’s personnel for project underwriting & evaluation able to support the implementation of the respective financing scheme?", [5], 'splitSchemeAnswers' => true],
-            ["Does your municipality have the appropriate (multi-departmental) structure responsible for the ultimate oversight, including co-ordination, monitoring, performance risks management etc, over your city's project efficient implementation?"],
-            ["Does your municipality have the necessary capacity to conduct business development activities among which investigating alternative funding sources?"],
-            ["Does your municipality have the technical expertise to support the implementation of the respective financing scheme?", 'splitSchemeAnswers' => true],
-            ["Can your municipality’s own capital (e.g. available city budget) support the implementation of the respective financing scheme?", [5, 6, 7, 8, 9], 'splitSchemeAnswers' => true],
-            ["Does your municipality’s financing strategy analyse both public and private, domestic and international, potential funding sources for supporting the priorities identified?", [0]],
-            ["Can your municipality capitalize from lending institutions to support the project’s implementation?", [0, 1]],
-            ["Does the municipality have a history on default on debt?", [0, 3, 5, 7], 'invertAnsVal' => true],
-            ["Is the typical nominal bank lending rate relatively low and/or attractive to your organization?", [0, 3, 5, 7, 9]],
-            ["Is co-financing foreseen and detailed in your municipality’s project proposal budget?", [0, 1]],
-            ["Will your municipality’s project utilize other innovative sources, such as levies?", [0, 1]],
-            ["Does your municipality’s project describe how priority objectives will be translated into specific actions, utilizing new financial instruments or mobilizing finance from third development partners?"],
-            ["Does the public stance support your municipality's project related investments within the planned timeframe?", 'note' => 'Public stance refers to public acceptance, participation and support. Poor public stance may lead to insufficient or poor involvement of public actors and key target groups in the project’s implementation.'],
-            ["Are your municipality’s energy and climate action plans, projects and initiatives adequately disseminated to prospect investors and actors?"],
-            ["Is the municipality’s cooperation and communication with public actors for SECAP or other investment projects adequate so as to implement the financing scheme?", [5], 'splitSchemeAnswers' => true],
-            ["Is the municipality’s cooperation and communication with traditional private actors for SECAP or other investment projects (e.g. banks, utilities, energy providers, etc) sufficient in order to implement the scheme?", 'splitSchemeAnswers' => true],
-            ["Is the municipality’s cooperation and communication with non-traditional investment actors (e.g. ESCOs) sufficient to implement the respective scheme?", [0, 3, 9], 'splitSchemeAnswers' => true],
-            ["Is a Steering Committee or similar internal mechanism in place or planned as a governing body to fully oversee your municipality’s project implementation?"],
-            ["Does the municipality plan to sub-contract its roles and responsibilities with respect to project implementation, and/or transfer all or part of the necessary proceeds,  to a third implementing entity either internal or external?", [0, 3, 4, 7]],
-            ["In case the municipality plans to sub-contract and/or transfer all or part of the necessary proceeds, to a private third implementing entity is a clear explanation of the contractual arrangements, including transactional flow and/or flow of information, in place?", [0, 1, 3, 4, 7]],
-            ["Is your municipality’s project anticipated duration and implementation schedule reasonable and fully coordinated with all relevant investment actors and stakeholders involved?"]
+        array_map(fn($a) => static::newQuestion($rdm, $a[2],
+                        array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), array_key_exists(3, $a) ? $a[3] : [])),
+                        array_key_exists('mustPass', $a) ? array_map(fn($i) =>  $schemes[$i], $a['mustPass']) : [],
+                        array_key_exists('note', $a) && $a['note'],
+                        array_key_exists('invertAnsVal', $a) && $a['invertAnsVal'],
+                        array_key_exists('splitSchemeAnswers', $a) && $a['splitSchemeAnswers'],
+                        $pillars[$a[0]], $a[1]
+                ), [    // Add RDM questions ([pillar, weight, question, disabled schemes?, 'invertAnsVal' => bool?, 'splitSchemeAnswers' => bool?, 'note' => string?, 'mustPass' => schemes?])
+                    [0, 6.571, "Has your municipality’s project been formally validated by your municipal council at a high political level?", 'mustPass' => [4, 9]],
+                    [0, 5.285, "Is your municipality’s project linked to a national investment prioritisation process directly supported by existing municipal budgets and/or dedicated national or international funding sources?", [3, 4, 5, 6, 7, 8, 9], 'mustPass' => [0, 1], 'note' => "The question refers to supporting central government projects and/or long term national strategies that can serve as framework condition for mobilizing intergovernmental transfers to address differences in expenditure needs and fiscal capacity across cities, thus ensure the successful implementation of the respective local action plan or project."],
+                    [0, 5.000, "Does your municipality’s project demonstrate a clear national ownership and national direction on its strategic priorities, with a long-term finance orientation, considering potential options for refinancing or repaying investment (e.g. through energy bills or taxation etc)?", [5, 6, 7], 'note' => "Ownership may refer to different levels of government, including subnational government (regions and municipalities) and may take different legal forms such as public-private partnerships with local authorities, co-operatives, community trusts and foundations, limited liability companies, non-profit customer-owned enterprises, housing associations and municipal ownership. Local projects that demonstrate a clear ownership direction indicate an increased operational role of local authorities and their economic decisions that may lead for example to an increase of municipal control over a project’s management (e.g. setting up new or taking back control over existing local energy companies and energy infrastructure), whilst also improving transparency and accountability in public service delivery."],
+                    [0, 5.857, "Does your municipality’s project financing strategy foresee a mix of financial instruments and/or business models to create public-private partnerships, multiple financiers and service providers (e.g. for coordinating and mobilising resources, sharing associated investment risks etc)?", [0, 1]],
+                    [1, 5.714, "Do public procurement procedures facilitate sustainable energy investments?", [0, 1, 3, 4]],
+                    [1, 5.000, "Are subsidies, tax benefits, or other incentives and obligations(e.g energy savings, EEOs, etc) available for private project investors and lenders?"],
+                    [1, 5.714, "Do ownership issues with regard to municipality’s assets (e.g. municipal building titles) facilitate the implementation of your municipality’s project related investments in these assets?", 'mustPass' => [5]],
+                    [1, 5.428, "Is the process for obtaining construction or renovation permits fast and efficient?", [0, 1]],
+                    [1, 5.714, "Are Budgetary Rules for local and regional authorities revised to exclude financing schemes (e.g. EPC) from debt quota obligations?"],
+                    [2, 6.000, "Does your municipality have the necessary resources to support your municipality’s project development and implementation within the planned timeframe?", [5], 'mustPass' => [0, 1, 2]],
+                    [2, 5.714, "Is the municipality’s personnel for project underwriting & evaluation sufficient to support the implementation of the respective financing scheme?", [5], 'splitSchemeAnswers' => true],
+                    [2, 4.571, "Does your municipality have the appropriate (multi-departmental) structure responsible for the ultimate oversight, including coordination, monitoring, performance risk management etc, over your municipality’s project efficient implementation?", 'mustPass' => [2, 5, 6, 8]],
+                    [2, 5.000, "Does the municipality have the capacity to investigate and secure alternative funding sources?"],
+                    [2, 5.285, "Does your municipality have the necessary know-how and/or technical expertise to support the implementation of the respective financing scheme?", 'mustPass' => [0, 1], 'splitSchemeAnswers' => true],
+                    [3, 5.142, "Can your municipality’s own capital (e.g. available municipality budget) support the implementation of the respective financing scheme?", [5, 6, 7, 8, 9], 'mustPass' => [0, 1, 2], 'splitSchemeAnswers' => true],
+                    [3, 4.714, "Does your municipality’s financing strategy analyse both public and private, domestic and international, potential funding sources for supporting the identified priorities?", [0], 'mustPass' => [3, 4]],
+                    [3, 4.857, "Can your municipality capitalise from lending institutions to support the project’s implementation?", [0, 5, 9], 'mustPass' => [3, 4, 6, 7, 8]],
+                    [3, 4.857, "Does the municipality have a clean credit history (no history of debt default)?", [0, 1, 2], 'invertAnsVal' => true],
+                    [3, 4.714, "Is the current nominal bank lending rate considered relatively low/favourable?", [0, 1, 2]],
+                    [3, 5.714, "Is co-financing foreseen and detailed in your municipality’s project proposal budget?"],
+                    [3, 5.571, "Will your municipality’s project utilise other innovative sources, such as levies?"],
+                    [5, 5.714, "Does your municipality’s project describe how priority objectives will be translated into specific actions, utilising new financial instruments or mobilising finance from third development partners?"],
+                    [0, 6.000, "Does the public stance support your municipality’s project related investments within the planned timeframe?", 'mustPass' => [9], 'note' => "Public stance refers to public acceptance, participation and support. Poor public stance may lead to insufficient or poor involvement of public actors and key target groups in the project’s implementation."],
+                    [4, 5.000, "Are your municipality’s energy and climate action plans, projects and initiatives adequately disseminated to prospective investors and actors?"],
+                    [4, 5.714, "Is the municipality’s cooperation and communication with public actors for SECAP or other investment projects adequate so as to implement the respective financing scheme?", [5], 'splitSchemeAnswers' => true],
+                    [4, 5.142, "Is the municipality’s cooperation and communication with traditional private actors for SECAP or other investment projects (e.g. banks, utilities, energy providers, etc) sufficient in order to implement the respective financing scheme?", 'mustPass' => [3, 4, 5, 6, 7, 8], 'splitSchemeAnswers' => true],
+                    [4, 5.571, "Is the municipality’s cooperation and communication with non-traditional investment actors (e.g. ESCOs) sufficient to implement the respective financing scheme?", [0, 3, 4, 9], 'mustPass' => [5, 6], 'splitSchemeAnswers' => true],
+                    [2, 4.285, "Is a Steering Committee or similar internal body in place to guide your municipality’s project implementation?", [0]],
+                    [5, 5.857, "Does the municipality plan to sub-contract its roles and responsibilities with respect to project implementation, and/or transfer all or part of the necessary proceeds, to a third implementing entity either internal or external?", [0, 3, 4]],
+                    [5, 6.428, "In case the municipality plans to sub-contract and/or transfer all or part of the necessary proceeds to a private third implementing entity, is a clear explanation of the contractual arrangements, including transactional flow and/or flow of information, in place?", [0, 1, 3, 4]],
+                    [5, 6.000, "Is your municipality’s project anticipated duration and implementation schedule reasonable and fully coordinated with all relevant investment actors and stakeholders involved?"]
+        ]);
+
+        $answers = array_map(fn($a) => static::newAnswer($a[0], $a[1], count($a) > 2 ? $a[2] : 1.0, count($a) > 3 ? $a[3] : []), [ // Add answers ([questionnaire, answer, value, must-pass multiplier])
+            ['No',                                                                    0, 0.5, $both],
+            ['Partially',                                                             1, 0.7, $rdm],
+            ['Yes',                                                                   2, 1.0, $both],
+
+            // Enablers' questionnaire answers
+            ['Strongly disagree',                                                     1],
+            ['Disagree',                                                              2],
+            ['Neither agree nor disagree',                                            3],
+            ['Agree',                                                                 4],
+            ['Strongly agree',                                                        5],
+
+            ['No capacity',                                                           1],
+            ['Limited advisory knowledge',                                            2],
+            ['Moderate support capacity',                                             3],
+            ['Strong practical support experience',                                   4],
+            ['Extensive experience managing complex financial structures',            5],
+
+            ['Not able to support beyond early advice',                               1],
+            ['Can support preparation only',                                          2],
+            ['Can support preparation and limited implementation',                    3],
+            ['Can support most lifecycle stages effectively',                         4],
+            ['Demonstrated ability to lead or fully support full lifecycle delivery', 5],
+
+            ['No coordination role',                                                  1],
+            ['Limited informal coordination',                                         2],
+            ['Moderate coordination capacity',                                        3],
+            ['Strong coordination and aggregation experience',                        4],
+            ['Core function with proven scaling capacity',                            5],
+        ]);
+
+        array_map(fn($a) => static::newEnablerQuestion($enablers, $a[2], $a[1], array_map(fn($i) => $answers[$i], $a[0])), [    // Add enabler questions ([answers, note, question])
+            [[ 3,  4,  5,  6,  7], 'Relationship',                        "Our municipality has an active and structured working relationship with this institutional enabler."],
+            [[ 3,  4,  5,  6,  7], 'Experience',                          "The institutional enabler has proven experience delivering projects in the selected thematic area (e.g. public/private buildings, e-mobility, renewable energy, district heating)."],
+            [[ 3,  4,  5,  6,  7], 'Institutional Legitimacy',            "The institutional enabler has a formal legal status and a clearly defined mandate related to energy or climate action."],
+            [[ 8,  9, 10, 11, 12], 'Financial Structuring Capacity',      "How would you rate the institutional enabler’s capacity to support projects requiring structured or multi-source financing?"],
+            [[13, 14, 15, 16, 17], 'Full Lifecycle Delivery Capacity',    "How would you rate the institutional enabler’s ability to support projects across the full lifecycle (preparation, financing, and implementation)?"],
+            [[18, 19, 20, 21, 22], 'Coordination & Aggregation Capacity', "How would you rate the institutional enabler’s ability to coordinate multiple actors and/or aggregate projects when needed?"]
         ]);
     }
 
-    public static function newQuestionnaire(string $title, array $schemeIDs, bool $isRDM = true){
-        $qID = Questionnaire::create(['title' => $title, 'isRDM' => $isRDM])->id;
+
+    public static function resetFreshSchemes(){
+        if(Scheme::where('title', '!=', '')->count() > 0) return;   // only proceed if migrated but not seeded
+        Schema::disableForeignKeyConstraints();
+        Scheme::truncate();
+        Schema::enableForeignKeyConstraints();
+    }
+
+    public static function mkNoneScheme(){
+        $noneSchemaID = Scheme::firstOrCreate(['title' => ''])->id; // special scheme, referred to in analyses_answers, instead of setting NULL (important for compound unique index constraint)
+        Schema::table('analyses_answers', fn(Blueprint $table) => $table->foreignId('scheme_id')->default($noneSchemaID)->change());    // update foreign key default
+    }
+
+    public static function newPillar(array $schemeIDs, string $title, array $schemeWeights){
+        $pID = Pillar::create(['title' => $title])->id;
         foreach ($schemeIDs as $schemeID)
-            QuestionnaireScheme::create([
-                'scheme_id' => $schemeID,
-                'questionnaire_id' => $qID
-            ]);
+            PillarScheme::create(['pillar_id' => $pID, 'scheme_id' => $schemeID, 'weight' => $schemeWeights[$schemeID]]);
+        return $pID;
+    }
+
+    public static function newQuestionnaire(string $title, array $schemeIDs = [], bool $isLegacy = false){
+        $qID = Questionnaire::create(['title' => $title, 'isRDM' => !empty($schemeIDs), 'isEnabler' => false, 'isLegacy' => $isLegacy])->id;
+        foreach ($schemeIDs as $schemeID)
+            QuestionnaireScheme::create(['scheme_id' => $schemeID, 'questionnaire_id' => $qID]);
         return $qID;
     }
 
-    public static function newA(array $questionnaireIDs, string $answer, int $value){
-        $aID = Answer::create(['answer' => $answer, 'value' => $value])->id;
+    public static function newEnabler(string $title, array $schemeIDRelevanceCoefficientMap = [], bool $isLegacy = false){
+        $qID = Questionnaire::create(['title' => $title, 'isRDM' => false, 'isEnabler' => true, 'isLegacy' => $isLegacy])->id;
+        foreach ($schemeIDRelevanceCoefficientMap as $schemeID => $RC)
+            SchemeEnabler::create(['scheme_id' => $schemeID, 'enabler_id' => $qID, 'relevance_coefficient' => $RC]);
+        return $qID;
+    }
+
+    public static function newAnswer(string $answer, int $value, float $mustPassMultiplier = 1.0, array $questionnaireIDs = []){
+        $aID = Answer::create(['answer' => $answer, 'value' => $value, 'must_pass_multiplier' => $mustPassMultiplier])->id;
         foreach ($questionnaireIDs as $questionnaireID)
-            QuestionnaireAnswer::create([
-                'questionnaire_id' => $questionnaireID,
-                'answer_id' => $aID
-            ]);
+            QuestionnaireAnswer::create(['questionnaire_id' => $questionnaireID, 'answer_id' => $aID]);
         return $aID;
     }
 
-    public static function newQ(array $questionnaireIDs, string $question, array $schemeIDs, string $note = null, bool $invertAnsVal = false, bool $splitSchemeAnswers = false){
+    public static function newQuestion(array $questionnaireIDs, string $question, array $schemeIDs, array $mustPassSchemeIDs = [], string $note = null, bool $invertAnsVal = false, bool $splitSchemeAnswers = false, int $pillarID = null, float $weight = 0){
         $qID = Question::create([
             'question' => $question,
             'note_id' => $note ? Note::create(['note' => $note])->id : null,
             'invert_ans_val' => $invertAnsVal,
-            'split_scheme_answers' => $splitSchemeAnswers
+            'split_scheme_answers' => $splitSchemeAnswers,
+            'pillar_id' => $pillarID,
+            'weight' => $weight
         ])->id;
         foreach ($schemeIDs as $schemeID)
-            QuestionScheme::create([
-                'scheme_id' => $schemeID,
-                'question_id' => $qID
-            ]);
+            QuestionScheme::create(['scheme_id' => $schemeID, 'question_id' => $qID, 'must_pass' => in_array($schemeID, $mustPassSchemeIDs)]);
         foreach ($questionnaireIDs as $questionnaireID)
-            QuestionnaireQuestion::create([
-                'questionnaire_id' => $questionnaireID,
-                'question_id' => $qID
-            ])->id;
+            QuestionnaireQuestion::create(['questionnaire_id' => $questionnaireID, 'question_id' => $qID]);
+        return $qID;
+    }
+
+    public static function newEnablerQuestion(array $enablerIDs, string $question, string $note, array $answerIDs){
+        $qID = Question::create([
+            'question' => $question,
+            'note_id' => $note ? Note::create(['note' => $note])->id : null,
+            'invert_ans_val' => false,
+            'split_scheme_answers' => false
+        ])->id;
+        foreach ($answerIDs as $answerID)
+            QuestionAnswer::create(['question_id' => $qID, 'answer_id' => $answerID]);
+        foreach ($enablerIDs as $enablerID)
+            QuestionnaireQuestion::create(['questionnaire_id' => $enablerID, 'question_id' => $qID]);
         return $qID;
     }
 }

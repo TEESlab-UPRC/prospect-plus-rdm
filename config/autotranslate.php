@@ -3,6 +3,7 @@
 use App\Models\Answer;
 use App\Models\Note;
 use App\Models\Phase;
+use App\Models\Pillar;
 use App\Models\Plan;
 use App\Models\Question;
 use App\Models\Questionnaire;
@@ -31,7 +32,8 @@ return [
         [Phase::class, 'text'],
         [Type::class, 'text'],
         [Plan::class, 'text'],
-        [Questionnaire::class, 'text']
+        [Questionnaire::class, 'text'],
+        [Pillar::class, 'text']
     ],
     'excluded_words' => [                           // Excluded strings.
         '\\n',

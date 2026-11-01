@@ -15,6 +15,14 @@ class Scheme extends TitleModel{
         return $this->hasMany(AnalysisAnswer::class);
     }
 
+    public function schemesEnablers(){
+        return $this->hasMany(SchemeEnabler::class);
+    }
+
+    public function pillarsSchemes(){
+        return $this->hasMany(PillarScheme::class);
+    }
+
     public static function none(): Scheme{
         return Scheme::firstWhere('title', '');
     }

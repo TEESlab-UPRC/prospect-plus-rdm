@@ -30,10 +30,10 @@ abstract class MigHelper{
     }
 
     /**
-     * Shortcut for bool column. Indexed and true by default. Returns created column.
+     * Shortcut for indexed bool column. True by default. Returns created column.
      */
-    public static function bool(Blueprint $table, string $colName): ColumnDefinition{
-        return $table->boolean($colName)->default(true)->index();
+    public static function bool(Blueprint $table, string $colName, bool $defVal = true): ColumnDefinition{
+        return $table->boolean($colName)->default($defVal)->index();
     }
 
     /**

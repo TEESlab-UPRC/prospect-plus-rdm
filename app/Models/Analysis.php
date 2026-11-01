@@ -18,6 +18,7 @@ namespace App\Models;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property integer $sector_id
+ * @property boolean $app_version
  */
 class Analysis extends Model{
     public $timestamps = true;
@@ -60,5 +61,9 @@ class Analysis extends Model{
 
     public function analysesAnswers(){
         return $this->hasMany(AnalysisAnswer::class);
+    }
+
+    public function analysesEnablers(){
+        return $this->hasMany(AnalysisEnabler::class);
     }
 }

@@ -9,9 +9,11 @@ use Parsedown;
  * @property integer $note_id
  * @property boolean $invert_ans_val
  * @property boolean $split_scheme_answers
+ * @property integer $pillar_id
+ * @property float $weight
  */
 class Question extends TextModel{
-    protected $fillable = ['question', 'invert_ans_val', 'split_scheme_answers', 'note_id'];
+    protected $fillable = ['question', 'invert_ans_val', 'split_scheme_answers', 'note_id', 'pillar_id', 'weight'];
     protected $casts = ['invert_ans_val' => 'boolean', 'split_scheme_answers' => 'boolean'];
     /** @var Parsedown */
     protected $parsedown;
@@ -37,8 +39,16 @@ class Question extends TextModel{
         return $this->hasMany(QuestionScheme::class);
     }
 
+    public function questionsAnswers(){
+        return $this->hasMany(QuestionAnswer::class);
+    }
+
     public function note(){
         return $this->belongsTo(Note::class);
+    }
+
+    public function pillar(){
+        return $this->belongsTo(Pillar::class);
     }
 
     public function formattedQuestion(){

@@ -97,5 +97,6 @@ class AnalysisInfoController extends Controller{
     static function getPlans() {return static::getArray(Plan::all('answer'));}
     static function getTypes() {return static::getArray(Type::all('answer'));}
     static function getPhases() {return static::getArray(Phase::all('answer'));}
-    static function getSectors() {return static::getArray(Questionnaire::where('isRDM', true)->get('title'), 'title');}
+    static function getSectors() {return static::getArray(Questionnaire::where(array_merge([['isRDM', true], ['isEnabler', false]], static::isLegacySectorEdit() ? [] : [['isLegacy', false]]))->get('title'), 'title');}
+    static function isLegacySectorEdit() {return session('infoEditMode') && session('analysis')?->sector?->isLegacy;}
 }

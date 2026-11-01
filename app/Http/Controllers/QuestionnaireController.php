@@ -53,7 +53,7 @@ class QuestionnaireController extends Controller{
             session(['analysis' => $analysis]);
         }else{
             $request->validate(['title' => 'nullable|string']);
-            $q = Questionnaire::where('isRDM', $request->input('type') == 'rdm');
+            $q = Questionnaire::where([['isRDM', $request->input('type') == 'rdm'], ['isEnabler', false], ['isLegacy', false]]);
             if($request->has('title')) $q->where('title', $request->input('title'));
             $q = $q->orderByDesc('id')->first();
             $i = session('info');
@@ -154,7 +154,7 @@ class QuestionnaireController extends Controller{
             $i = static::mapInfo($i);
             $i['user_id'] = $request->user()->id;
             $i[($q->isRDM ? 'rdm' : 'frc') . '_id'] = $q->id;
-            $analysis = Analysis::create($i);
+            $analysis = Analysis::create($i);   // TODO add app_version val where needed
             session(['analysis' => $analysis]);
         }
 

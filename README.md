@@ -7,7 +7,6 @@
 - Node.js (>=18, latest LTS recommended)
 - Composer
 
-
 ## Setup
 ```sh
 composer install

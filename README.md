@@ -2,9 +2,9 @@
 [PROSPECT+](https://h2020prospect.eu/) [Recommendations-Decision Matrix tool](https://rdmtool.teeslab.unipi.gr/), powered by [TEESlab](https://teeslab.unipi.gr/).
 
 ## Requirements
-- PHP 8.1
+- PHP 8.2
 ### For development & building
-- Node.js (>=16, latest LTS recommended)
+- Node.js (>=18, latest LTS recommended)
 - Composer
 
 ## Setup

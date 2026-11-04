@@ -1,5 +1,5 @@
 import Menu from '@/Components/Menu';
-import { TEESlabLogo, PROSPECTplusLogo } from '@/Components/Logo';
+import { TEESlabLogo, PROSPECTlogo } from '@/Components/Logo';
 import { GlossaryLink, GuidelinesLink } from './ExtLink';
 import useTransHelper from '@/Helpers/TransHelpers';
 
@@ -10,7 +10,7 @@ const MenuBar = ({ user }) => {
         <div id="menubar">
             <div className="menubar-logos">
                 <TEESlabLogo />
-                <PROSPECTplusLogo />
+                <PROSPECTlogo />
             </div>
             <div>
                 <div className="menubar-links">

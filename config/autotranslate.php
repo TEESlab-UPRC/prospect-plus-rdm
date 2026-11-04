@@ -43,6 +43,7 @@ return [
         'Recommendation-Decision Matrix',
         'Quick Finance Readiness Check',
         'TEESlab',
+        'PROSPECT',
         'PROSPECT+',
         'HORIZON 2020',
         'Horizon 2020',

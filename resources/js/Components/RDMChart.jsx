@@ -10,10 +10,10 @@ import useTransHelper from '@/Helpers/TransHelpers';
 const lg = 0.3;     // msg vertical line gap mod
 
 const getMsg = t => t(`
-    Thank you for using the PROSPECT+ Decision Matrix Tool to check which financing scheme will be the most suitable for your local authority to implement the planned
+    Thank you for using the PROSPECT Decision Matrix Tool to check which financing scheme will be the most suitable for your local authority to implement the planned
     or ongoing local sustainable energy project for your city. Please note that all results have been automatically determined based on your answers, indicating an ease of
     implementation rate (%) for each available financing scheme against the general framework conditions. More information on the set of financing alternatives is also
-    available on the PROSPECT+ :PPLearningHandbooksLink.
+    available on the PROSPECT :PPLearningHandbooksLink.
 `, {PPLearningHandbooksLink: (<PPLearningHandbooksLink text={t("Learning Handbooks")}/>)});
 
 const svgAutoCropY = () => Array.from(document.getElementsByClassName("svg-autocrop-y")).forEach(svg => {

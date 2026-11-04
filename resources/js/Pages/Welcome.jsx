@@ -3,7 +3,7 @@ import Input from '@/Components/Input';
 import { getFormData } from '@/Helpers/DomHelpers';
 import { Link, router } from '@inertiajs/react';
 import Layout from '@/Layouts/GeneralLayout';
-import { PROSPECTplusLogo } from '@/Components/Logo';
+import { PROSPECTlogo } from '@/Components/Logo';
 import { PrivacyPolicyLink } from '@/Components/IntLink';
 import { analyticsEvent } from '@/Helpers/AnalyticsHelpers';
 import useTransHelper from '@/Helpers/TransHelpers';
@@ -27,7 +27,7 @@ export default function Welcome({ auth, env, locale, pwReset, isRegister = false
     return (
         <Layout title="Welcome" auth={auth} env={env} locale={locale} className="pb-4">
             <div className="welcome-pp-logo">
-                <PROSPECTplusLogo />
+                <PROSPECTlogo />
                 <h3 className="pp-fg-blue-light">Capacity building for cities and regions<br />From learning to action!</h3>
             </div>
             <div className="flex flex-col gap-2 text-center">

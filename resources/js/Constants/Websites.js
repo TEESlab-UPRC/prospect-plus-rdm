@@ -5,7 +5,7 @@ export const Repo = "https://github.com/TEESlab-UPRC/prospect-plus-rdm";
 export const Glossary = "https://h2020prospect.eu/glossary-financial-terms";
 export const Guidelines = Files.Guidelines;
 export const TEESlab = "https://teeslab.unipi.gr/";
-export const PROSPECTplus = "https://h2020prospect.eu/";
+export const PROSPECT = "https://h2020prospect.eu/";
 export const PPLearningHandbooks = "https://h2020prospect.eu/learning-handbooks";
 export const PPLearningProgramme = "https://h2020prospect.eu/learning-programme";
 export const Consortium = {
@@ -38,7 +38,7 @@ export default {
     Glossary,
     Guidelines,
     TEESlab,
-    PROSPECTplus,
+    PROSPECT,
     PPLearningHandbooks,
     PPLearningProgramme,
     Consortium,

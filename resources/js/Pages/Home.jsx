@@ -5,7 +5,7 @@ import { onPageLoad } from '@/Helpers/DomHelpers';
 import { toast } from 'react-toastify';
 import { ConsortiumLogos } from '@/Components/Logo';
 import { PrivacyPolicyLink } from '@/Components/IntLink';
-import { GuidelinesLink, PPLearningProgrammeLink, PROSPECTplusLink } from '@/Components/ExtLink';
+import { GuidelinesLink, PPLearningProgrammeLink, PROSPECTlink } from '@/Components/ExtLink';
 import useTransHelper from '@/Helpers/TransHelpers';
 
 const start = () => router.post(route('info.load'));
@@ -60,11 +60,11 @@ export default function Home({ auth, env, locale }) {
             </div>
             <button type="button" onClick={start} className="self-center my-2 text-2xl w-52 sm:w-64 pp-btn-green justify-self-center">{t("Start!")}</button>
             <p className="text-sm pp-text" {...tHTML(`
-                The <b>Recommendation-Decision Matrix tool</b> has been developed in :PROSPECTplusLink, a capacity-building HORIZON 2020 project aiming at bringing
+                The <b>Recommendation-Decision Matrix tool</b> has been developed in :PROSPECTlink, a capacity-building HORIZON 2020 project aiming at bringing
                 together EU municipalities and empowering them to make more informed decisions on implementing their local energy and climate plans
                 (e.g. SEAPs, SECAPs, etc.) by using the appropriate :PPLearningProgrammeLink.
             `, {
-                PROSPECTplusLink: (<PROSPECTplusLink text={t("PROSPECT+")}/>),
+                PROSPECTlink: (<PROSPECTlink text={t("PROSPECT")}/>),
                 PPLearningProgrammeLink: (<PPLearningProgrammeLink text={t("innovative financing schemes")}/>)
             })}/>
             <ConsortiumLogos />

@@ -1,4 +1,4 @@
-import PROSPECT from './PROSPECTplus.png';
+import PROSPECT from './PROSPECTcube.png';
 import TEESlab from './TEESlab.png';
 import Consortium from './Consortium/ConsortiumLogoImg';
 

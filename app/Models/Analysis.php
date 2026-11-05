@@ -66,4 +66,13 @@ class Analysis extends Model{
     public function analysesEnablers(){
         return $this->hasMany(AnalysisEnabler::class);
     }
+
+    public function isLegacy(): bool{
+        return config('app.version', 1) > $this->app_version;
+    }
+
+    public function updateVersion(){
+        $this->app_version = config('app.version', 1);
+        $this->save();
+    }
 }

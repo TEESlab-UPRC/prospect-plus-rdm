@@ -11,3 +11,5 @@ body {@apply pp-font-def pp-selection;}
 .pp-inner-container {@apply sm:min-w-[500px] grid grid-cols-1 gap-5 p-6 mx-16 mb-6 scale-100 bg-white rounded-lg shadow-2xl max-w-7xl from-gray-700/50 via-transparent shadow-gray-500/20;}
 
 .toastify-customizations {@apply top-20 z-40;}
+
+body:has(.phpdebugbar) .pp-outer-container{@apply -mb-2;}

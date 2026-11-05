@@ -17,17 +17,21 @@ const onChartLoadCenterDelay = 100;
 const imgMap = {
     'Public Buildings': SectorCircleImg.PublicBuildings,
     'Private Buildings': SectorCircleImg.PrivateBuildings,
-    'Transport': SectorCircleImg.Transport,
-    'Public Lighting': SectorCircleImg.PublicLighting,
-    'Cross Sectoral': SectorCircleImg.CrossSectoral
+    'Transport & E-mobility': SectorCircleImg.Transport,
+    'Lighting': SectorCircleImg.Lighting,
+    'Cross Sectoral': SectorCircleImg.CrossSectoral,
+    'District Heating & Cooling': SectorCircleImg.HeatingCooling,
+    'Renewable Energy Projects': SectorCircleImg.RenewableEnergy
 }
 
 const colorMap = Object.fromEntries(Object.entries({
     'Public Buildings': "blue",
     'Private Buildings': "cyan",
-    'Transport': "green",
-    'Public Lighting': "yellow",
-    'Cross Sectoral': "lime"
+    'Transport & E-mobility': "green",
+    'Lighting': "yellow",
+    'Cross Sectoral': "lime",
+    'District Heating & Cooling': "light-viridian",
+    'Renewable Energy Projects': "lime"
 }).map(e => [e[0], getCSSVar(`pp-${e[1]}`)]));
 
 const simplifiedAnswers = answers => answers.map(({value, dataset}) => Object.fromEntries(Object.entries({value, ...dataset}).map(e => [e[0], parseInt(e[1])])));   // to Objects, keeping only their values & related IDs

@@ -1,13 +1,17 @@
-import PublicBuildings from './1-public-buildings-circle.png';
-import PrivateBuildings from './2-private-buildings-circle.png';
-import Transport from './3-transport-circle.png';
-import PublicLighting from './4-public-lighting-circle.png';
-import CrossSectoral from './5-cross-sectoral-circle.png';
+import PublicBuildings from './public-buildings-circle.png';
+import PrivateBuildings from './private-buildings-circle.png';
+import Transport from './transport-circle.png';
+import Lighting from './lighting-circle.png';
+import CrossSectoral from './cross-sectoral-circle.png';
+import HeatingCooling from './heating-cooling-circle.png';
+import RenewableEnergy from './renewable-energy-circle.png';
 
 export default {
     PublicBuildings,
     PrivateBuildings,
     Transport,
-    PublicLighting,
-    CrossSectoral
+    Lighting,
+    CrossSectoral,
+    HeatingCooling,
+    RenewableEnergy
 };

@@ -6,6 +6,7 @@
     --pp-blue: #003068;
     --pp-yellow: #FFD500;
     --pp-cyan: #009999;
+    --pp-light-viridian: #69A88C;
     --pp-lime: #97B42A;
     --pp-lime-light: #AEC76B;
     --pp-green: #00883B;
@@ -27,6 +28,7 @@
     .pp-bg-blue {background-color: var(--pp-blue);}
     .pp-bg-yellow {background-color: var(--pp-yellow);}
     .pp-bg-cyan {background-color: var(--pp-cyan);}
+    .pp-bg-lime {background-color: var(--pp-light-viridian);}
     .pp-bg-lime {background-color: var(--pp-lime);}
     .pp-bg-lime-trans{background-color: var(--pp-lime-trans);}
     .pp-bg-lime-light {background-color: var(--pp-lime-light);}
@@ -40,6 +42,7 @@
     .pp-fg-blue {color: var(--pp-blue);}
     .pp-fg-yellow {color: var(--pp-yellow);}
     .pp-fg-cyan {color: var(--pp-cyan);}
+    .pp-fg-lime {color: var(--pp-light-viridian);}
     .pp-fg-lime {color: var(--pp-lime);}
     .pp-fg-lime-light {color: var(--pp-lime-light);}
     .pp-fg-green {color: var(--pp-green);}

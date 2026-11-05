@@ -14,7 +14,7 @@ const transSTc = (c, pWR = 10, pHR = 10) => {
     const cW = cB.width, cH = cB.height;
     const tW = t.clientWidth, tH = t.clientHeight;
     const wR = cW / tW, hR = cH / tH;
-    t.style.transform = `translateY(-50%) scale(min(${wR}, ${hR}))`;
+    t.style.transform = `translateY(-50%) scale(min(${wR * 0.75}, ${hR}))`;
     if(!(ratiosAreClose(pWR, wR) && ratiosAreClose(pHR, hR)))
         postAnimFrame(() => transSTc(c, wR, hR));
 }
@@ -58,11 +58,12 @@ export default function SectorSelection({ auth, env, locale }) {
                 <div>
                     <ImgLink img={SectorImg.PublicBuildings} dest="Public Buildings"/>
                     <ImgLink img={SectorImg.PrivateBuildings} dest="Private Buildings"/>
-                    <ImgLink img={SectorImg.Transport} dest="Transport"/>
+                    <ImgLink img={SectorImg.Transport} dest="Transport & E-mobility"/>
                 </div>
                 <div>
-                    <ImgLink img={SectorImg.PublicLighting} dest="Public Lighting"/>
-                    <ImgLink img={SectorImg.CrossSectoral} dest="Cross Sectoral"/>
+                    <ImgLink img={SectorImg.Lighting} dest="Lighting"/>
+                    <ImgLink img={SectorImg.HeatingCooling} dest="District Heating & Cooling"/>
+                    <ImgLink img={SectorImg.RenewableEnergy} dest="Renewable Energy Projects"/>
                 </div>
             </div>
         </Layout>

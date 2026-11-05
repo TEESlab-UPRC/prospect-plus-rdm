@@ -10,13 +10,16 @@ export const PPLearningHandbooks = "https://h2020prospect.eu/learning-handbooks"
 export const PPLearningProgramme = "https://h2020prospect.eu/learning-programme";
 export const Consortium = {
     adelphi:     "https://adelphi.de/en",
+    AESS:        "https://aessenergy.it/",
+    AURAEE:      "https://www.auvergnerhonealpes-ee.fr/en/",
     ENERGAP:     "https://www.energap.si/",
     ENC:         "https://energy-cities.eu/",
     ESV:         "https://www.energiesparverband.at/en",
+    EURAC:       "https://www.eurac.edu/en",
     EuroCities:  "https://eurocities.eu/",
     FEDARENE:    "https://fedarene.org/",
     IEECP:       "https://ieecp.org/",
-    Innolid:     "http://www.valladolidadelante.es/",
+    Innolid:     "https://www.ideva.es/",
     SEMMO:       "https://semmo.cz/",
     TEA:         "https://tippenergy.ie/",
     TEESlabUPRC: TEESlab

@@ -1,7 +1,10 @@
 import adelphi from './adelphi.png';
+import AESS from './AESS.png';
+import AURAEE from './AURA-EE.png';
 import ENERGAP from './ENERGAP-new.png';
 import ENC from './Energy-cities.png';
 import ESV from './ESV.png';
+import EURAC from './EURAC.png';
 import EuroCities from './Eurocities.png';
 import FEDARENE from './Fedarene.png';
 import IEECP from './IEECP.png';
@@ -12,9 +15,12 @@ import TEESlabUPRC from './TEESlab-UPRC.png';
 
 export default {
     adelphi,
+    AESS,
+    AURAEE,
     ENERGAP,
     ENC,
     ESV,
+    EURAC,
     EuroCities,
     FEDARENE,
     IEECP,

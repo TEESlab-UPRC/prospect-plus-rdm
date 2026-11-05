@@ -18,6 +18,7 @@ const ConsortiumLogo = {
     IEECPLogo:       props => (<Logo {...props} logo={CLogoImgs.IEECP}       website={CWebsites.IEECP}/>),
     FEDARENELogo:    props => (<Logo {...props} logo={CLogoImgs.FEDARENE}    website={CWebsites.FEDARENE}/>),
     InnolidLogo:     props => (<Logo {...props} logo={CLogoImgs.Innolid}     website={CWebsites.Innolid}/>),
+    EURACLogo:       props => (<Logo {...props} logo={CLogoImgs.EURAC}       website={CWebsites.EURAC}/>),
     EuroCitiesLogo:  props => (<Logo {...props} logo={CLogoImgs.EuroCities}  website={CWebsites.EuroCities}/>),
     ENCLogo:         props => (<Logo {...props} logo={CLogoImgs.ENC}         website={CWebsites.ENC}/>),
     TEESlabUPRCLogo: props => (<Logo {...props} logo={CLogoImgs.TEESlabUPRC} website={CWebsites.TEESlabUPRC}/>),
@@ -26,6 +27,8 @@ const ConsortiumLogo = {
     TEALogo:         props => (<Logo {...props} logo={CLogoImgs.TEA}         website={CWebsites.TEA}/>),
     SEMMOLogo:       props => (<Logo {...props} logo={CLogoImgs.SEMMO}       website={CWebsites.SEMMO}/>),
     adelphiLogo:     props => (<Logo {...props} logo={CLogoImgs.adelphi}     website={CWebsites.adelphi}/>),
+    AURAEELogo:      props => (<Logo {...props} logo={CLogoImgs.AURAEE}      website={CWebsites.AURAEE}/>),
+    AESSLogo:        props => (<Logo {...props} logo={CLogoImgs.AESS}        website={CWebsites.AESS}/>),
 };
 
 export const ConsortiumLogos = ({ className, ...props }) => (
@@ -33,6 +36,7 @@ export const ConsortiumLogos = ({ className, ...props }) => (
         <ConsortiumLogo.IEECPLogo />
         <ConsortiumLogo.FEDARENELogo />
         <ConsortiumLogo.InnolidLogo />
+        <ConsortiumLogo.EURACLogo />
         <ConsortiumLogo.EuroCitiesLogo />
         <ConsortiumLogo.ENCLogo />
         <ConsortiumLogo.TEESlabUPRCLogo />
@@ -41,6 +45,8 @@ export const ConsortiumLogos = ({ className, ...props }) => (
         <ConsortiumLogo.TEALogo />
         <ConsortiumLogo.SEMMOLogo />
         <ConsortiumLogo.adelphiLogo />
+        <ConsortiumLogo.AURAEELogo />
+        <ConsortiumLogo.AESSLogo />
     </div>
 );
 

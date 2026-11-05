@@ -79,14 +79,17 @@ class QuestionnaireData extends Seeder{
             ['Have you assessed any **challenging regulations or policies** that could pose a risk or barrier for your project?', 'It is important to understand which political factors or regulations negatively influence your project, such as e.g. long and bureaucratic licensing processes, requirements for impact assessments, land-use and ownership barriers etc.']
         ]);
 
-        array_map(fn($a) => static::newQuestion($rdm, $a[2],
+        array_map(function ($a) use ($rdm, $schemes, $pillars){
+
+            return static::newQuestion($rdm, $a[2],
                         array_map(fn($i) => $schemes[$i], array_diff(array_keys($schemes), array_key_exists(3, $a) ? $a[3] : [])),
                         array_key_exists('mustPass', $a) ? array_map(fn($i) =>  $schemes[$i], $a['mustPass']) : [],
-                        array_key_exists('note', $a) && $a['note'],
+                        array_key_exists('note', $a) ? $a['note'] : null,
                         array_key_exists('invertAnsVal', $a) && $a['invertAnsVal'],
                         array_key_exists('splitSchemeAnswers', $a) && $a['splitSchemeAnswers'],
                         $pillars[$a[0]], $a[1]
-                ), [    // Add RDM questions ([pillar, weight, question, disabled schemes?, 'invertAnsVal' => bool?, 'splitSchemeAnswers' => bool?, 'note' => string?, 'mustPass' => schemes?])
+        );
+            }, [    // Add RDM questions ([pillar, weight, question, disabled schemes?, 'invertAnsVal' => bool?, 'splitSchemeAnswers' => bool?, 'note' => string?, 'mustPass' => schemes?])
                     [0, 6.571, "Has your municipality’s project been formally validated by your municipal council at a high political level?", 'mustPass' => [4, 9]],
                     [0, 5.285, "Is your municipality’s project linked to a national investment prioritisation process directly supported by existing municipal budgets and/or dedicated national or international funding sources?", [3, 4, 5, 6, 7, 8, 9], 'mustPass' => [0, 1], 'note' => "The question refers to supporting central government projects and/or long term national strategies that can serve as framework condition for mobilizing intergovernmental transfers to address differences in expenditure needs and fiscal capacity across cities, thus ensure the successful implementation of the respective local action plan or project."],
                     [0, 5.000, "Does your municipality’s project demonstrate a clear national ownership and national direction on its strategic priorities, with a long-term finance orientation, considering potential options for refinancing or repaying investment (e.g. through energy bills or taxation etc)?", [5, 6, 7], 'note' => "Ownership may refer to different levels of government, including subnational government (regions and municipalities) and may take different legal forms such as public-private partnerships with local authorities, co-operatives, community trusts and foundations, limited liability companies, non-profit customer-owned enterprises, housing associations and municipal ownership. Local projects that demonstrate a clear ownership direction indicate an increased operational role of local authorities and their economic decisions that may lead for example to an increase of municipal control over a project’s management (e.g. setting up new or taking back control over existing local energy companies and energy infrastructure), whilst also improving transparency and accountability in public service delivery."],

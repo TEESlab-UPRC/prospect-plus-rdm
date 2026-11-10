@@ -59,4 +59,11 @@ class Controller extends BaseController{
     protected static function invalid($msg, $values = [], $field = 0){
         throw ValidationException::withMessages([$field => $msg . ($values ? ': ' . implode(', ', $values) : '')]);
     }
+
+    protected static function groupBy(array $array, mixed $groupKey){
+        return array_reduce($array, function($acc, $ans) use ($groupKey){
+            $acc[$ans[$groupKey]][] = $ans;
+            return $acc;
+        }, []);
+    }
 }

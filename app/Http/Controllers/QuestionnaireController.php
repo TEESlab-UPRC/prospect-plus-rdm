@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Analysis;
 use App\Models\AnalysisAnswer;
+use App\Models\Pillar;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Questionnaire;
@@ -14,6 +15,7 @@ class QuestionnaireController extends Controller{
     function load(Request $request){
         $request->validate(['type' => 'required|string|in:rdm,frc']);
         $ans = null;
+        $enAns = null;
         $analysisTitle = null;
         $analysis = static::getAnalysis($request);  // for editing mode of questionnaire answers
         if($analysis){  // edit mode
@@ -49,6 +51,10 @@ class QuestionnaireController extends Controller{
                     )->toArray();
             array_walk($invalidAns, fn($a) => $a->delete());    // delete invalid entries
             $ans = array_replace_recursive(...array_map(fn($m) => [$m[0] => is_array($m[1]) ? [$m[1][0] => $m[1][1]] : $m[1]], $ans));
+            $enAns = AnalysisAnswer::where('analysis_id', $analysis->id)    // TODO test
+                    ->whereIn('questionnaire_id', $analysis->analysesEnablers->map(fn($ae) => $ae->enabler_id))
+                    ->get()->toArray();
+            $enAns = array_map(fn($e) => array_replace([], ...array_map(fn($a) => [$a['question_id'] => $a['answer_id']], $e)), static::groupBy($enAns, 'questionnaire_id'));
             $analysisTitle = $analysis->title ?? $analysis->org;
             session(['analysis' => $analysis]);
         }else{
@@ -61,6 +67,7 @@ class QuestionnaireController extends Controller{
         }
         session([
             'currentAnswers' => $ans,
+            'currentEnablerAnswers' => $enAns,
             'questionnaire' => $q,
             'analysisTitle' => $analysisTitle
         ]);
@@ -74,12 +81,14 @@ class QuestionnaireController extends Controller{
             'questionnaire' => [
                 'title' => $q->title,
                 'isRDM' => $q->isRDM,
+                'isLegacy' => $q->isLegacy,
                 'answers' => $q->questionnaireAnswers->map(function($m){
                     $a = $m->answer;
                     return [
                         'id' => $a->id,
                         'answer' => $a->answer,
-                        'value' => $a->value
+                        'value' => $a->value,
+                        'must_pass_multiplier' => $a->must_pass_multiplier
                     ];
                 }),
                 'questions' => $q->questionnaireQuestions->map(function($m){
@@ -90,7 +99,11 @@ class QuestionnaireController extends Controller{
                         'question' => $q->formattedQuestion(),
                         'note' => $n ? $n->formattedNote() : null,
                         'invert_ans_val' => $q->invert_ans_val,
-                        'split_scheme_answers' => $q->split_scheme_answers
+                        'split_scheme_answers' => $q->split_scheme_answers,
+                        'pillar_id' => $q->pillar_id,
+                        'weight' => $q->weight,
+                        'must_pass_schemes' => $q->questionsSchemes->filter(fn($qs) => $qs->must_pass)
+                                ->map(fn($qs) => $qs->scheme_id)->values()
                     ];
                 }),
                 'schemes' => $q->isRDM ? $q->questionnairesSchemes->map(function($m){
@@ -100,10 +113,49 @@ class QuestionnaireController extends Controller{
                         'title' => $s->title,
                         'questions' => $s->questionsSchemes->map(fn($m2) => $m2->question->id)
                     ];
+                }) : null,
+                'pillars' => $q->isRDM ? Pillar::all()->map(function($m){
+                    return [
+                        'id' => $m->id,
+                        'title' => $m->title,
+                        'schemes' => $m->pillarsSchemes->map(fn($ps) => [
+                            'id' => $ps->scheme_id,
+                            'weight' => $ps->weight
+                        ])
+                    ];
+                }) : null,
+                'enablers' => $q->isRDM ? Questionnaire::where('isEnabler', true)->get()->map(function($e) use ($q){
+                    return [
+                        'id' => $e->id,
+                        'title' => $e->title,
+                        'schemes' => $e->schemesEnablers->map(fn($se) => [
+                            'id' => $se->scheme_id,
+                            'relevance_coefficient' => $se->relevance_coefficient
+                        ]),
+                        'questions' => $e->questionnaireQuestions->map(function($qq){
+                            $eq = $qq->question;
+                            $n = $eq->note;
+                            return [
+                                'id' => $eq->id,
+                                'question' => $eq->formattedQuestion(),
+                                'note' => $n ? $n->formattedNote() : null,
+                                'answers' => $eq->questionsAnswers->map(function($qa){
+                                    $a = $qa->answer;
+                                    return [
+                                        'id' => $a->id,
+                                        'answer' => $a->answer,
+                                        'value' => $a->value
+                                    ];
+                                })
+                            ];
+                        })
+                    ];
                 }) : null
             ],
             'currentAnswers' => session('currentAnswers'),
-            'analysisTitle' => session('analysisTitle')
+            'currentEnablerAnswers' => session('currentEnablerAnswers'),
+            'analysisTitle' => session('analysisTitle'),
+            'isLegacyAnalysis' => session('analysis')?->isLegacy(),
         ]);
     }
 
@@ -150,11 +202,13 @@ class QuestionnaireController extends Controller{
                 $analysis[$aQKey] = $q->id;
                 $analysis->save();
             }
+            // if($updateAnalysis) $analysis->updateVersion(); // TODO impl updating analysis
         }else{ // Need to make new analysis, process info for it and create it
             $i = static::mapInfo($i);
             $i['user_id'] = $request->user()->id;
             $i[($q->isRDM ? 'rdm' : 'frc') . '_id'] = $q->id;
-            $analysis = Analysis::create($i);   // TODO add app_version val where needed
+            $i['app_version'] = config('app.version', 1);
+            $analysis = Analysis::create($i);
             session(['analysis' => $analysis]);
         }
 

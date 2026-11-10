@@ -46,16 +46,21 @@ const centerToChart = () => {
     centerTo(chart);
 };
 
-export default function Questionnaire({ auth, env, locale, questionnaire, currentAnswers, analysisTitle }) {
+export default function Questionnaire({ auth, env, locale, questionnaire, currentAnswers, currentEnablerAnswers, analysisTitle, isLegacyAnalysis }) {
     const isEdit = !!currentAnswers;
-    const dlQuestionnaireTitle = questionnaire.isRDM ? questionnaire.title : "Quick Finance Readiness Check";
+    const isLegacySector = !!questionnaire.isLegacy;
+    const isRDM = !!questionnaire.isRDM;
+    const dlQuestionnaireTitle = isRDM ? questionnaire.title : "Quick Finance Readiness Check";
     const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const ansInversionMap = Object.fromEntries(questionnaire.questions.map(q => [q.id, q.invert_ans_val]));
+    const pillarMap = Object.fromEntries(questionnaire.pillars.map(p => [p.id, p]));
     const [currentAnswersState, setCurrentAnswersState] = useState(currentAnswers);
     const [initScrollY, setInitScrollY] = useState(window.scrollY);
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
+    const [currentEnablerAnswersState, setCurrentEnablerAnswersState] = useState(currentEnablerAnswers);    // TODO impl setCurrentEnablerAnswersState call
+    const [enabledEnablers, setEnabledEnablers] = useState(Object.fromEntries(questionnaire.enablers.map(e => [e.id, Object.keys(currentEnablerAnswers ?? {}).includes(e.id)])));
     const { t } = useTransHelper();
 
     const getAnswersWithInversions = answers => answers.map(a => ansInversionMap[a.questionId] ? Object.assign({}, a, {value: maxAns - a.value}) : a);
@@ -72,10 +77,10 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     }), [currentAnswers]);
 
     function showResults(form){
-        let answers = simplifiedAnswers(Array.from(form.querySelectorAll(":checked")));
+        let answers = simplifiedAnswers(Array.from(form.querySelectorAll(".main-questionnaire-container :checked")));
         if(answers.length == 0) return;
         let answersWithInversions = getAnswersWithInversions(answers);
-        if(questionnaire.isRDM) setResult(questionnaire.schemes.map(s => ({ // for each scheme included in this questionnaire
+        if(isRDM) setResult(questionnaire.schemes.map(s => ({ // for each scheme included in this questionnaire
             'title': s.title,
             'result': reduceAns2Percent(answersWithInversions.filter(a => a.schemeId == s.id || (a.schemeId == null && s.questions.includes(a.questionId)))), // filter for included questions in scheme (and scheme, for questions requiring separate answers) and reduce answers to percentage
             'fill': colorMap[questionnaire.title]
@@ -105,6 +110,11 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
         });
     }
 
+    function onEnablerPresenceAnswerChange(e){
+        let el = e.target;
+        setEnabledEnablers(Object.assign({}, enabledEnablers, {[el.dataset.answerId]: el.checked}));
+    }
+
     function resetState(){
         setResult([0]);
         setFilled(false);
@@ -122,7 +132,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
 
     return (
         <Layout title={questionnaire.title} auth={auth} env={env} locale={locale}>
-            {questionnaire.isRDM && (
+            {isRDM && (
                 <div className="flex flex-col items-center gap-4 text-center">
                     <h2>Recommendation-Decision Matrix Tool</h2>
                     <img src={imgMap[questionnaire.title]} className="circle-img" />
@@ -133,14 +143,44 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                     colorMap[questionnaire.title] ? {color: colorMap[questionnaire.title]} : {}
                 }>{t(questionnaire.title)}</legend>
                 <hr />
-                <div className="gap-6" children={questionnaire.questions.map((q, i) => (
-                    <Question question={q} answers={questionnaire.answers} schemes={questionnaire.schemes} currentAnswers={currentAnswersState} key={`q${q.id}`} num={i+1} isDebug={env.debug}/>
+                <div className="gap-5 main-questionnaire-container" children={(!isRDM || isLegacyAnalysis) ? questionnaire.questions.map((q, i) => (
+                    <Question question={q} answers={questionnaire.answers} schemes={questionnaire.schemes} currentAnswers={currentAnswersState} key={`q${q.id}`} num={i+1} required={!env.debug}/>
+                )) : Object.entries(Object.groupBy(questionnaire.questions, q => q.pillar_id)).map(([pID, Qs]) => (
+                    <div className="flex flex-col gap-5 mt-1" key={`pq${pID}`}>
+                        <h3 className="text-xl font-bold text-gray-700">{pillarMap[pID].title}</h3>
+                        <div className="flex flex-col gap-5">{...Qs.map((q, i) => (
+                            <Question question={q} answers={questionnaire.answers} schemes={questionnaire.schemes} currentAnswers={currentAnswersState} key={`q${q.id}`} num={i+1} required={!env.debug}/>
+                        ))}</div>
+                    </div>
                 ))} />
-                <button type="submit" className="pp-btn-cyan">{t(`S${isEdit ? "ave & s" : ""}how results`)}</button>
+                {(isRDM && !isLegacyAnalysis) && (<>
+                    <hr />
+                    <div className="enablers-container">
+                        <h2 className="text-2xl font-bold text-gray-700">{t("Institutional Enablers")}</h2>
+                        <Question question={{id: 0, note: t("Presence (Screening)"), question: t("Are any of the following institutional enablers operating in or near your municipality?")}}
+                                answers={questionnaire.enablers.map((e, i) => ({id: e.id, value: i, answer: e.title}))}
+                                onChange={onEnablerPresenceAnswerChange}
+                                currentAnswers={Object.entries(enabledEnablers).filter(e => e[1]).map(e => e[0])}
+                                required={false} multipleAllowed={true} />
+                        <div className="flex flex-col gap-5">
+                            {questionnaire.enablers.filter(e => enabledEnablers[e.id]).map(e => (
+                                <div className="flex flex-col gap-5 mt-1" key={`e${e.id}`}>
+                                    <h3 className="text-xl font-bold text-gray-700">{e.title}</h3>
+                                    <div className="flex flex-col gap-5">
+                                        {e.questions.map((q, i) => (
+                                            <Question question={q} answers={q.answers} currentAnswers={currentEnablerAnswersState} key={`eq${q.id}`} num={i+1} required={!env.debug}/>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </>)}
+                <button type="submit" className="mt-2 pp-btn-cyan">{t(`S${isEdit ? "ave & s" : ""}how results`)}</button>
             </form>
             {filled && (<>
-                {questionnaire.isRDM ? (<>
                     <RDMChart percentages={result} title={questionnaire.title} onLoaded={onChartLoad} />
+                {isRDM ? (<>
                     {isEdit ? ( // edit mode
                         <DLBtn />
                     ) : (
@@ -171,8 +211,8 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                 </div>
                 <div id="offscreen-chart-container">
                     <div>
-                        {questionnaire.isRDM ? (
                             <RDMChart percentages={result} title={questionnaire.title} isOffscreen={true} />
+                        {isRDM ? (
                         ) : (
                             <FRCChart percentage={result[0]} isOffscreen={true} />
                         )}

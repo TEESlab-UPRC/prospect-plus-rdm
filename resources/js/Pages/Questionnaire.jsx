@@ -179,8 +179,8 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                 <button type="submit" className="mt-2 pp-btn-cyan">{t(`S${isEdit ? "ave & s" : ""}how results`)}</button>
             </form>
             {filled && (<>
-                    <RDMChart percentages={result} title={questionnaire.title} onLoaded={onChartLoad} />
                 {isRDM ? (<>
+                    <RDMChart percentages={result} title={questionnaire.title} onLoaded={onChartLoad} />
                     {isEdit ? ( // edit mode
                         <DLBtn />
                     ) : (
@@ -211,8 +211,8 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                 </div>
                 <div id="offscreen-chart-container">
                     <div>
-                            <RDMChart percentages={result} title={questionnaire.title} isOffscreen={true} />
                         {isRDM ? (
+                            <RDMChart percentages={result} title={questionnaire.title} isOffscreen={true} />
                         ) : (
                             <FRCChart percentage={result[0]} isOffscreen={true} />
                         )}

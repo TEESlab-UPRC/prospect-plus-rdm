@@ -40,7 +40,7 @@ export const isCentered = el => {
     let rect = el.getBoundingClientRect();
     let vp = window.visualViewport;
     let scrPT = parseInt(getComputedStyle(document.documentElement).scrollPaddingTop.match(/\d+/));
-    return Math.abs(rect.top + el.offsetParent.offsetTop - scrPT + rect.height / 2 - (vp.offsetTop + vp.height / 2)) < 1;
+    return Math.abs(rect.top + el.offsetParent.offsetTop - scrPT + rect.height / 2 - (vp.offsetTop + vp.height / 2)) < 2;
 };
 
 export default {

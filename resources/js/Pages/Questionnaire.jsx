@@ -41,7 +41,7 @@ const centerToChart = () => {
     let chart = document.getElementById("visible-chart");
     addEventListener("scrollend", function scr(){
         removeEventListener("scrollend", scr);
-        if(!isCentered(chart)) centerToChart(); // retry
+        if(!chart || !isCentered(chart)) setTimeout(() => centerToChart(), 5); // retry
     });
     centerTo(chart);
 };

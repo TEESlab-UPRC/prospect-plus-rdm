@@ -180,7 +180,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
             </form>
             {filled && (<>
                 {isRDM ? (<>
-                    <RDMChart percentages={result} title={questionnaire.title} onLoaded={onChartLoad} />
+                    <RDMChart barChartPercentages={result} radarChartPercentages={questionnaire.pillars.map((p, i) => ({pillar: p.title, score: [60,60,20,70,45,50][i]})) /* TODO radar chart pillar percentages */} radarChartColor={colorMap[questionnaire.title]} title={questionnaire.title} onLoaded={onChartLoad} />
                     {isEdit ? ( // edit mode
                         <DLBtn />
                     ) : (
@@ -212,7 +212,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                 <div id="offscreen-chart-container">
                     <div>
                         {isRDM ? (
-                            <RDMChart percentages={result} title={questionnaire.title} isOffscreen={true} />
+                            <RDMChart barChartPercentages={result} radarChartPercentages={questionnaire.pillars.map((p, i) => ({pillar: p.title, score: [60,60,20,70,45,50][i]})) /* TODO radar chart pillar percentages */} radarChartColor={colorMap[questionnaire.title]} title={questionnaire.title} isOffscreen={true} />
                         ) : (
                             <FRCChart percentage={result[0]} isOffscreen={true} />
                         )}

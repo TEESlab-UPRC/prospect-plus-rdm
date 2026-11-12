@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 import { useEffect, useState } from 'react';
 import { forClassEls, setClassStyle } from '../Helpers/DomHelpers';
 import { getCSSVar, getTextWidth } from '../Helpers/RenderHelpers';
@@ -48,26 +48,43 @@ const scaleMsg = id => {
     Array.from(document.getElementById(id).getElementsByClassName("svg-autoscale")).forEach(el => scaleG(el, maxH));
 };
 
-const onResize = (w, h, colNum, id) => {
+const onResize = (w, h, id) => {
     setClassStyle(`pp-${id}-rtitle`, s => s.fontSize = `${w / 50}px`);
-    setClassStyle(`pp-${id}-rval`, s => s.fontSize = `${w / 75}px`);
-    setClassStyle(`pp-${id}-rschemes`, s => s.fontSize = `${w / (colNum * 15)}px`);
-    setClassStyle(`pp-${id}-rlabel`, s => s.fontSize = `${w / 85}px`);
     scaleMsg(id);
     svgAutoCropY();
+}
+
+const onBarResize = (w, h, colNum, id) => {
+    onResize(w, h, id);
+    setClassStyle(`pp-${id}-bar-rval`, s => s.fontSize = `${w / 75}px`);
+    setClassStyle(`pp-${id}-bar-rschemes`, s => s.fontSize = `${w / (colNum * 15)}px`);
+    setClassStyle(`pp-${id}-bar-rlabel`, s => s.fontSize = `${w / 85}px`);
 };
 
-const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) => {
+const onRadarResize = (w, h, id) => {
+    setClassStyle(`pp-${id}-radar-rval`, s => s.fontSize = `${w / 105}px`);
+    setClassStyle(`pp-${id}-radar-rpillars`, s => s.fontSize = `${w / 95}px`);
+};
+
+const getContainerRect = (id, key) => {
+    let rect = document.getElementById(`pp-${id}-${key}-container`).getBoundingClientRect();
+    return [rect.width, rect.height];
+}
+
+const RDMChart = ({ barChartPercentages, radarChartPercentages, radarChartColor, title, onLoaded = null, isOffscreen = false }) => {
     const { t } = useTransHelper();
-    const [loaded, setLoaded] = useState(false);
+    const [allLoaded, setAllLoaded] = useState(false);
+    const [loaded, setLoaded] = useState({bar: false, radar: false});
     const fontFamily = getCSSVar("pp-font-sans");
     const id = isOffscreen ? "offscreen-chart" : "visible-chart";
 
-    const onAnimationStart = () => {
-        patchLabel();
-        if(loaded) return;
-        onLoaded && onLoaded();
-        setLoaded(true);
+    const markLoaded = (key) => {
+        if(allLoaded || loaded[key]) return;
+        setLoaded(Object.assign(loaded, {[key]: true}));
+        if(Object.values(loaded).every(v => v)){
+            onLoaded && onLoaded();
+            setAllLoaded(true);
+        }
     };
 
     useEffect(() => {
@@ -76,7 +93,7 @@ const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) 
 
     useEffect(() => scaleMsg(id), [getMsg(t)]);
 
-    return (<div className="grid grid-cols-1" id={id}>
+    return (<div className="grid grid-cols-1 place-items-center" id={id}>
         <svg className="mx-5 svg-autocrop-y" height="100%" style={{ width: "calc(100% - 2.5rem)", fontFamily: fontFamily }}>
             <g className="svg-autoscale" children={getMsg(t).split(/[\r\n]+/).map((h, i) => (
                 <text data-msg-line={i} className={`pp-${id}-rmsg`} key={`chartmsg-${i}`} x={0} y={i * 22} dominantBaseline="hanging" textAnchor="left" style={{ fontSize: 16, fill: '#777' }} dangerouslySetInnerHTML={{__html: h}}/>)
@@ -85,15 +102,23 @@ const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) 
         <svg className={`${isOffscreen ? "my-4" : "my-2"} svg-autocrop-y`} width="100%" height="100%" style={{ fontFamily: fontFamily }}>
             <text x="50%" y={6} textAnchor="middle" dominantBaseline="hanging" className={`pp-${id}-rtitle`} style={{ fontWeight: 'bold', fill: '#777' }}>{t(title)}</text>
         </svg>
-        <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onResize(w, h, percentages.length, id)}>
-            <BarChart title={title} label={title} width={400} height={400} data={percentages} margin={(isOffscreen ? {top: 30, bottom: 20, right: 8, left: 4} : {top: 15, bottom: 8})} style={{ fontFamily: fontFamily }}>
+        <ResponsiveContainer aspect={2} width="100%" onResize={(w, h) => onBarResize(w, h, barChartPercentages.length, id)} id={`pp-${id}-bar-container`}>
+            <BarChart title={title} label={title} width={400} height={400} data={barChartPercentages} margin={(isOffscreen ? {top: 30, bottom: 20, right: 8, left: 4} : {top: 15, bottom: 8})} style={{ fontFamily: fontFamily }}>
                 <CartesianGrid strokeDasharray="3 3"/>
-                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className={`pp-${id}-rschemes`} style={{ fontWeight: 'bold', fill: '#777' }} offset={isOffscreen ? 8 : 2}/>}/>
-                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className={`pp-${id}-rval`} offset={isOffscreen ? 4 : 1}/>}/>
-                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} dataKey="result" fill="#0b2870" className={`pp-${id}-rlabel`}>
-                    <LabelList dataKey="result" position="top" offset={isOffscreen ? 8 : 4} formatter={Math.round}/>
+                <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className={`pp-${id}-bar-rschemes`} style={{ fontWeight: 'bold', fill: '#777' }} offset={isOffscreen ? 8 : 2}/>}/>
+                <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className={`pp-${id}-bar-rval`} offset={isOffscreen ? 4 : 1}/>}/>
+                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={() => {onRadarResize(...getContainerRect(id, 'bar'), barChartPercentages.length, id); markLoaded('bar');}} dataKey="result" fill="#0b2870">
+                    <LabelList dataKey="result" position="top" offset={isOffscreen ? 8 : 4} formatter={Math.round} className={`pp-${id}-bar-rlabel`}/>
                 </Bar>
             </BarChart>
+        </ResponsiveContainer>
+        <ResponsiveContainer aspect={1.5} width="100%" onResize={(w, h) => onRadarResize(w, h, id)} id={`pp-${id}-radar-container`}>
+            <RadarChart outerRadius="95%" data={radarChartPercentages} className={isOffscreen ? "my-4" : "my-2"} style={{ fontFamily: fontFamily }}>
+                <PolarGrid />
+                <PolarAngleAxis dataKey="pillar" className={`pp-${id}-radar-rpillars`} style={{ fontWeight: 'bold' }} tick={<CustomizedAxisTick className={`pp-${id}-radar-rpillars`} style={{ fontWeight: 'bold' }} isRadial={true} offset={isOffscreen ? 10 : 5} />} />
+                <PolarRadiusAxis axisLine={false} angle={90} domain={[0, 100]} tickCount={11} orientation='left' tick={<CustomizedAxisTick tickFormatter={v => `${v}%`} className={`pp-${id}-radar-rval`} style={{ fill: '#999', fontWeight: 'bold' }} isYAxis={true} offset={isOffscreen ? 8 : 6} />} unit='%' />
+                <Radar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={() => {onRadarResize(...getContainerRect(id, 'radar'), id); markLoaded('radar');}} dataKey="score" fill={radarChartColor} fillOpacity={0.3} stroke={radarChartColor} strokeWidth={isOffscreen ? 4 : 3} />
+            </RadarChart>
         </ResponsiveContainer>
     </div>);
 }

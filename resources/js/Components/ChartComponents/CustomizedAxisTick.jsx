@@ -13,19 +13,25 @@ const schemePdfMap = {
     'Third-Party Financing': SchemePDF.ThirdPartyFinancing
 }
 
-const CustomizedAxisTick = ({ isYAxis, x, y, payload, style, className, offset = 0 }) => {
-    if(isYAxis) x -= offset;
-    else y += offset;
+const CustomizedAxisTick = ({ isYAxis, x, y, cx, cy, payload, style, className, offset = 0, tickFormatter = undefined, isRadial = false, visibleTicksCount: visibletickscount, ...otherProps }) => {
+    if(isRadial){
+        x += Math.sign(x - cx) * offset;
+        y += Math.sign(y - cy) * offset;
+    }else{
+        if(isYAxis) x -= offset;
+        else y += offset;
+    }
 
     let text = payload.value
     let pdfLink = schemePdfMap[text];
-    let props = {x, y, className, style, width: isYAxis ? 60 : 155, textAnchor: isYAxis ? "end" : "middle"};
+    let props = {...otherProps, x, y, cx, cy, className, style, ...(isRadial ? {} : {width: isYAxis ? 60 : 155, textAnchor: isYAxis ? "end" : "middle", verticalAnchor: isYAxis ? "middle" : "start"})};
+    let formattedText = tickFormatter ? tickFormatter(text) : text;
 
     return (<g style={style}>{  // for inner <a> to inherit fill, when downloading
         pdfLink ? (
-            <SVGCompatExtLink {...props} chartCompat={true} verticalanchor={isYAxis ? "middle" : "start"} dest={pdfLink} text={text}/>
+            <SVGCompatExtLink {...props} chartCompat={true} dest={pdfLink} text={formattedText}/>
         ) : (
-            <Text {...props} verticalAnchor={isYAxis ? "middle" : "start"}>{text}</Text>
+            <Text {...props}>{formattedText}</Text>
         )
     }</g>);
 };

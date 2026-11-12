@@ -13,10 +13,10 @@ const ExtLink = ({ dest = null, className = "", text = null, noAnalytics = false
 
 const ExtLinkWDef = ({ defText, text = null, ...props }) => (<ExtLink {...props} text={text ?? defText}/>);
 
-export const SVGCompatExtLink = ({ style = {}, text = null, chartCompat = false, verticalanchor = "middle", children, ...props }) => (
+export const SVGCompatExtLink = ({ style = {}, text = null, chartCompat = false, verticalAnchor = "middle", children, ...props }) => (
     <ExtLink {...props} dominantBaseline="auto" noStyle={true} style={{ ...style, fill: getCSSVar("pp-cyan") }}>
         {chartCompat ? (
-            <Text {...props} verticalAnchor={verticalanchor} style={{ ...style, fill: "inherit" /* always inherit <a>'s fill, which changes on download */ }}>
+            <Text {...props} verticalAnchor={verticalAnchor} style={{ ...style, fill: "inherit" /* always inherit <a>'s fill, which changes on download */ }}>
                 {text ?? children}
             </Text>
         ) : (text ?? children)}

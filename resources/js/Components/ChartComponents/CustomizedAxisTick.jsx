@@ -3,14 +3,14 @@ import { SchemePDF } from '@/Constants/Websites';
 import { SVGCompatExtLink } from '@/Components/ExtLink';
 
 const schemePdfMap = {
-    'Citizens Financing - Cooperatives/Crowdfunding': SchemePDF.CooperativesCrowdfunding,
+    'Citizens Finance': SchemePDF.CooperativesCrowdfunding,
     'EPC': SchemePDF.EPC,
     'Green Bonds': SchemePDF.GreenBonds,
     'Guarantee Funds': SchemePDF.GuaranteeFunds,
-    'Interacting/Internal Contracting': SchemePDF.Interacting,
+    'Internal Contracting': SchemePDF.Interacting,
     'Revolving Funds': SchemePDF.RevolvingFunds,
     'Soft Loans': SchemePDF.SoftLoans,
-    '3rd Party Financing': SchemePDF.ThirdPartyFinancing
+    'Third-Party Financing': SchemePDF.ThirdPartyFinancing
 }
 
 const CustomizedAxisTick = ({ isYAxis, x, y, payload, style, className, offset = 0 }) => {

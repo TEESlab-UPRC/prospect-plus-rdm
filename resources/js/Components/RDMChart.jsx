@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, LabelList } from 'recharts';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { forClassEls, setClassStyle } from '../Helpers/DomHelpers';
 import { getCSSVar, getTextWidth } from '../Helpers/RenderHelpers';
 import { getBoundaries } from '../Helpers/SVGHelpers';
@@ -60,14 +60,8 @@ const onResize = (w, h, colNum, id) => {
 const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) => {
     const { t } = useTransHelper();
     const [loaded, setLoaded] = useState(false);
-    const barRef = useRef(null);
     const fontFamily = getCSSVar("pp-font-sans");
     const id = isOffscreen ? "offscreen-chart" : "visible-chart";
-
-    const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
-        let bar = barRef.current;
-        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration);
-    };
 
     const onAnimationStart = () => {
         patchLabel();
@@ -78,7 +72,6 @@ const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) 
 
     useEffect(() => {
         svgAutoCropY();
-        patchLabel();
     });
 
     useEffect(() => scaleMsg(id), [getMsg(t)]);
@@ -97,7 +90,7 @@ const RDMChart = ({ percentages, title, onLoaded = null, isOffscreen = false }) 
                 <CartesianGrid strokeDasharray="3 3"/>
                 <XAxis dataKey="title" interval={0} tick={<CustomizedAxisTick isYAxis={false} className={`pp-${id}-rschemes`} style={{ fontWeight: 'bold', fill: '#777' }} offset={isOffscreen ? 8 : 2}/>}/>
                 <YAxis fontSize={15} domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick isYAxis={true} className={`pp-${id}-rval`} offset={isOffscreen ? 4 : 1}/>}/>
-                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} ref={barRef} dataKey="result" fill="#0b2870" className={`pp-${id}-rlabel`}>
+                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} dataKey="result" fill="#0b2870" className={`pp-${id}-rlabel`}>
                     <LabelList dataKey="result" position="top" offset={isOffscreen ? 8 : 4} formatter={Math.round}/>
                 </Bar>
             </BarChart>

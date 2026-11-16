@@ -54,13 +54,13 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
     const resultFilename = [analysisTitle, dlQuestionnaireTitle, "results"].filter(e => e).join(" - ");
     const maxAns = Math.max(...questionnaire.answers.map(a => a.value));
     const ansInversionMap = Object.fromEntries(questionnaire.questions.map(q => [q.id, q.invert_ans_val]));
-    const pillarMap = Object.fromEntries(questionnaire.pillars.map(p => [p.id, p]));
+    const pillarMap = isRDM ? Object.fromEntries(questionnaire.pillars.map(p => [p.id, p])) : {};
     const [currentAnswersState, setCurrentAnswersState] = useState(currentAnswers);
     const [initScrollY, setInitScrollY] = useState(window.scrollY);
     const [filled, setFilled] = useState(false);
     const [result, setResult] = useState([0]);
     const [currentEnablerAnswersState, setCurrentEnablerAnswersState] = useState(currentEnablerAnswers);    // TODO impl setCurrentEnablerAnswersState call
-    const [enabledEnablers, setEnabledEnablers] = useState(Object.fromEntries(questionnaire.enablers.map(e => [e.id, Object.keys(currentEnablerAnswers ?? {}).includes(e.id)])));
+    const [enabledEnablers, setEnabledEnablers] = useState(isRDM ? Object.fromEntries(questionnaire.enablers.map(e => [e.id, Object.keys(currentEnablerAnswers ?? {}).includes(e.id)])) : {});
     const { t } = useTransHelper();
 
     const getAnswersWithInversions = answers => answers.map(a => ansInversionMap[a.questionId] ? Object.assign({}, a, {value: maxAns - a.value}) : a);

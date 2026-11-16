@@ -83,7 +83,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
         if(isRDM) setResult(questionnaire.schemes.map(s => ({ // for each scheme included in this questionnaire
             'title': s.title,
             'result': reduceAns2Percent(answersWithInversions.filter(a => a.schemeId == s.id || (a.schemeId == null && s.questions.includes(a.questionId)))), // filter for included questions in scheme (and scheme, for questions requiring separate answers) and reduce answers to percentage
-            'fill': colorMap[questionnaire.title]
+            'enablers': {9: 5, 10: 14, 11: 8}
         })));
         else setResult([reduceAns2Percent(answersWithInversions)]);
         analyticsEvent("view_results", {
@@ -180,7 +180,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
             </form>
             {filled && (<>
                 {isRDM ? (<>
-                    <RDMChart barChartPercentages={result} radarChartPercentages={questionnaire.pillars.map((p, i) => ({pillar: p.title, score: [60,60,20,70,45,50][i]})) /* TODO radar chart pillar percentages */} radarChartColor={colorMap[questionnaire.title]} title={questionnaire.title} onLoaded={onChartLoad} />
+                    <RDMChart barChartPercentages={result} radarChartPercentages={questionnaire.pillars.map((p, i) => ({pillar: p.title, score: [60,60,20,70,45,50][i]})) /* TODO radar chart pillar percentages */} baseColor={colorMap[questionnaire.title]} title={questionnaire.title} enablers={questionnaire.enablers} onLoaded={onChartLoad} />
                     {isEdit ? ( // edit mode
                         <DLBtn />
                     ) : (
@@ -212,7 +212,7 @@ export default function Questionnaire({ auth, env, locale, questionnaire, curren
                 <div id="offscreen-chart-container">
                     <div>
                         {isRDM ? (
-                            <RDMChart barChartPercentages={result} radarChartPercentages={questionnaire.pillars.map((p, i) => ({pillar: p.title, score: [60,60,20,70,45,50][i]})) /* TODO radar chart pillar percentages */} radarChartColor={colorMap[questionnaire.title]} title={questionnaire.title} isOffscreen={true} />
+                            <RDMChart barChartPercentages={result} radarChartPercentages={questionnaire.pillars.map((p, i) => ({pillar: p.title, score: [60,60,20,70,45,50][i]})) /* TODO radar chart pillar percentages */} baseColor={colorMap[questionnaire.title]} title={questionnaire.title} enablers={questionnaire.enablers} isOffscreen={true} />
                         ) : (
                             <FRCChart percentage={result[0]} isOffscreen={true} />
                         )}

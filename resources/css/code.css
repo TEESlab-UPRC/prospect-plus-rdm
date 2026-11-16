@@ -3,3 +3,11 @@ input:-webkit-autofill {animation-name: onAutoFill;}    /* Expose autofill event
 
 #offscreen-chart-container {@apply fixed invisible w-1 h-1 overflow-scroll;}
 #offscreen-chart-container > div {@apply w-[1900px];}   /* controls downloaded chart size (not including added margins: defMargin @ ChartDLBtn component etc) */
+
+#offscreen-chart-container .chart-legend-mods .recharts-legend-wrapper ul { @apply !mt-8; }
+.chart-legend-mods .recharts-legend-wrapper {
+    @apply justify-center;
+    &, ul, li { @apply !flex flex-row !m-0 items-center; }
+    ul { @apply gap-4 !mt-2 !mb-1; }
+    svg.recharts-surface { @apply mb-1; }
+}

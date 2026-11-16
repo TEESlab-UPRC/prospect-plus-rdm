@@ -83,18 +83,11 @@ const onResize = (w, h, id) => {
 const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoaded = null, isOffscreen = false }) => {
     const { t } = useTransHelper();
     const [loaded, setLoaded] = useState(false);
-    const barRef = useRef(null);
     const fontFamily = getCSSVar("pp-font-sans");
     const id = isOffscreen ? "offscreen-chart" : "visible-chart";
     const resp = percentage >= 75 ? FRCResponses[0] : (percentage > 50 ? FRCResponses[1] : FRCResponses[2]);
 
-    const patchLabel = () => {  // patch for recharts lib bug: sometimes the animation end event doesn't fire, which causes the label to not appear
-        let bar = barRef.current;
-        if(bar) setTimeout(() => bar.state.isAnimationFinished || bar.handleAnimationEnd(), bar.props.animationDuration);
-    };
-
     const onAnimationStart = () => {
-        patchLabel();
         if(loaded) return;
         onLoaded && onLoaded();
         setLoaded(true);
@@ -102,7 +95,6 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
 
     useEffect(() => {
         svgAutoCropY();
-        patchLabel();
     });
 
     useEffect(() => scaleMsg(id), [t(resp[1])]);
@@ -126,7 +118,7 @@ const FRCChart = ({ percentage, title = "Quick Finance Readiness Check", onLoade
                 <ReferenceLine x={75} stroke="#7dbe00" strokeDasharray="5 5" strokeWidth={2} />
                 <XAxis type="number" domain={[0, 100]} tickCount={11} interval="preserveStartEnd" tick={<CustomizedAxisTick className={`pp-${id}-rtick`} isYAxis={false} offset={isOffscreen ? 8 : 2}/>} />
                 <YAxis type="category" hide />
-                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} ref={barRef} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className={`pp-${id}-rlabel`}>
+                <Bar {...(isOffscreen ? {animationDuration: 0} : {})} onAnimationStart={onAnimationStart} dataKey="value" fill="#0b2870" background={{fill: "url(#gradient)"}} shape={<FRCBar />} className={`pp-${id}-rlabel`}>
                     <LabelList dataKey="value" content={FRCLabel}/>
                 </Bar>
             </BarChart>
